@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Pladeco.Model.Project>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="page-header">
+    <br />
+    <div class="breadcrumb-line breadcrumb-line-component">
+        <ul class="breadcrumb">
+            <li class="active">Proyectos</li>
+        </ul>
+    </div>
+</div>
+<br />
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+    <!-- Vertical form options -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-left">
+                <a asp-action="Create" class="btn bg-orange" role="button">Crear</a>
+            </div>
+            <br />
+        </div>
+        <div class="col-md-12">
+            <!-- Basic datatable -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="reload"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <table class="table datatable-button-html5-basic ">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StartDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EndDate)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /basic datatable -->
+        </div>
+    </div>
+</div>
+<!-- Theme JS files -->
+<script src="~/js/plugins/tables/datatables/datatables.min.js"></script>
+<script src="~/js/plugins/forms/selects/select2.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/jszip/jszip.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/select.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
+<script src="~/js/demo_pages/datatables_extension_buttons_html5.js"></script>
+<script src="~/js/custom/custom_datatable.js"></script>

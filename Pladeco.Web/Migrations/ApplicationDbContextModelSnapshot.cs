@@ -27,6 +27,9 @@ namespace Pladeco.Web.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Name")
                         .HasMaxLength(256);
 
@@ -41,6 +44,8 @@ namespace Pladeco.Web.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -189,7 +194,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("Model.Area", b =>
+            modelBuilder.Entity("Pladeco.Model.Area", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -199,12 +204,20 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
                     b.HasKey("ID");
 
                     b.ToTable("Areas");
                 });
 
-            modelBuilder.Entity("Model.Budget", b =>
+            modelBuilder.Entity("Pladeco.Model.Budget", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -212,7 +225,7 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<decimal>("Amount");
 
-                    b.Property<int?>("AreaID");
+                    b.Property<int>("AreaID");
 
                     b.HasKey("ID");
 
@@ -221,7 +234,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Budgets");
                 });
 
-            modelBuilder.Entity("Model.PaymentPlan", b =>
+            modelBuilder.Entity("Pladeco.Model.PaymentPlan", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -246,7 +259,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("PaymentPlans");
                 });
 
-            modelBuilder.Entity("Model.Plan", b =>
+            modelBuilder.Entity("Pladeco.Model.Plan", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -258,7 +271,7 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<int>("Priority");
 
-                    b.Property<int?>("ProjectID");
+                    b.Property<int>("ProjectID");
 
                     b.Property<DateTime>("RealEndDate");
 
@@ -279,32 +292,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Plans");
                 });
 
-            modelBuilder.Entity("Model.Project", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AreaID");
-
-                    b.Property<int>("Priority");
-
-                    b.Property<string>("ResponsableId");
-
-                    b.Property<string>("SolicitanteId");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("AreaID");
-
-                    b.HasIndex("ResponsableId");
-
-                    b.HasIndex("SolicitanteId");
-
-                    b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("Model.Task", b =>
+            modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -327,13 +315,71 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("Model.User", b =>
+            modelBuilder.Entity("Pladeco.Model.Project", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AreaID");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Priority");
+
+                    b.Property<DateTime>("RealEndDate");
+
+                    b.Property<DateTime>("RealStartDate");
+
+                    b.Property<string>("ResponsableID");
+
+                    b.Property<string>("SolicitanteID");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AreaID");
+
+                    b.HasIndex("ResponsableID");
+
+                    b.HasIndex("SolicitanteID");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.Role", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("Description");
+
+                    b.ToTable("Role");
+
+                    b.HasDiscriminator().HasValue("Role");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("AreaID");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200);
+
+                    b.HasIndex("AreaID");
 
                     b.ToTable("User");
 
@@ -385,55 +431,65 @@ namespace Pladeco.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Model.Budget", b =>
+            modelBuilder.Entity("Pladeco.Model.Budget", b =>
                 {
-                    b.HasOne("Model.Area", "Area")
+                    b.HasOne("Pladeco.Model.Area", "Area")
                         .WithMany()
-                        .HasForeignKey("AreaID");
+                        .HasForeignKey("AreaID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Model.PaymentPlan", b =>
+            modelBuilder.Entity("Pladeco.Model.PaymentPlan", b =>
                 {
-                    b.HasOne("Model.Project", "Project")
+                    b.HasOne("Pladeco.Model.Project", "Project")
                         .WithMany("PaymentPlans")
                         .HasForeignKey("ProjectID");
 
-                    b.HasOne("Model.User", "Solicitante")
+                    b.HasOne("Pladeco.Model.User", "Solicitante")
                         .WithMany()
                         .HasForeignKey("SolicitanteId");
                 });
 
-            modelBuilder.Entity("Model.Plan", b =>
+            modelBuilder.Entity("Pladeco.Model.Plan", b =>
                 {
-                    b.HasOne("Model.Project", "Project")
+                    b.HasOne("Pladeco.Model.Project", "Project")
                         .WithMany("Plans")
-                        .HasForeignKey("ProjectID");
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Model.User", "Responsable")
+                    b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
                         .HasForeignKey("ResponsableId");
                 });
 
-            modelBuilder.Entity("Model.Project", b =>
+            modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
                 {
-                    b.HasOne("Model.Area", "Area")
-                        .WithMany()
-                        .HasForeignKey("AreaID");
-
-                    b.HasOne("Model.User", "Responsable")
-                        .WithMany()
-                        .HasForeignKey("ResponsableId");
-
-                    b.HasOne("Model.User", "Solicitante")
-                        .WithMany()
-                        .HasForeignKey("SolicitanteId");
-                });
-
-            modelBuilder.Entity("Model.Task", b =>
-                {
-                    b.HasOne("Model.Plan")
+                    b.HasOne("Pladeco.Model.Plan")
                         .WithMany("Task")
                         .HasForeignKey("PlanID");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.Project", b =>
+                {
+                    b.HasOne("Pladeco.Model.Area", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Pladeco.Model.User", "Responsable")
+                        .WithMany()
+                        .HasForeignKey("ResponsableID");
+
+                    b.HasOne("Pladeco.Model.User", "Solicitante")
+                        .WithMany()
+                        .HasForeignKey("SolicitanteID");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.User", b =>
+                {
+                    b.HasOne("Pladeco.Model.Area", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaID");
                 });
 #pragma warning restore 612, 618
         }

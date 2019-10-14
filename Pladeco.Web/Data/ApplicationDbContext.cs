@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Model;
+using Pladeco.Model;
 
 namespace Pladeco.Web.Data
 {
@@ -27,11 +27,27 @@ namespace Pladeco.Web.Data
             modelBuilder.Entity<IdentityUserLogin<string>>(entity => { entity.ToTable("UserLogins"); });
             modelBuilder.Entity<IdentityUserToken<string>>(entity => { entity.ToTable("UserTokens"); });
             modelBuilder.Entity<IdentityRoleClaim<string>>(entity => { entity.ToTable("RoleClaims"); });
+
+            //modelBuilder.Entity<UserRole>(userRole =>
+            //{
+            //    userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+
+            //    userRole.HasOne(ur => ur.Role)
+            //        .WithMany(r => r.UserRoles)
+            //        .HasForeignKey(ur => ur.RoleId)
+            //        .IsRequired();
+
+            //    userRole.HasOne(ur => ur.User)
+            //        .WithMany(r => r.UserRoles)
+            //        .HasForeignKey(ur => ur.UserId)
+            //        .IsRequired();
+            //});
         }
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Plan> Plans { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<PlanTask> Tasks { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<PaymentPlan> PaymentPlans { get; set; }
         public DbSet<Budget> Budgets { get; set; }

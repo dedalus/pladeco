@@ -1,21 +1,43 @@
-﻿<ul class="sidebar-menu" data-widget="tree">
-    <li class="header">MENU</li>
-    <!-- Optionally, you can add icons to the links -->
+﻿<!-- Main sidebar -->
+<div class="sidebar sidebar-main">
+    <div class="sidebar-content">
 
-    <li class="active"><a asp-area="" asp-controller="Updates" asp-action="Index"><i class="fa fa-dashboard"></i> <span>Escritorio</span></a></li>
-    <li><a asp-area="" asp-controller="Projects" asp-action="Index"><i class="fa fa-folder"></i> <span>Proyectos</span></a></li>
-    <li><a asp-area="" asp-controller="Budges" asp-action="Index"><i class="fa fa-dollar"></i> <span>Presupuesto</span></a></li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-gears"></i> <span>Administración</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a asp-area="" asp-controller="Roles" asp-action="Index">Roles</a></li>
-            <li><a asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a></li>
-            <li><a asp-area="" asp-controller="Areas" asp-action="Index">Areas</a></li>
-        </ul>
-    </li>
-</ul>
+        @*<partial name="_LoginPartial" />*@
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <!-- Main navigation -->
+            <div class="sidebar-category sidebar-category-visible">
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-main navigation-accordion">
+
+                        <!-- Main -->
+                        <li><a asp-controller="Dashboard" asp-action="Index"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                        <li is-active-route asp-controller="Project" asp-action="Index">
+                            <a asp-controller="Projects" asp-action="Index"><i class="icon-folder"></i> <span>Proyectos</span></a>
+                        </li>
+                        <li is-active-route asp-controller="Budget" asp-action="Index">
+                            <a asp-controller="Budgets" asp-action="Index"><i class="icon-wallet"></i> <span>Presupuesto</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="icon-cog3"></i> <span>Administración</span></a>
+                            <ul>
+                                <li is-active-route asp-controller="Account" asp-action="Index"><a asp-controller="Account" asp-action="Index">Usuarios</a></li>
+                                <li is-active-route asp-controller="Roles" asp-action="Index"><a asp-controller="Roles" asp-action="Index">Roles</a></li>
+                                <li is-active-route asp-controller="Areas" asp-action="Index"><a asp-controller="Areas" asp-action="Index">Areas</a></li>
+                            </ul>
+                        </li>
+                        <!-- /main -->
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /main navigation -->
+        }
+
+    </div>
+    <!-- Footer -->
+    <partial name="_Footer" />
+    <!-- /footer -->
+</div>
+<!-- /main sidebar -->

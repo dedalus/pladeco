@@ -7,3 +7,5 @@
 /Model/obj
 /Pladeco.Web/bin/Debug/netcoreapp2.1
 /Pladeco.Web/obj
+/Model/bin/Release/netstandard2.0
+/Pladeco.Web/bin/Release/netcoreapp2.1

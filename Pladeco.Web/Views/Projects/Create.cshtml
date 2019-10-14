@@ -1,0 +1,111 @@
+﻿@using Pladeco.Model.Enum
+@model Pladeco.Web.Models.ProjectViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <!-- Page header -->
+    <div class="page-header">
+        <br />
+        <div class="breadcrumb-line breadcrumb-line-component">
+            <ul class="breadcrumb">
+                <li><a asp-action="Index"><i class="icon-folder"></i>Proyectos</a></li>
+                <li class="active">Nuevo</li>
+            </ul>
+        </div>
+        <br />
+        <div class="page-header-content">
+            <div class="text-left">
+                <button type="submit" class="btn bg-orange">Guardar<i class="icon-arrow-right14 position-right"></i></button>
+                <a asp-action="Index" class="btn btn-default" role="button">Descartar</a>
+            </div>
+            <div class="heading-elements">
+
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- Content area -->
+    <div class="content">
+        <!-- Vertical form options -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Basic layout-->
+                <p>
+                    <div class="text-left">
+                    </div>
+                </p>
+                <div class="panel panel-flat">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="Name" class="text-semibold"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="text-semibold"></label>
+                            <textarea asp-for="Description" rows="4" cols="5" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Priority"></label>
+                            <select asp-for="Priority" class="select" asp-items="Html.GetEnumSelectList<ePriority>()"></select>
+                            <span asp-validation-for="Priority" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SolicitanteID" class="text-semibold"></label>
+                            <select asp-for="SolicitanteID" class="select" asp-items="Model.Users"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AreaID" class="text-semibold"></label>
+                            <select asp-for="AreaID" class="select" asp-items="Model.Areas"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StartDate" class="text-semibold"></label>
+                            <input asp-for="StartDate" class="form-control" />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="EndDate" class="text-semibold"></label>
+                            <input asp-for="EndDate" class="form-control" />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RealStartDate" class="text-semibold"></label>
+                            <input asp-for="RealStartDate" class="form-control" />
+                            <span asp-validation-for="RealStartDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RealEndDate" class="text-semibold"></label>
+                            <input asp-for="RealEndDate" class="form-control" />
+                            <span asp-validation-for="RealEndDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ResponsableID" class="text-semibold"></label>
+                            <select asp-for="ResponsableID" class="select" asp-items="Model.Users"></select>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /basic layout -->
+            </div>
+        </div>
+
+    </div>
+    <!-- /content area -->
+</form>
+<!-- /vertical form options -->
+<!-- Theme JS files -->
+<script src="~/js/plugins/forms/selects/select2.min.js"></script>
+<script src="~/js/plugins/forms/styling/uniform.min.js"></script>
+<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_checkradio.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

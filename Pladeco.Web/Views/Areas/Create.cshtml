@@ -1,66 +1,68 @@
-﻿@model Model.Area
+﻿@model Pladeco.Model.Area
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<!-- Content Header (Page header) -->
-<!-- form start -->
-<form asp-action="Create" role="form">
+
+<form asp-action="Create" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <section class="content-header">
-        <button type="submit" value="Create" class="btn btn-primary">Guardar</button>
-        <a asp-action="Index"><input type="button" class="btn btn-default" value="Descartar"></a>
-
-        <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                Acciones <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Suprimir</a></li>
-                <li><a href="#">Exportar</a></li>
+    <!-- Page header -->
+    <div class="page-header">
+        <br />
+        <div class="breadcrumb-line breadcrumb-line-component">
+            <ul class="breadcrumb">
+                <li><a asp-action="Index"><i class="icon-cog3"></i> Areas</a></li>
+                <li class="active">Nuevo</li>
             </ul>
         </div>
-
-        <ol class="breadcrumb">
-            <li><a asp-area="" asp-controller="Ticket" asp-action="Index"><i class="fa fa-support"></i>Soporte</a></li>
-            <li><a asp-area="" asp-controller="TicketChannels" asp-action="Index">Canales</a></li>
-            <li class="active">Nuevo</li>
-        </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-
-                    </div>
-                    <!-- /.box-header -->
-
-                    <div class="box-body">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
-                                <input asp-for="Name" class="form-control" placeholder="Nombre" />
-                                <span asp-validation-for="Name" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+        <br />
+        <div class="page-header-content">
+            <div class="text-left">
+                <button type="submit" class="btn bg-orange">Guardar<i class="icon-arrow-right14 position-right"></i></button>
+                <a asp-action="Index" class="btn btn-default" role="button">Descartar</a>
             </div>
-            <!--/.col (right) -->
+            <div class="heading-elements">
+
+            </div>
         </div>
-        <!-- /.row -->
-    </section>
+    </div>
+    <!-- /page header -->
+    <!-- Content area -->
+    <div class="content">
+        <!-- Vertical form options -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Basic layout-->
+                <p>
+                    <div class="text-left">
+                    </div>
+                </p>
+                <div class="panel panel-flat">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="Name" class="text-semibold"></label>
+                            <input asp-for="Name" class="form-control" autofocus="autofocus" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- /basic layout -->
+            </div>
+        </div>
+
+    </div>
+    <!-- /content area -->
 </form>
-<!-- /.content -->
+<!-- /vertical form options -->
+<!-- Theme JS files -->
+<script src="~/js/plugins/forms/selects/select2.min.js"></script>
+<script src="~/js/plugins/forms/styling/uniform.min.js"></script>
+<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_checkradio.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

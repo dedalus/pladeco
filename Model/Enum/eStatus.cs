@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.Enum
+namespace Pladeco.Model.Enum
 {
     public enum eStatus
     {

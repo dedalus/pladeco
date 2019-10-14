@@ -12,7 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using Pladeco.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Model;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Pladeco.Web.Helpers;
+using Pladeco.Model;
+using Pladeco.Web.Data.Data;
 
 namespace Pladeco.Web
 {
@@ -54,7 +57,22 @@ namespace Pladeco.Web
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
+            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+            opt =>
+            {
+                //configure your other properties
+                opt.LoginPath = "/Account/Login";
+                opt.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
+            services.AddTransient<SeedDb>();
+            services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<ICombosHelper, CombosHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +89,7 @@ namespace Pladeco.Web
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -81,7 +99,7 @@ namespace Pladeco.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Dashboard}/{action=Index}/{id?}");
             });
         }
     }
