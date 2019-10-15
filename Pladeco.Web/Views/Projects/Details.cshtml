@@ -34,7 +34,7 @@
     <br />
     <div class="page-header-content">
         <div class="text-left">
-            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-orange" role="button">Editar</a>
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
             <a asp-action="Create" class="btn btn-default" role="button">Crear</a>
             <a href="#" class="btn btn-default" role="button">Plan de gasto</a>
         </div>
@@ -62,7 +62,7 @@
                 <div class="panel panel-flat">
                     <div class="panel-heading">
                         <div class="progress">
-                            <div class="progress-bar bg-teal" style="width: 85%">
+                            <div class="progress-bar bg-green-700" style="width: 85%">
                                 <span>85% Complete</span>
                             </div>
                         </div>
@@ -72,56 +72,71 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <fieldset>
-                                    <legend class="text-semibold"><i class="icon-folder position-left"></i>Datos </legend>
+                                    <legend class="text-semibold"><i class="icon-folder position-left"></i>General </legend>
 
                                     <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.Name)</label>
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Name)</label>
                                         <input value="@Html.DisplayFor(model => model.Name)" class="form-control" disabled />
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.Description)</label>
-                                        <textarea asp-for="Description" rows="4" cols="5" class="form-control" disabled></textarea>
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Description)</label>
+                                        <textarea asp-for="Description" rows="10" cols="5" class="form-control" disabled></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.Solicitante)</label>
-                                        <input value="@Html.DisplayFor(model => model.Solicitante.Name)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.Area)</label>
-                                        <input value="@Html.DisplayFor(model => model.Area.Name)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.Priority)</label>
-                                        <input value="@Html.DisplayFor(model => model.Priority)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.StartDate)</label>
-                                        <input value="@Html.DisplayFor(model => model.StartDate)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.EndDate)</label>
-                                        <input value="@Html.DisplayFor(model => model.EndDate)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.RealStartDate)</label>
-                                        <input value="@Html.DisplayFor(model => model.RealStartDate)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.RealEndDate)</label>
-                                        <input value="@Html.DisplayFor(model => model.RealEndDate)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">@Html.DisplayNameFor(model => model.Responsable)</label>
-                                        <input value="@Html.DisplayFor(model => model.Responsable.Name)" class="form-control" disabled />
-                                    </div>
+                                    
 
                                 </fieldset>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
+                                <fieldset>
+                                    <legend class="text-semibold"><i class="icon-newspaper"></i> Datos</legend>
+
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Solicitante)</label>
+                                        <input value="@Html.DisplayFor(model => model.Solicitante.Name)" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Area)</label>
+                                        <input value="@Html.DisplayFor(model => model.Area.Name)" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Priority)</label>
+                                        <input value="@Html.DisplayFor(model => model.Priority)" class="form-control" disabled />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Responsable)</label>
+                                        <input value="@Html.DisplayFor(model => model.Responsable.Name)" class="form-control" disabled />
+                                    </div>
+
+</div>
+
+                            <div class="col-md-3">
+                                <fieldset>
+                                    <legend class="text-semibold"><i class="icon-database-time2"></i> Duración</legend>
+
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.StartDate)</label>
+                                        <input value="@Html.DisplayFor(model => model.StartDate)" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.EndDate)</label>
+                                        <input value="@Html.DisplayFor(model => model.EndDate)" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.RealStartDate)</label>
+                                        <input value="@Html.DisplayFor(model => model.RealStartDate)" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.RealEndDate)</label>
+                                        <input value="@Html.DisplayFor(model => model.RealEndDate)" class="form-control" disabled />
+                                    </div>
+
+                            </div>
+
+                            <div class="col-md-12">
                                 <fieldset>
                                     <legend class="text-semibold"><i class="icon-task"></i> Plan de ejecución</legend>
-
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
@@ -193,13 +208,15 @@
                                                     </td>
                                                     <td>En proceso</td>
                                                 </tr>
-     
-                                                
+
+
                                             </tbody>
                                         </table>
                                     </div>
-                            </div>
 
+
+                                </fieldset>
+                            </div>
                             </fieldset>
                         </div>
                         </div>

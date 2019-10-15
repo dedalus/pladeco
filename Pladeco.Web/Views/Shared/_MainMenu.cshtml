@@ -12,19 +12,19 @@
                     <ul class="navigation navigation-main navigation-accordion">
 
                         <!-- Main -->
-                        <li><a asp-controller="Dashboard" asp-action="Index"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
-                        <li is-active-route asp-controller="Project" asp-action="Index">
+                        <li is-active-route asp-controller="Dashboard" asp-action="Index"><a asp-controller="Dashboard" asp-action="Index"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                        <li is-active-route asp-controller="Projects">
                             <a asp-controller="Projects" asp-action="Index"><i class="icon-folder"></i> <span>Proyectos</span></a>
                         </li>
-                        <li is-active-route asp-controller="Budget" asp-action="Index">
+                        <li is-active-route asp-controller="Budgets">
                             <a asp-controller="Budgets" asp-action="Index"><i class="icon-wallet"></i> <span>Presupuesto</span></a>
                         </li>
                         <li>
                             <a href="#"><i class="icon-cog3"></i> <span>Administración</span></a>
                             <ul>
-                                <li is-active-route asp-controller="Account" asp-action="Index"><a asp-controller="Account" asp-action="Index">Usuarios</a></li>
-                                <li is-active-route asp-controller="Roles" asp-action="Index"><a asp-controller="Roles" asp-action="Index">Roles</a></li>
-                                <li is-active-route asp-controller="Areas" asp-action="Index"><a asp-controller="Areas" asp-action="Index">Areas</a></li>
+                                <li is-active-route asp-controller="Account"><a asp-controller="Account" asp-action="Index">Usuarios</a></li>
+                                <li is-active-route asp-controller="Roles"><a asp-controller="Roles" asp-action="Index">Roles</a></li>
+                                <li is-active-route asp-controller="Areas"><a asp-controller="Areas" asp-action="Index">Areas</a></li>
                             </ul>
                         </li>
                         <!-- /main -->

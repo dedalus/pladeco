@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pladeco.Model.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Pladeco.Model
 {
-    public class Budget
+    public class Budget : IEntity
     {
         public Budget()
         {
@@ -26,5 +27,9 @@ namespace Pladeco.Model
         [ForeignKey("AreaID")]
         [DisplayName("Area")]
         public virtual Area Area { get; set; }
+        public DateTime? create_date { get; set; }
+        public int? create_uid { get; set; }
+        public DateTime? write_date { get; set; }
+        public int? write_uid { get; set; }
     }
 }

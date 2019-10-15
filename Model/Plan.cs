@@ -1,4 +1,5 @@
-﻿using Pladeco.Model.Enum;
+﻿using Pladeco.Model.Base;
+using Pladeco.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Pladeco.Model
 {
-    public class Plan
+    public class Plan : IEntity
     {
         [Key]
         public int ID { get; set; }
@@ -34,5 +35,9 @@ namespace Pladeco.Model
         public User Responsable { get; set; }
 
         public ICollection<PlanTask> Task { get; set; }
+        public DateTime? create_date { get; set; }
+        public int? create_uid { get; set; }
+        public DateTime? write_date { get; set; }
+        public int? write_uid { get; set; }
     }
 }

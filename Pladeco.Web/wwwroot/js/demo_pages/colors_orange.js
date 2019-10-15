@@ -15,26 +15,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Basic select2
     $('.select').select2({
         minimumResultsForSearch: Infinity,
-        containerCssClass: 'bg-orange-600'
+        containerCssClass: 'bg-green-700-600'
     });
 
 
     // Select2 ultiselect item color
     $('.select-item-color').select2({
-        containerCssClass: 'bg-orange-600'
+        containerCssClass: 'bg-green-700-600'
     });
 
 
     // Select2 dropdown menu color
     $('.select-menu-color').select2({
-        containerCssClass: 'bg-orange-600',
-        dropdownCssClass: 'bg-orange-600'
+        containerCssClass: 'bg-green-700-600',
+        dropdownCssClass: 'bg-green-700-600'
     });
 
 
     // Multiselect
     $('.multiselect').multiselect({
-        buttonClass: 'btn bg-orange-600',
+        buttonClass: 'btn bg-green-700-600',
         nonSelectedText: 'Select your state'
     });
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // jGrowl
     $('.growl-launch').on('click', function () {
-        $.jGrowl('I am a well highlighted orange notice..', { theme: 'bg-orange', header: 'Well highlighted' });
+        $.jGrowl('I am a well highlighted orange notice..', { theme: 'bg-green-700', header: 'Well highlighted' });
     });
 
 
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             text: 'Check me out! I\'m a notice.',
             icon: 'icon-info22',
             delay: 5000,
-            addclass: 'bg-orange'
+            addclass: 'bg-green-700'
         });
     });
 
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // File input
     $(".file-styled").uniform({
-        fileButtonClass: 'action btn bg-orange'
+        fileButtonClass: 'action btn bg-green-700'
     });
 
 
@@ -103,19 +103,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Tooltip
     $('[data-popup=tooltip-custom]').tooltip({
-        template: '<div class="tooltip"><div class="bg-orange-600"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div></div>'
+        template: '<div class="tooltip"><div class="bg-green-700-600"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div></div>'
     });
 
 
     // Popover title
     $('[data-popup=popover-custom]').popover({
-        template: '<div class="popover border-orange-600"><div class="arrow"></div><h3 class="popover-title bg-orange-600"></h3><div class="popover-content"></div></div>'
+        template: '<div class="popover border-orange-600"><div class="arrow"></div><h3 class="popover-title bg-green-700-600"></h3><div class="popover-content"></div></div>'
     });
 
 
     // Popover background color
     $('[data-popup=popover-solid]').popover({
-        template: '<div class="popover bg-orange-600"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+        template: '<div class="popover bg-green-700-600"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
     });
 
 });

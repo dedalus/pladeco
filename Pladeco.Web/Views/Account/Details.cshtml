@@ -11,7 +11,7 @@
     <br />
     <div class="breadcrumb-line breadcrumb-line-component">
         <ul class="breadcrumb">
-            <li><a href="index.html"><i class="icon-cog3"></i> Administracion</a></li>
+            <li><a href="#"><i class="icon-cog3"></i> Administracion</a></li>
             <li><a asp-action="Index">Usuarios</a></li>
             <li class="active">@Model.UserName</li>
         </ul>
@@ -35,7 +35,7 @@
     <br />
     <div class="page-header-content">
         <div class="text-left">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn bg-orange" role="button">Editar</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn bg-green-700" role="button">Editar</a>
             <a asp-action="Create" class="btn btn-default" role="button">Crear</a>
         </div>
 

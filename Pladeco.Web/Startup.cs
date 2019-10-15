@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Pladeco.Web.Helpers;
 using Pladeco.Model;
 using Pladeco.Web.Data.Data;
+using Microsoft.AspNetCore.Server.IISIntegration;
 
 namespace Pladeco.Web
 {
@@ -73,6 +74,8 @@ namespace Pladeco.Web
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
+
+            services.AddAuthentication(IISDefaults.AuthenticationScheme);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
