@@ -37,6 +37,10 @@ namespace Pladeco.Web.Data.Data
 
             await this.CheckUser("sa@valsoft.com.ar", "SysAdmin", "Admin");
 
+            await this.AddDevAxes();
+            await this.AddResponsableUnits();
+            await this.AddSectors();
+
             //// Add products
             //if (!this.context.Products.Any())
             //{
@@ -98,31 +102,81 @@ namespace Pladeco.Web.Data.Data
             return user;
         }
 
-        //private async Task AddCountriesAndCitiesAsync()
-        //{
-        //    this.AddCountry("Colombia", new string[] { "Medellín", "Bogota", "Calí", "Barranquilla", "Bucaramanga", "Cartagena", "Pereira" });
-        //    this.AddCountry("Argentina", new string[] { "Córdoba", "Buenos Aires", "Rosario", "Tandil", "Salta", "Mendoza" });
-        //    this.AddCountry("Estados Unidos", new string[] { "New York", "Los Ángeles", "Chicago", "Washington", "San Francisco", "Miami", "Boston" });
-        //    this.AddCountry("Ecuador", new string[] { "Quito", "Guayaquil", "Ambato", "Manta", "Loja", "Santo" });
-        //    this.AddCountry("Peru", new string[] { "Lima", "Arequipa", "Cusco", "Trujillo", "Chiclayo", "Iquitos" });
-        //    this.AddCountry("Chile", new string[] { "Santiago", "Valdivia", "Concepcion", "Puerto Montt", "Temucos", "La Sirena" });
-        //    this.AddCountry("Uruguay", new string[] { "Montevideo", "Punta del Este", "Colonia del Sacramento", "Las Piedras" });
-        //    this.AddCountry("Bolivia", new string[] { "La Paz", "Sucre", "Potosi", "Cochabamba" });
-        //    this.AddCountry("Venezuela", new string[] { "Caracas", "Valencia", "Maracaibo", "Ciudad Bolivar", "Maracay", "Barquisimeto" });
-        //    this.AddCountry("Paraguay", new string[] { "Asunción", "Ciudad del Este", "Encarnación", "San  Lorenzo", "Luque", "Areguá" });
-        //    this.AddCountry("Brasil", new string[] { "Rio de Janeiro", "São Paulo", "Salvador", "Porto Alegre", "Curitiba", "Recife", "Belo Horizonte", "Fortaleza" });
-        //    await this.context.SaveChangesAsync();
-        //}
+        private async Task AddSectors()
+        {
+            this.AddSector("Agua potable, alcantarillado");
+            this.AddSector("Alumbrado público");
+            this.AddSector("Áreas verdes");
+            this.AddSector("Capacitación");
+            this.AddSector("Conectividad");
+            this.AddSector("Consultoría");
+            this.AddSector("Cultura");
+            this.AddSector("Deporte");
+            this.AddSector("Emergencia");
+            this.AddSector("Equipamiento Comunitario");
+            this.AddSector("Equipamiento Municipal");
+            this.AddSector("Fomento productivo");
+            this.AddSector("Informática");
+            this.AddSector("Infraestructura comunitaria");
+            this.AddSector("Infraestructura municipal");
+            this.AddSector("Mantención, aseo y ornato");
+            this.AddSector("Medio ambiente");
+            this.AddSector("Salud");
+            this.AddSector("Tránsito y transporte público");
+            this.AddSector("Vialidad");
+            this.AddSector("Vivienda");
+            await this.context.SaveChangesAsync();
+        }
 
-        //private void AddCountry(string country, string[] cities)
-        //{
-        //    var theCities = cities.Select(c => new City { Name = c }).ToList();
-        //    this.context.Countries.Add(new Country
-        //    {
-        //        Cities = theCities,
-        //        Name = country
-        //    });
-        //}
+        private void AddSector(string name)
+        {
+            this.context.Sectors.Add(new Sector
+            {
+                Name = name
+            });
+        }
+
+        private async Task AddResponsableUnits()
+        {
+            this.AddResponsableUnit("Secretaría de Planificación");
+            this.AddResponsableUnit("Gabinete");
+            this.AddResponsableUnit("Dirección de Asesoría Jurídica");
+            this.AddResponsableUnit("Dirección de Control");
+            this.AddResponsableUnit("Secretaría Municipal");
+            this.AddResponsableUnit("Dirección de Desarrollo Comunitario");
+            this.AddResponsableUnit("Dirección de Obras Municipales");
+            this.AddResponsableUnit("Dirección de Tránsito y Transporte Público");
+            this.AddResponsableUnit("Dirección de Aseo, Ornato y Medio Ambiente");
+            this.AddResponsableUnit("Dirección de Administración y Finanzas");
+            this.AddResponsableUnit("Dirección para el Desarrollo de Personas");
+            this.AddResponsableUnit("Dirección de Protección Civil");
+            await this.context.SaveChangesAsync();
+        }
+
+        private void AddResponsableUnit(string name)
+        {
+            this.context.ResponsableUnits.Add(new ResponsableUnit
+            {
+                Name = name
+            });
+        }
+
+        private async Task AddDevAxes()
+        {
+            this.AddDevAxis("Desarrollo Medio Físico, Infraestructura, Medio Ambiente");
+            this.AddDevAxis("Desarrollo Sociocultural, Salud, Educación, Cultura y Deporte");
+            this.AddDevAxis("Desarrollo Económico - Productivo");
+            this.AddDevAxis("Gestión Municipal");
+            await this.context.SaveChangesAsync();
+        }
+
+        private void AddDevAxis(string name)
+        {
+            this.context.DevAxes.Add(new DevAxis
+            {
+                Name = name
+            });
+        }
 
         private async Task CheckRolesAsync()
         {

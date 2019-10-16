@@ -37,6 +37,7 @@ namespace Pladeco.Web.Controllers
                 .Include(p=> p.Area)
                 .Include(p => p.Responsable)
                 .Include(p => p.Solicitante)
+                .Include(p=> p.Plans)
                 .Where(p=> p.ID==id)
                 .FirstOrDefaultAsync();
             if (area == null)
@@ -93,6 +94,29 @@ namespace Pladeco.Web.Controllers
             };
         }
 
+        private ProjectViewModel ToProjectViewModel(Project project)
+        {
+            var model = new ProjectViewModel()
+            {
+                ID=project.ID,
+                Name=project.Name,
+                Description=project.Description,
+                Priority=project.Priority,
+                
+                StartDate=project.StartDate,
+                EndDate=project.EndDate,
+                RealStartDate=project.RealStartDate,
+                RealEndDate=project.RealEndDate,
+
+                Areas = new SelectList(context.Areas, "ID", "Name"),
+                Solicitantes = new SelectList(context.Users, "Id", "Name", project.SolicitanteID),
+                Users = new SelectList(context.Users, "Id", "Name", project.ResponsableID)
+
+            };
+
+            return model;
+        }
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -101,6 +125,9 @@ namespace Pladeco.Web.Controllers
             }
 
             var project = await context.Projects
+                .Include(p => p.Area)
+                .Include(p => p.Responsable)
+                .Include(p => p.Solicitante)
                 .Where(b => b.ID == id)
                 .FirstOrDefaultAsync();
 
@@ -109,14 +136,16 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            return View(project);
+            var model = ToProjectViewModel(project);
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Amount,AreaID,ID")] Project project)
+        public async Task<IActionResult> Edit(int id, ProjectViewModel view)
         {
-            if (id != project.ID)
+            if (id != view.ID)
             {
                 return NotFound();
             }
@@ -125,12 +154,14 @@ namespace Pladeco.Web.Controllers
             {
                 try
                 {
+                    Project project = this.ToProject(view);
+
                     context.Update(project);
                     await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectExists(project.ID))
+                    if (!ProjectExists(view.ID))
                     {
                         return NotFound();
                     }
@@ -142,7 +173,7 @@ namespace Pladeco.Web.Controllers
                 return RedirectToAction(nameof(Details), new { id });
             }
 
-            return View(project);
+            return View(view);
         }
 
         [HttpPost, ActionName("Delete")]

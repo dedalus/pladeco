@@ -10,6 +10,8 @@ namespace Pladeco.Web.Models
 {
     public class CreateUserViewModel
     {
+        public string ID { get; set; }
+
         [Required]
         [Display(Name = "Nombre")]
         public string Name { get; set; }
@@ -30,7 +32,7 @@ namespace Pladeco.Web.Models
         public string Confirm { get; set; }
 
         [DisplayName("Area")]
-        public int AreaID { get; set; }
+        public int? AreaID { get; set; }
 
         [DisplayName("Activo")]
         public bool Active { get; set; }

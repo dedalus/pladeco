@@ -52,6 +52,23 @@ namespace Pladeco.Model
         [DisplayName("Fecha de fin real")]
         [DataType(DataType.Date)]
         public DateTime RealEndDate { get; set; }
+
+        [DisplayName("Sector")]
+        public int SectorID { get; set; }
+        [ForeignKey("SectorID")]
+        public Sector Sector { get; set; }
+
+
+        [DisplayName("Unidad responsable")]
+        public int ResponsableUnitID { get; set; }
+        [ForeignKey("ResponsableUnitID")]
+        public ResponsableUnit ResponsableUnit { get; set; }
+
+        [DisplayName("Eje de desarrollo")]
+        public int DevAxisID { get; set; }
+        [ForeignKey("DevAxisID")]
+        public DevAxis DevAxis { get; set; }
+
         public ICollection<Plan> Plans { get; set; }
         public ICollection<PaymentPlan> PaymentPlans { get; set; }
         public DateTime? create_date { get; set; }

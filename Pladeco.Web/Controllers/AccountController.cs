@@ -124,72 +124,70 @@ namespace Pladeco.Web.Controllers
             return this.View(model);
         }
 
-        //public async Task<IActionResult> ChangeUser()
-        //{
-        //    var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-        //    var model = new ChangeUserViewModel();
+        public async Task<IActionResult> Edit(string id)
+        {
+            var user = await this.userHelper.GetUserByIdAsync(id);
+            var model = new CreateUserViewModel();
 
-        //    if (user != null)
-        //    {
-        //        model.FirstName = user.FirstName;
-        //        model.LastName = user.LastName;
-        //        model.Address = user.Address;
-        //        model.PhoneNumber = user.PhoneNumber;
+            if (user != null)
+            {
+                model.ID = user.Id;
+                model.Name = user.Name;
+                model.Username = user.UserName;
+                model.AreaID = user.AreaID;
 
-        //        var city = await this.countryRepository.GetCityAsync(user.CityId);
-        //        if (city != null)
-        //        {
-        //            var country = await this.countryRepository.GetCountryAsync(city);
-        //            if (country != null)
-        //            {
-        //                model.CountryId = country.Id;
-        //                model.Cities = this.countryRepository.GetComboCities(country.Id);
-        //                model.Countries = this.countryRepository.GetComboCountries();
-        //                model.CityId = user.CityId;
-        //            }
-        //        }
-        //    }
+                model.Areas = new SelectList(context.Areas, "ID", "Name", model.AreaID);
 
-        //    model.Cities = this.countryRepository.GetComboCities(model.CountryId);
-        //    model.Countries = this.countryRepository.GetComboCountries();
-        //    return this.View(model);
-        //}
+            }
 
-        //[HttpPost]
-        //public async Task<IActionResult> ChangeUser(ChangeUserViewModel model)
-        //{
-        //    if (this.ModelState.IsValid)
-        //    {
-        //        var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-        //        if (user != null)
-        //        {
-        //            var city = await this.countryRepository.GetCityAsync(model.CityId);
+            return this.View(model);
+        }
 
-        //            user.FirstName = model.FirstName;
-        //            user.LastName = model.LastName;
-        //            user.Address = model.Address;
-        //            user.PhoneNumber = model.PhoneNumber;
-        //            user.CityId = model.CityId;
-        //            user.City = city;
+        [HttpPost]
+        public async Task<IActionResult> Edit(CreateUserViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                var user = await this.userHelper.GetUserByEmailAsync(model.ID);
+                if (user != null)
+                {
+                    user.Name = model.Name;
+                    user.AreaID = model.AreaID;
 
-        //            var respose = await this.userHelper.UpdateUserAsync(user);
-        //            if (respose.Succeeded)
-        //            {
-        //                this.ViewBag.UserMessage = "User updated!";
-        //            }
-        //            else
-        //            {
-        //                this.ModelState.AddModelError(string.Empty, respose.Errors.FirstOrDefault().Description);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            this.ModelState.AddModelError(string.Empty, "User no found.");
-        //        }
-        //    }
+                    var respose = await this.userHelper.UpdateUserAsync(user);
+                    if (respose.Succeeded)
+                    {
+                        if(model.Password.Trim() != string.Empty)
+                        {
+                            if(model.Password.Trim() != model.Confirm.Trim())
+                            {
+                                this.ModelState.AddModelError(string.Empty, "Las contraseñas no coinciden.");
+                            }
+                            else
+                            {
+                                //var result = await this.userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                                //if (result.Succeeded)
+                                //{
+                                //    return RedirectToAction(nameof(Details), new { model.ID });
+                                //}
+                            }
+                        }
+                        return RedirectToAction(nameof(Details), new { model.ID });
+                        //this.ViewBag.UserMessage = "User updated!";
+                    }
+                    else
+                    {
+                        this.ModelState.AddModelError(string.Empty, respose.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    this.ModelState.AddModelError(string.Empty, "User not found.");
+                }
+            }
 
-        //    return this.View(model);
-        //}
+            return this.View(model);
+        }
 
         //public IActionResult ChangePassword()
         //{

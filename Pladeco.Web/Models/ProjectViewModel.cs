@@ -17,6 +17,7 @@ namespace Pladeco.Web.Models
             RealEndDate = DateTime.Now;
         }
         public SelectList Users { get; set; }
+        public SelectList Solicitantes { get; set; }
         public SelectList Areas { get; set; }
         public SelectList Priorities { get; set; }
     }

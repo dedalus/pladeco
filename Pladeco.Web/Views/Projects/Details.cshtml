@@ -109,7 +109,7 @@
                                         <input value="@Html.DisplayFor(model => model.Responsable.Name)" class="form-control" disabled />
                                     </div>
 
-</div>
+                                </div>
 
                             <div class="col-md-3">
                                 <fieldset>
@@ -148,66 +148,82 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="success">
-                                                    <td>1</td>
-                                                    <td>Plan 1</td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-info" style="width: 100%;">
-                                                                <span class="sr-only">100% Complete</span>
+                                                @foreach (var item in Model.Plans)
+                                                {
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>@item.Description</td>
+                                                        <td>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-info" style="width: 0%;">
+                                                                    <span class="sr-only">0% Complete</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>Finalizado</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Plan 2</td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-info" style="width: 0%;">
-                                                                <span class="sr-only">0% Complete</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>Pendiente</td>
-                                                </tr>
-                                                <tr class="danger">
-                                                    <td>3</td>
-                                                    <td>Plan 3</td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-info" style="width: 0%;">
-                                                                <span class="sr-only">0% Complete</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>Cancelado</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Plan 4</td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-info" style="width: 0%;">
-                                                                <span class="sr-only">0% Complete</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>Pendiente</td>
-                                                </tr>
-                                                <tr class="warning">
-                                                    <td>5</td>
-                                                    <td>Plan 5</td>
-                                                    <td>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-info" style="width: 60%;">
-                                                                <span class="sr-only">60% Complete</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>En proceso</td>
-                                                </tr>
+                                                        </td>
+                                                        <td>Pendiente</td>
+                                                    </tr>
+                                                }
+                                                
+                                                @*<tr class="success">
+            <td>1</td>
+            <td>Plan 1</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info" style="width: 100%;">
+                        <span class="sr-only">100% Complete</span>
+                    </div>
+                </div>
+            </td>
+            <td>Finalizado</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Plan 2</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info" style="width: 0%;">
+                        <span class="sr-only">0% Complete</span>
+                    </div>
+                </div>
+            </td>
+            <td>Pendiente</td>
+        </tr>
+        <tr class="danger">
+            <td>3</td>
+            <td>Plan 3</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info" style="width: 0%;">
+                        <span class="sr-only">0% Complete</span>
+                    </div>
+                </div>
+            </td>
+            <td>Cancelado</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Plan 4</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info" style="width: 0%;">
+                        <span class="sr-only">0% Complete</span>
+                    </div>
+                </div>
+            </td>
+            <td>Pendiente</td>
+        </tr>
+        <tr class="warning">
+            <td>5</td>
+            <td>Plan 5</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info" style="width: 60%;">
+                        <span class="sr-only">60% Complete</span>
+                    </div>
+                </div>
+            </td>
+            <td>En proceso</td>
+        </tr>*@
 
 
                                             </tbody>

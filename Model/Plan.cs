@@ -34,7 +34,7 @@ namespace Pladeco.Model
         public virtual Project Project { get; set; }
         public User Responsable { get; set; }
 
-        public ICollection<PlanTask> Task { get; set; }
+        public ICollection<PlanTask> Tasks { get; set; }
         public DateTime? create_date { get; set; }
         public int? create_uid { get; set; }
         public DateTime? write_date { get; set; }
