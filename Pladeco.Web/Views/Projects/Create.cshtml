@@ -87,7 +87,22 @@
                                                 <label asp-for="ResponsableID" class="text-semibold"></label>
                                                 <select asp-for="ResponsableID" class="select" asp-items="Model.Users"></select>
                                             </div>
-                                    </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="SectorID" class="text-semibold"></label>
+                                                <select asp-for="SectorID" class="select" asp-items="Model.Sectors"></select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="ResponsableID" class="text-semibold"></label>
+                                                <select asp-for="ResponsableID" class="select" asp-items="Model.ResponsableUnits"></select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="DevAxisID" class="text-semibold"></label>
+                                                <select asp-for="DevAxisID" class="select" asp-items="Model.DevAxes"></select>
+                                            </div>
+                                        </div>
 
                                     <div class="col-md-3">
                                         <fieldset>

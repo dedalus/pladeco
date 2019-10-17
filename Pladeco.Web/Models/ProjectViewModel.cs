@@ -20,5 +20,8 @@ namespace Pladeco.Web.Models
         public SelectList Solicitantes { get; set; }
         public SelectList Areas { get; set; }
         public SelectList Priorities { get; set; }
+        public SelectList ResponsableUnits { get; set; }
+        public SelectList Sectors { get; set; }
+        public SelectList DevAxes { get; set; }
     }
 }

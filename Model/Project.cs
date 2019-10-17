@@ -11,6 +11,7 @@ namespace Pladeco.Model
 {
     public class Project : IEntity
     {
+       
         [Key]
         public int ID { get; set; }
 
@@ -75,5 +76,13 @@ namespace Pladeco.Model
         public int? create_uid { get; set; }
         public DateTime? write_date { get; set; }
         public int? write_uid { get; set; }
+
+        public Project()
+        {
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
+            RealStartDate = DateTime.Now;
+            RealEndDate = DateTime.Now;
+        }
     }
 }

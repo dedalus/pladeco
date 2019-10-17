@@ -10,8 +10,8 @@ using Pladeco.Web.Data;
 namespace Pladeco.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191013173946_AddDescriptionToProject")]
-    partial class AddDescriptionToProject
+    [Migration("20191017124207_RemoveNullableFromProject")]
+    partial class RemoveNullableFromProject
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -229,11 +229,41 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<int>("AreaID");
 
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
                     b.HasKey("ID");
 
                     b.HasIndex("AreaID");
 
                     b.ToTable("Budgets");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.DevAxis", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("DevAxes");
                 });
 
             modelBuilder.Entity("Pladeco.Model.PaymentPlan", b =>
@@ -251,6 +281,14 @@ namespace Pladeco.Web.Migrations
                     b.Property<int?>("ProjectID");
 
                     b.Property<string>("SolicitanteId");
+
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
 
                     b.HasKey("ID");
 
@@ -285,6 +323,14 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
                     b.HasKey("ID");
 
                     b.HasIndex("ProjectID");
@@ -310,6 +356,14 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
                     b.HasKey("ID");
 
                     b.HasIndex("PlanID");
@@ -327,21 +381,96 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<int>("DevAxisID");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
                     b.Property<int>("Priority");
+
+                    b.Property<DateTime>("RealEndDate");
+
+                    b.Property<DateTime>("RealStartDate");
 
                     b.Property<string>("ResponsableID");
 
+                    b.Property<int>("ResponsableUnitID");
+
+                    b.Property<int>("SectorID");
+
                     b.Property<string>("SolicitanteID");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
 
                     b.HasKey("ID");
 
                     b.HasIndex("AreaID");
 
+                    b.HasIndex("DevAxisID");
+
                     b.HasIndex("ResponsableID");
+
+                    b.HasIndex("ResponsableUnitID");
+
+                    b.HasIndex("SectorID");
 
                     b.HasIndex("SolicitanteID");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.ResponsableUnit", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ResponsableUnits");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.Sector", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Sectors");
                 });
 
             modelBuilder.Entity("Pladeco.Model.Role", b =>
@@ -363,9 +492,15 @@ namespace Pladeco.Web.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("AreaID");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200);
+
+                    b.HasIndex("AreaID");
 
                     b.ToTable("User");
 
@@ -451,7 +586,7 @@ namespace Pladeco.Web.Migrations
             modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
                 {
                     b.HasOne("Pladeco.Model.Plan")
-                        .WithMany("Task")
+                        .WithMany("Tasks")
                         .HasForeignKey("PlanID");
                 });
 
@@ -462,13 +597,35 @@ namespace Pladeco.Web.Migrations
                         .HasForeignKey("AreaID")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Pladeco.Model.DevAxis", "DevAxis")
+                        .WithMany()
+                        .HasForeignKey("DevAxisID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
                         .HasForeignKey("ResponsableID");
 
+                    b.HasOne("Pladeco.Model.ResponsableUnit", "ResponsableUnit")
+                        .WithMany()
+                        .HasForeignKey("ResponsableUnitID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Pladeco.Model.Sector", "Sector")
+                        .WithMany()
+                        .HasForeignKey("SectorID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Pladeco.Model.User", "Solicitante")
                         .WithMany()
                         .HasForeignKey("SolicitanteID");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.User", b =>
+                {
+                    b.HasOne("Pladeco.Model.Area", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaID");
                 });
 #pragma warning restore 612, 618
         }

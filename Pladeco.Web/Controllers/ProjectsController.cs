@@ -35,6 +35,9 @@ namespace Pladeco.Web.Controllers
 
             var area = await context.Projects
                 .Include(p=> p.Area)
+                .Include(p => p.ResponsableUnit)
+                .Include(p => p.Sector)
+                .Include(p => p.DevAxis)
                 .Include(p => p.Responsable)
                 .Include(p => p.Solicitante)
                 .Include(p=> p.Plans)
@@ -50,12 +53,14 @@ namespace Pladeco.Web.Controllers
 
         public IActionResult Create()
         {
-            var model = new ProjectViewModel()
-            {
-                Areas= new SelectList(context.Areas, "ID", "Name"),
-                Users= new SelectList(context.Users, "Id", "Name")
+            //var model = new ProjectViewModel()
+            //{
+            //    Areas= new SelectList(context.Areas, "ID", "Name"),
+            //    Users= new SelectList(context.Users, "Id", "Name")
 
-            };
+            //};
+            var model = ToProjectViewModel(new Project());
+
             return View(model);
         }
 
@@ -87,6 +92,9 @@ namespace Pladeco.Web.Controllers
                 AreaID = view.AreaID,
                 SolicitanteID = view.SolicitanteID,
                 ResponsableID = view.ResponsableID,
+                SectorID=view.SectorID,
+                ResponsableUnitID=view.ResponsableUnitID,
+                DevAxisID=view.DevAxisID,
                 StartDate = view.StartDate,
                 EndDate = view.EndDate,
                 RealStartDate = view.RealStartDate,
@@ -110,7 +118,10 @@ namespace Pladeco.Web.Controllers
 
                 Areas = new SelectList(context.Areas, "ID", "Name"),
                 Solicitantes = new SelectList(context.Users, "Id", "Name", project.SolicitanteID),
-                Users = new SelectList(context.Users, "Id", "Name", project.ResponsableID)
+                Users = new SelectList(context.Users, "Id", "Name", project.ResponsableID),
+                DevAxes= new SelectList(context.DevAxes, "ID", "Name", project.DevAxisID),
+                ResponsableUnits = new SelectList(context.ResponsableUnits, "ID", "Name", project.ResponsableUnitID),
+                Sectors = new SelectList(context.Sectors, "ID", "Name", project.SectorID)
 
             };
 
@@ -126,6 +137,9 @@ namespace Pladeco.Web.Controllers
 
             var project = await context.Projects
                 .Include(p => p.Area)
+                .Include(p=> p.ResponsableUnit)
+                .Include(p=> p.Sector)
+                .Include(p=> p.DevAxis)
                 .Include(p => p.Responsable)
                 .Include(p => p.Solicitante)
                 .Where(b => b.ID == id)
