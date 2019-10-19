@@ -13,6 +13,9 @@ namespace Pladeco.Model
         public int ID { get; set; }
         [DisplayName("Nombre")]
         public string Name { get; set; }
+        [DisplayName("Presupuesto")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal? Budget { get; set; }
         [DisplayName("Habilitada")]
         public bool Active { get; set; }
         public DateTime? create_date { get; set; }

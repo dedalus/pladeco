@@ -1,4 +1,4 @@
-﻿@model Pladeco.Model.Budget
+﻿@model Pladeco.Web.Models.BudgetViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -13,7 +13,7 @@
     <div class="breadcrumb-line breadcrumb-line-component">
         <ul class="breadcrumb">
             <li><a asp-action="Index"><i class="icon-wallet"></i>Presupuesto</a></li>
-            <li class="active">@Model.Area.Name</li>
+            <li class="active">@Model.AreaName</li>
         </ul>
 
         <ul class="breadcrumb-elements">
@@ -34,8 +34,7 @@
     <br />
     <div class="page-header-content">
         <div class="text-left">
-            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
-            <a asp-action="Create" class="btn btn-default" role="button">Crear</a>
+            <a asp-action="Edit" asp-route-id="@Model.AreaID" class="btn bg-green-700" role="button">Editar</a>
         </div>
 
         <div class="heading-elements">
@@ -69,8 +68,8 @@
 
 
                     <div class="form-group">
-                        <label class="control-label">@Html.DisplayNameFor(model => model.Area)</label>
-                        <input value="@Html.DisplayFor(model => model.Area.Name)" class="form-control" disabled />
+                        <label class="control-label">@Html.DisplayNameFor(model => model.AreaName)</label>
+                        <input value="@Html.DisplayFor(model => model.AreaName)" class="form-control" disabled />
                     </div>
                     <div class="form-group">
                         <label class="control-label">@Html.DisplayNameFor(model => model.Amount)</label>
@@ -86,32 +85,6 @@
 
     </div>
 
-    <!-- Danger modal -->
-    <div id="modal_theme_danger" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-danger">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title">¡Atención!</h6>
-                </div>
-
-                <div class="modal-body">
-                    <h6 class="text-semibold">¿Está seguro que desea eliminar este elemento?</h6>
-                    <p>Esta acción es irreversible</p>
-
-                </div>
-
-                <div class="modal-footer">
-                    <form asp-action="Delete">
-                        <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                        <input type="hidden" asp-for="ID" />
-                        <input type="submit" value="Eliminar" class="btn btn-danger" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /default modal -->
 
 
 </div>

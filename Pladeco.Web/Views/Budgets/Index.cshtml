@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Pladeco.Model.Budget>
+﻿@model IEnumerable<Pladeco.Model.Area>
 
 @{
     ViewData["Title"] = "Index";
@@ -20,9 +20,6 @@
     <!-- Vertical form options -->
     <div class="row">
         <div class="col-md-12">
-            <div class="text-left">
-                <a asp-action="Create" class="btn bg-green-700" role="button">Crear</a>
-            </div>
             <br />
         </div>
         <div class="col-md-12">
@@ -40,10 +37,10 @@
                         <tr>
                             <th></th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Area)
+                                @Html.DisplayNameFor(model => model.Name)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Amount)
+                                @Html.DisplayNameFor(model => model.Budget)
                             </th>
 
                         </tr>
@@ -54,10 +51,10 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Area.Name)</a>
+                                    <a asp-action="Details" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
                                 </td>
                                 <td> 
-                                    @Html.DisplayFor(modelItem => item.Amount)
+                                    @Html.DisplayFor(modelItem => item.Budget)
                                 </td>
                             </tr>
                         }

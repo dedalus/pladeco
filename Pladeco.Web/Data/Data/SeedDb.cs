@@ -40,6 +40,7 @@ namespace Pladeco.Web.Data.Data
             await this.AddDevAxes();
             await this.AddResponsableUnits();
             await this.AddSectors();
+            await this.AddAreas();
 
             //// Add products
             //if (!this.context.Products.Any())
@@ -173,6 +174,24 @@ namespace Pladeco.Web.Data.Data
         private void AddDevAxis(string name)
         {
             this.context.DevAxes.Add(new DevAxis
+            {
+                Name = name
+            });
+        }
+
+        private async Task AddAreas()
+        {
+            this.AddArea("Informática y Tecnología");
+            this.AddArea("Contabilidad");
+            this.AddArea("Finanzas");
+            this.AddArea("Producción");
+            this.AddArea("Operaciones");
+            await this.context.SaveChangesAsync();
+        }
+
+        private void AddArea(string name)
+        {
+            this.context.Areas.Add(new Area
             {
                 Name = name
             });

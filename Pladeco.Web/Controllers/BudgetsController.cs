@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pladeco.Model;
 using Pladeco.Web.Data;
+using Pladeco.Web.Models;
 
 namespace Pladeco.Web.Controllers
 {
@@ -21,7 +22,7 @@ namespace Pladeco.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await context.Budgets.Include(b => b.Area).ToListAsync());
+            return View(await context.Areas.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -31,39 +32,16 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            var area = await context.Budgets
-                .Include(b=> b.Area)
+            var area = await context.Areas
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (area == null)
             {
                 return NotFound();
             }
 
-            return View(area);
-        }
+            var model = ToBudgetViewModel(area);
 
-        public IActionResult Create()
-        {
-            ViewData["area_id"] = new SelectList(context.Areas, "ID", "Name");
-
-            return View(new Budget());
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Amount,AreaID")] Budget bugdet)
-        {
-            if (ModelState.IsValid)
-            {
-
-                context.Add(bugdet);
-                await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), new { bugdet.ID });
-            }
-
-            ViewData["area_id"] = new SelectList(context.Areas, "ID", "Name", bugdet.Area);
-
-            return View(bugdet);
+            return View(model);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -73,25 +51,23 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            var budget = await context.Budgets
-                .Include(b=> b.Area)
-                .Where(b=> b.ID==id)
-                .FirstOrDefaultAsync();
+            var area = await context.Areas.FindAsync(id);
 
-            if (budget == null)
+            if (area == null)
             {
                 return NotFound();
             }
-            ViewData["area_id"] = new SelectList(context.Areas, "ID", "Name", budget.AreaID);
 
-            return View(budget);
+            var model = ToBudgetViewModel(area);
+           
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Amount,AreaID,ID")] Budget budget)
+        public async Task<IActionResult> Edit(int id, BudgetViewModel view)
         {
-            if (id != budget.ID)
+            if (id != view.AreaID)
             {
                 return NotFound();
             }
@@ -100,12 +76,15 @@ namespace Pladeco.Web.Controllers
             {
                 try
                 {
-                    context.Update(budget);
+                    Area area = await context.Areas.FindAsync(view.AreaID);
+                    area.Budget = view.Amount;
+
+                    context.Update(area);
                     await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BudgetExists(budget.ID))
+                    if (!AreaExists(view.AreaID))
                     {
                         return NotFound();
                     }
@@ -116,22 +95,33 @@ namespace Pladeco.Web.Controllers
                 }
                 return RedirectToAction(nameof(Details), new { id });
             }
-            ViewData["area_id"] = new SelectList(context.Areas, "ID", "Name", budget.Area);
-            return View(budget);
+
+            return View(view);
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        private BudgetViewModel ToBudgetViewModel(Area area)
         {
-            var product = await context.Budgets.FindAsync(id);
-            context.Budgets.Remove(product);
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var model = new BudgetViewModel()
+            {
+                AreaID = area.ID,
+                AreaName=area.Name
+            };
+
+            if (area.Budget == null)
+            {
+                model.Amount = 0;
+            }
+            else
+            {
+                model.Amount = (decimal)area.Budget;
+            }
+            
+            return model;
         }
-        private bool BudgetExists(int id)
+
+        private bool AreaExists(int id)
         {
-            return context.Budgets.Any(e => e.ID == id);
+            return context.Areas.Any(e => e.ID == id);
         }
     }
 }

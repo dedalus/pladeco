@@ -50,7 +50,6 @@ namespace Pladeco.Web.Data
         public DbSet<PlanTask> Tasks { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<PaymentPlan> PaymentPlans { get; set; }
-        public DbSet<Budget> Budgets { get; set; }
         public DbSet<Sector> Sectors { get; set; }
         public DbSet<ResponsableUnit> ResponsableUnits { get; set; }
         public DbSet<DevAxis> DevAxes { get; set; }
