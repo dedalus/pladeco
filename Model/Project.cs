@@ -62,6 +62,7 @@ namespace Pladeco.Model
 
         [DisplayName("Unidad responsable")]
         public int ResponsableUnitID { get; set; }
+        [DisplayName("Unidad responsable")]
         [ForeignKey("ResponsableUnitID")]
         public ResponsableUnit ResponsableUnit { get; set; }
 

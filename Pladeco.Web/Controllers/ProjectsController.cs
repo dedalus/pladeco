@@ -23,7 +23,9 @@ namespace Pladeco.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await context.Projects.ToListAsync());
+            return View(await context.Projects
+                .Include(p=> p.ResponsableUnit)
+                .ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
