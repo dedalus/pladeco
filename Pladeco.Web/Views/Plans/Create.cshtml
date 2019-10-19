@@ -14,7 +14,7 @@
             <br />
             <div class="breadcrumb-line breadcrumb-line-component">
                 <ul class="breadcrumb">
-                    <li><a asp-action="Index"><i class="icon-folder"></i>Proyectos</a></li>
+                    <li><a asp-action="Index"  asp-controller="Projects"><i class="icon-folder"></i>Proyectos</a></li>
                     <li><a asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Project.ID">@Model.Project.Name</a></li>
                     <li class="active">Nuevo plan</li>
                 </ul>

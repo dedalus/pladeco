@@ -4,9 +4,6 @@
     ViewData["Title"] = "Details";
 }
 
-
-
-
 <div class="page-header">
 
     <br />
@@ -36,7 +33,8 @@
         <div class="text-left">
             <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
             <a asp-action="Create" class="btn btn-default" role="button">Crear</a>
-            <a asp-action="Create" asp-controller="Plans" asp-route-id="@Model.ID" class="btn btn-default" role="button">Plan de gasto</a>
+            <a asp-action="Create" asp-controller="Plans" asp-route-id="@Model.ID" class="btn btn-default" role="button">Agregar plan</a>
+            <a asp-action="PaymentPlan" asp-route-id="@Model.ID" class="btn btn-default" role="button">Plan de gasto</a>
         </div>
 
         <div class="heading-elements">
@@ -108,7 +106,7 @@
                                         <label class="text-semibold">@Html.DisplayNameFor(model => model.Responsable)</label>
                                         <input value="@Html.DisplayFor(model => model.Responsable.Name)" class="form-control" disabled />
                                     </div>
-
+                                </fieldset>
                                 </div>
 
                             <div class="col-md-3">
@@ -131,7 +129,7 @@
                                         <label class="text-semibold">@Html.DisplayNameFor(model => model.RealEndDate)</label>
                                         <input value="@Html.DisplayFor(model => model.RealEndDate)" class="form-control" disabled />
                                     </div>
-
+                                </fieldset>
                             </div>
 
                             <div class="col-md-12">
@@ -173,77 +171,11 @@
                                                     <td>@Html.DisplayFor(modelItem => item.Status)</td>
                                                 </tr>
                                                 }
-                                                
-                                                @*<tr class="success">
-            <td>1</td>
-            <td>Plan 1</td>
-            <td>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-info" style="width: 100%;">
-                        <span class="sr-only">100% Complete</span>
-                    </div>
-                </div>
-            </td>
-            <td>Finalizado</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Plan 2</td>
-            <td>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-info" style="width: 0%;">
-                        <span class="sr-only">0% Complete</span>
-                    </div>
-                </div>
-            </td>
-            <td>Pendiente</td>
-        </tr>
-        <tr class="danger">
-            <td>3</td>
-            <td>Plan 3</td>
-            <td>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-info" style="width: 0%;">
-                        <span class="sr-only">0% Complete</span>
-                    </div>
-                </div>
-            </td>
-            <td>Cancelado</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>Plan 4</td>
-            <td>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-info" style="width: 0%;">
-                        <span class="sr-only">0% Complete</span>
-                    </div>
-                </div>
-            </td>
-            <td>Pendiente</td>
-        </tr>
-        <tr class="warning">
-            <td>5</td>
-            <td>Plan 5</td>
-            <td>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-info" style="width: 60%;">
-                        <span class="sr-only">60% Complete</span>
-                    </div>
-                </div>
-            </td>
-            <td>En proceso</td>
-        </tr>*@
-
-
                                             </tbody>
                                         </table>
                                     </div>
-
-
                                 </fieldset>
                             </div>
-                            </fieldset>
                         </div>
                         </div>
 

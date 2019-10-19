@@ -86,15 +86,12 @@ namespace Pladeco.Web.Controllers
             return model;
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var planTask = await context.Tasks
                 .Include(p => p.Plan)
+                    .ThenInclude(p=> p.Project)
                 .Where(p => p.ID == id)
                 .FirstOrDefaultAsync();
             if (planTask == null)
@@ -103,6 +100,70 @@ namespace Pladeco.Web.Controllers
             }
 
             return View(planTask);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var planTask = await context.Tasks
+                .Include(p => p.Responsable)
+                .Include(p => p.Plan)
+                    .ThenInclude(p => p.Project)
+                .Where(b => b.ID == id)
+                .FirstOrDefaultAsync();
+
+            if (planTask == null)
+            {
+                return NotFound();
+            }
+
+            var model = ToPlanTaskViewModel(planTask);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, PlanTaskViewModel view)
+        {
+            if (id != view.ID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    PlanTask planTask = this.ToPlanTask(view);
+
+                    context.Update(planTask);
+                    await context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PlanTaskExists(view.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            return View(view);
+        }
+
+        private bool PlanTaskExists(int id)
+        {
+            return context.Tasks.Any(e => e.ID == id);
         }
     }
 }

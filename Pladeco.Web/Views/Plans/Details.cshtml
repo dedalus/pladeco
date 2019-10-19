@@ -12,7 +12,7 @@
     <br />
     <div class="breadcrumb-line breadcrumb-line-component">
         <ul class="breadcrumb">
-            <li><a asp-action="Index"><i class="icon-folder"></i>Proyectos</a></li>
+            <li><a asp-action="Index"  asp-controller="Projects"><i class="icon-folder"></i>Proyectos</a></li>
             <li><a asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Project.ID">@Model.Project.Name</a></li>
             <li class="active">@Model.Name</li>
         </ul>
@@ -36,8 +36,9 @@
     <div class="page-header-content">
         <div class="text-left">
             <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
+            <a asp-action="Create" asp-controller="PlanTasks" asp-route-id="@Model.ID" class="btn btn-default" role="button">Agregar tarea</a>
             @*<a asp-action="Create" asp-controller="Plans" asp-route="@Model.ProjectID" class="btn btn-default" role="button">Crear</a>
-            <a asp-action="Create" asp-controller="PlanTasks" asp-route="@Model.ID" class="btn btn-default" role="button">Nueva tarea</a>*@
+        <a asp-action="Create" asp-controller="PlanTasks" asp-route="@Model.ID" class="btn btn-default" role="button">Nueva tarea</a>*@
         </div>
 
         <div class="heading-elements">
@@ -124,7 +125,7 @@
 
                             <div class="col-md-12">
                                 <fieldset>
-                                    <legend class="text-semibold"><i class="icon-task"></i> Actividades</legend>
+                                    <legend class="text-semibold"><i class="icon-sort-time-asc"></i> Actividades</legend>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
@@ -143,7 +144,7 @@
                                                     <tr>
                                                         <td>@item.ID</td>
                                                         <td>
-                                                            <a asp-action="Details" asp-controller="Plans" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                                                            <a asp-action="Details" asp-controller="PlanTasks" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
                                                         </td>
                                                         <td>
                                                             @Html.DisplayFor(modelItem => item.StartDate)

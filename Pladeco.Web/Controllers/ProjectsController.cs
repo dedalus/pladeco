@@ -53,6 +53,26 @@ namespace Pladeco.Web.Controllers
             return View(area);
         }
 
+        public async Task<IActionResult> PaymentPlan(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var area = await context.Projects
+                .Include(p => p.PaymentPlans)
+                    .ThenInclude(p=> p.Solicitante)
+                .Where(p => p.ID == id)
+                .FirstOrDefaultAsync();
+            if (area == null)
+            {
+                return NotFound();
+            }
+
+            return View(area);
+        }
+
         public IActionResult Create()
         {
             //var model = new ProjectViewModel()

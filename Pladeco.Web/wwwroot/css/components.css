@@ -2772,9 +2772,9 @@ label.checkbox-switch.checkbox-inline {
 }
 .select2-container--focus .select2-selection--single:not([class*=bg-]):not([class*=border-]),
 .select2-container--open .select2-selection--single:not([class*=bg-]):not([class*=border-]) {
-    border-bottom-color: #FF6347;
-    -webkit-box-shadow: 0 1px 0 #FF6347;
-    box-shadow: 0 1px 0 #FF6347;
+    border-bottom-color: #639735;
+    -webkit-box-shadow: 0 1px 0 #639735;
+    box-shadow: 0 1px 0 #639735;
 }
 .select2-container--disabled .select2-selection--single:not([class*=bg-]) {
   color: #999999;
@@ -3053,7 +3053,7 @@ label.checkbox-switch.checkbox-inline {
   color: rgba(255, 255, 255, 0.6);
 }
 .select2-results__option[aria-selected=true] {
-    background-color: #FF6347;
+    background-color: #639735;
     color: #fff;
 }
 .select2-results__options--nested > .select2-results__option {

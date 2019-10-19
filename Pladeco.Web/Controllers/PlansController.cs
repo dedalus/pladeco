@@ -19,6 +19,21 @@ namespace Pladeco.Web.Controllers
         {
             this.context = context;
         }
+        public async Task<IActionResult> Details(int id)
+        {
+
+            var area = await context.Plans
+                .Include(p => p.Tasks)
+                .Include(p => p.Project)
+                .Where(p => p.ID == id)
+                .FirstOrDefaultAsync();
+            if (area == null)
+            {
+                return NotFound();
+            }
+
+            return View(area);
+        }
 
         public IActionResult Create(int id)
         {
@@ -152,24 +167,6 @@ namespace Pladeco.Web.Controllers
             return context.Plans.Any(e => e.ID == id);
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var area = await context.Plans
-                .Include(p=> p.Tasks)
-                .Include(p=> p.Project)
-                .Where(p => p.ID == id)
-                .FirstOrDefaultAsync();
-            if (area == null)
-            {
-                return NotFound();
-            }
-
-            return View(area);
-        }
+       
     }
 }

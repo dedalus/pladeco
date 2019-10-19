@@ -41,6 +41,11 @@
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.AreaName)</label>
+                            <input value="@Html.DisplayFor(model => model.AreaName)" class="form-control" disabled />
+                        </div>
+
+                        <div class="form-group">
                             <label asp-for="Amount" class="text-semibold"></label>
                             <input asp-for="Amount" class="form-control" />
                             <span asp-validation-for="Amount" class="text-danger"></span>

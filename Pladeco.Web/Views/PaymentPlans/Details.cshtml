@@ -1,0 +1,146 @@
+﻿@model Pladeco.Model.PaymentPlan
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="page-header">
+
+    <br />
+    <div class="breadcrumb-line breadcrumb-line-component">
+        <ul class="breadcrumb">
+            <li><a asp-action="Index"><i class="icon-folder"></i>Proyectos</a></li>
+            <li><a asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Project.ID">@Model.Project.Name</a></li>
+            <li class="active">@Model.Name</li>
+        </ul>
+
+        <ul class="breadcrumb-elements">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-gear position-left"></i>
+                    Acciones
+                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#" data-toggle="modal" data-target="#modal_theme_danger"><i class="icon-database-remove"></i> Eliminar</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <br />
+    <div class="page-header-content">
+        <div class="text-left">
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
+        </div>
+
+        <div class="heading-elements">
+
+        </div>
+    </div>
+</div>
+
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+
+    <!-- Vertical form options -->
+    <div class="row">
+
+        <div class="col-md-12">
+            <!-- Basic layout-->
+            <p>
+                <div class="text-left">
+                </div>
+            </p>
+            <div class="panel panel-flat">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset>
+                                    <legend class="text-semibold"><i class="icon-folder position-left"></i>General </legend>
+
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Name)</label>
+                                        <input value="@Html.DisplayFor(model => model.Name)" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Description)</label>
+                                        <textarea asp-for="Description" rows="10" cols="5" class="form-control" disabled></textarea>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset>
+                                    <legend class="text-semibold"><i class="icon-newspaper"></i> Datos</legend>
+
+
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Solicitante)</label>
+                                        <input value="@Html.DisplayFor(model => model.Solicitante.Name)" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Amount)</label>
+                                        <input value="@Html.DisplayFor(model => model.Amount)" class="form-control" disabled />
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /basic layout -->
+    </div>
+
+</div>
+
+<!-- Danger modal -->
+<div id="modal_theme_danger" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h6 class="modal-title">¡Atención!</h6>
+            </div>
+
+            <div class="modal-body">
+                <h6 class="text-semibold">¿Está seguro que desea eliminar este elemento?</h6>
+                <p>Esta acción es irreversible</p>
+
+            </div>
+
+            <div class="modal-footer">
+                <form asp-action="Delete">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                    <input type="hidden" asp-for="ID" />
+                    <input type="submit" value="Eliminar" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /default modal -->
+</div>
+<!-- /content area -->
+<!-- /vertical form options -->
+<!-- Theme JS files -->
+<script src="~/js/plugins/forms/selects/select2.min.js"></script>
+<script src="~/js/plugins/forms/styling/uniform.min.js"></script>
+<script>
+    $('.select').select2({
+        placeholder: 'Select an option',
+        allowClear: true
+    });
+</script>
+<script src="~/js/demo_pages/form_layouts.js"></script>
+

@@ -13,7 +13,8 @@ namespace Pladeco.Model
     {
         public PlanTask()
         {
-
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
         }
 
         public PlanTask(Plan plan)

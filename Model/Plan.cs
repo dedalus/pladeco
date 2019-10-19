@@ -20,7 +20,8 @@ namespace Pladeco.Model
 
         public Plan()
         {
-
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
         }
 
         [Key]

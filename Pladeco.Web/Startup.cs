@@ -100,9 +100,22 @@ namespace Pladeco.Web
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
+                routes
+                .MapRoute(
                     name: "default",
-                    template: "{controller=Dashboard}/{action=Index}/{id?}");
+                    template: "{controller=Dashboard}/{action=Index}/{id?}")
+
+                .MapRoute(
+                    name: "default_plans",
+                    template: "plans/{id?}", new { controller = "Plans", action = "Details" })
+
+                .MapRoute(
+                    name: "default_projects",
+                    template: "projects/{id?}", new { controller = "Projects", action = "Details" })
+
+                .MapRoute(
+                    name: "default_plantask",
+                    template: "plantasks/{id?}", new { controller = "PlanTasks", action = "Details" });
             });
         }
     }
