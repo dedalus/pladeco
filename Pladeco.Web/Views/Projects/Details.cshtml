@@ -36,7 +36,7 @@
         <div class="text-left">
             <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
             <a asp-action="Create" class="btn btn-default" role="button">Crear</a>
-            <a href="#" class="btn btn-default" role="button">Plan de gasto</a>
+            <a asp-action="Create" asp-controller="Plans" asp-route-id="@Model.ID" class="btn btn-default" role="button">Plan de gasto</a>
         </div>
 
         <div class="heading-elements">
@@ -142,29 +142,39 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Plan</th>
+                                                    <th>Tareas</th>
+                                                    <th>Fecha inicio</th>
+                                                    <th>Fecha fin</th>
                                                     <th>Progreso</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @*@foreach (var item in Model.Plans)
+                                                @foreach (var item in Model.Plans)
                                                 {
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>@item.Description</td>
-                                                        <td>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" style="width: 0%;">
-                                                                    <span class="sr-only">0% Complete</span>
-                                                                </div>
+                                                <tr>
+                                                    <td>@item.ID</td>
+                                                    <td>
+                                                        <a asp-action="Details" asp-controller="Plans" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.StartDate)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.EndDate)
+                                                    </td>
+                                                    <td>
+                                                        <div class="progress">
+                                                            <div class="progress-bar progress-bar-info" style="width: 0%;">
+                                                                <span class="sr-only">0% Complete</span>
                                                             </div>
-                                                        </td>
-                                                        <td>Pendiente</td>
-                                                    </tr>
-                                                }*@
+                                                        </div>
+                                                    </td>
+                                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                                </tr>
+                                                }
                                                 
-                                                <tr class="success">
+                                                @*<tr class="success">
             <td>1</td>
             <td>Plan 1</td>
             <td>
@@ -223,7 +233,7 @@
                 </div>
             </td>
             <td>En proceso</td>
-        </tr>
+        </tr>*@
 
 
                                             </tbody>

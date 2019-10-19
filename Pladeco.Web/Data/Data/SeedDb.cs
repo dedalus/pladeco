@@ -181,6 +181,8 @@ namespace Pladeco.Web.Data.Data
         private async Task CheckRolesAsync()
         {
             await this.userHelper.CheckRoleAsync("Admin");
+            await this.userHelper.CheckRoleAsync("Colaborador");
+            await this.userHelper.CheckRoleAsync("Presupuesto");
         }
 
         //private void AddProduct(string name, decimal price, User user)

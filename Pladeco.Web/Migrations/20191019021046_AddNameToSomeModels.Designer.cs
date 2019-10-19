@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pladeco.Web.Data;
 
 namespace Pladeco.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191019021046_AddNameToSomeModels")]
+    partial class AddNameToSomeModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -318,7 +320,7 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<DateTime>("RealStartDate");
 
-                    b.Property<string>("ResponsableID");
+                    b.Property<string>("ResponsableId");
 
                     b.Property<DateTime>("StartDate");
 
@@ -336,7 +338,7 @@ namespace Pladeco.Web.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.HasIndex("ResponsableID");
+                    b.HasIndex("ResponsableId");
 
                     b.ToTable("Plans");
                 });
@@ -354,11 +356,7 @@ namespace Pladeco.Web.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("PlanID");
-
-                    b.Property<int>("Priority");
-
-                    b.Property<string>("ResponsableID");
+                    b.Property<int?>("PlanID");
 
                     b.Property<DateTime>("StartDate");
 
@@ -375,8 +373,6 @@ namespace Pladeco.Web.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("PlanID");
-
-                    b.HasIndex("ResponsableID");
 
                     b.ToTable("Tasks");
                 });
@@ -590,19 +586,14 @@ namespace Pladeco.Web.Migrations
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
-                        .HasForeignKey("ResponsableID");
+                        .HasForeignKey("ResponsableId");
                 });
 
             modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
                 {
-                    b.HasOne("Pladeco.Model.Plan", "Plan")
+                    b.HasOne("Pladeco.Model.Plan")
                         .WithMany("Tasks")
-                        .HasForeignKey("PlanID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Pladeco.Model.User", "Responsable")
-                        .WithMany()
-                        .HasForeignKey("ResponsableID");
+                        .HasForeignKey("PlanID");
                 });
 
             modelBuilder.Entity("Pladeco.Model.Project", b =>
