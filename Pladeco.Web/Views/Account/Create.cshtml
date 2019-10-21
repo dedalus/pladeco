@@ -51,6 +51,12 @@
                         <div class="form-group">
                             <label asp-for="AreaID" class="text-semibold"></label>
                             <select asp-for="AreaID" class="select" asp-items="Model.Areas"></select>
+                            <span asp-validation-for="AreaID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoleID" class="text-semibold"></label>
+                            <select asp-for="RoleID" class="select" asp-items="Model.Roles"></select>
+                            <span asp-validation-for="RoleID" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Password" class="text-semibold"></label>

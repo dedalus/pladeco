@@ -16,7 +16,7 @@
             <ul class="breadcrumb">
                 <li><a asp-action="Index"><i class="icon-folder"></i>Proyectos</a></li>
                 <li><a asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Project.ID">@Model.Project.Name</a></li>
-                <li class="active">Nuevo plan</li>
+                <li class="active">Nuevo plan de gasto</li>
             </ul>
         </div>
         <br />
@@ -56,7 +56,7 @@
 
                                         <div class="form-group">
                                             <label asp-for="Name" class="text-semibold"></label>
-                                            <input asp-for="Name" class="form-control" />
+                                            <input asp-for="Name" class="form-control" autofocus/>
                                             <span asp-validation-for="Name" class="text-danger"></span>
                                         </div>
 

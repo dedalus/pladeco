@@ -9,7 +9,7 @@ using Pladeco.Model;
 
 namespace Pladeco.Web.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -63,5 +63,8 @@ namespace Pladeco.Web.Data
         public DbSet<Sector> Sectors { get; set; }
         public DbSet<ResponsableUnit> ResponsableUnits { get; set; }
         public DbSet<DevAxis> DevAxes { get; set; }
+        public DbSet<Typology> Typologies { get; set; }
+        public DbSet<TypologyStage> TypologyStages { get; set; }
+
     }
 }

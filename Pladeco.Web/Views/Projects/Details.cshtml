@@ -32,7 +32,7 @@
     <div class="page-header-content">
         <div class="text-left">
             <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
-            <a asp-action="Create" class="btn btn-default" role="button">Crear</a>
+            @*<a asp-action="Create" class="btn btn-default" role="button">Crear</a>*@
             <a asp-action="Create" asp-controller="Plans" asp-route-id="@Model.ID" class="btn btn-default" role="button">Agregar plan</a>
             <a asp-action="PaymentPlan" asp-route-id="@Model.ID" class="btn btn-default" role="button">Plan de gasto</a>
         </div>
@@ -105,6 +105,16 @@
                                     <div class="form-group">
                                         <label class="text-semibold">@Html.DisplayNameFor(model => model.Responsable)</label>
                                         <input value="@Html.DisplayFor(model => model.Responsable.Name)" class="form-control" disabled />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Typology)</label>
+                                        <input value="@Html.DisplayFor(model => model.Typology.Name)" class="form-control" disabled />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Stage)</label>
+                                        <input value="@Html.DisplayFor(model => model.Stage.Name)" class="form-control" disabled />
                                     </div>
                                 </fieldset>
                                 </div>

@@ -10,8 +10,8 @@ using Pladeco.Web.Data;
 namespace Pladeco.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191019234203_ReestrictCascade")]
-    partial class ReestrictCascade
+    [Migration("20191020174056_AddStagesToModel")]
+    partial class AddStagesToModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,14 +77,9 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                    b.Property<string>("ConcurrencyStamp");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
+                    b.Property<string>("Email");
 
                     b.Property<bool>("EmailConfirmed");
 
@@ -92,11 +87,9 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
+                    b.Property<string>("NormalizedEmail");
 
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
+                    b.Property<string>("NormalizedUserName");
 
                     b.Property<string>("PasswordHash");
 
@@ -108,22 +101,11 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
                     b.ToTable("Users");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -299,7 +281,8 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<DateTime>("RealStartDate");
 
-                    b.Property<string>("ResponsableID");
+                    b.Property<string>("ResponsableID")
+                        .IsRequired();
 
                     b.Property<DateTime>("StartDate");
 
@@ -339,7 +322,8 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<int>("Priority");
 
-                    b.Property<string>("ResponsableID");
+                    b.Property<string>("ResponsableID")
+                        .IsRequired();
 
                     b.Property<DateTime>("StartDate");
 
@@ -385,15 +369,21 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<DateTime>("RealStartDate");
 
-                    b.Property<string>("ResponsableID");
+                    b.Property<string>("ResponsableID")
+                        .IsRequired();
 
                     b.Property<int>("ResponsableUnitID");
 
                     b.Property<int>("SectorID");
 
-                    b.Property<string>("SolicitanteID");
+                    b.Property<string>("SolicitanteID")
+                        .IsRequired();
+
+                    b.Property<int>("StageID");
 
                     b.Property<DateTime>("StartDate");
+
+                    b.Property<int>("TypologyID");
 
                     b.Property<DateTime?>("create_date");
 
@@ -416,6 +406,10 @@ namespace Pladeco.Web.Migrations
                     b.HasIndex("SectorID");
 
                     b.HasIndex("SolicitanteID");
+
+                    b.HasIndex("StageID");
+
+                    b.HasIndex("TypologyID");
 
                     b.ToTable("Projects");
                 });
@@ -464,6 +458,113 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Sectors");
                 });
 
+            modelBuilder.Entity("Pladeco.Model.Typology", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Typologies");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.TypologyStage", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("TypologyID");
+
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TypologyID");
+
+                    b.ToTable("TypologyStages");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("AreaID");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AreaID");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("Pladeco.Model.Role", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
@@ -479,25 +580,6 @@ namespace Pladeco.Web.Migrations
                     b.HasDiscriminator().HasValue("Role");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.User", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<bool>("Active");
-
-                    b.Property<int?>("AreaID");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200);
-
-                    b.HasIndex("AreaID");
-
-                    b.ToTable("User");
-
-                    b.HasDiscriminator().HasValue("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -508,7 +590,7 @@ namespace Pladeco.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Pladeco.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -516,7 +598,7 @@ namespace Pladeco.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Pladeco.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -529,7 +611,7 @@ namespace Pladeco.Web.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Pladeco.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -537,7 +619,7 @@ namespace Pladeco.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Pladeco.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -564,7 +646,8 @@ namespace Pladeco.Web.Migrations
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
-                        .HasForeignKey("ResponsableID");
+                        .HasForeignKey("ResponsableID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
@@ -576,7 +659,8 @@ namespace Pladeco.Web.Migrations
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
-                        .HasForeignKey("ResponsableID");
+                        .HasForeignKey("ResponsableID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Pladeco.Model.Project", b =>
@@ -593,7 +677,8 @@ namespace Pladeco.Web.Migrations
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
-                        .HasForeignKey("ResponsableID");
+                        .HasForeignKey("ResponsableID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Pladeco.Model.ResponsableUnit", "ResponsableUnit")
                         .WithMany()
@@ -607,7 +692,26 @@ namespace Pladeco.Web.Migrations
 
                     b.HasOne("Pladeco.Model.User", "Solicitante")
                         .WithMany()
-                        .HasForeignKey("SolicitanteID");
+                        .HasForeignKey("SolicitanteID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pladeco.Model.TypologyStage", "Stage")
+                        .WithMany()
+                        .HasForeignKey("StageID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pladeco.Model.Typology", "Typology")
+                        .WithMany()
+                        .HasForeignKey("TypologyID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Pladeco.Model.TypologyStage", b =>
+                {
+                    b.HasOne("Pladeco.Model.Typology", "Typology")
+                        .WithMany("Stages")
+                        .HasForeignKey("TypologyID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Pladeco.Model.User", b =>

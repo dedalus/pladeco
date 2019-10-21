@@ -34,8 +34,14 @@ namespace Pladeco.Web.Models
         [DisplayName("Area")]
         public int? AreaID { get; set; }
 
+        [DisplayName("Rol")]
+        [Required(ErrorMessage ="Debe seleccionar un rol")]
+        public string RoleID { get; set; }
+
         [DisplayName("Activo")]
         public bool Active { get; set; }
+
+        public IEnumerable<SelectListItem> Roles { get; set; }
 
         public SelectList Areas { get; set; }
     }

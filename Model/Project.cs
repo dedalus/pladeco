@@ -25,18 +25,24 @@ namespace Pladeco.Model
         [DisplayName("Prioridad")]
         public ePriority Priority { get; set; }
 
-        [Required]
+        
         [DisplayName("Area")]
+        [Required(ErrorMessage = "Debes seleccionar un área")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un área")]
         public int AreaID { get; set; }
         [ForeignKey("AreaID")]
         public virtual Area Area { get; set; }
 
         [DisplayName("Solicitante")]
+        [Required(ErrorMessage = "Debes seleccionar un solicitante")]
+        [MinLength(1)]
         public string SolicitanteID { get; set; }
         [ForeignKey("SolicitanteID")]
         public User Solicitante { get; set; }
 
         [DisplayName("Responsable")]
+        [Required(ErrorMessage = "Debes seleccionar un responsable")]
+        [MinLength(1)]
         public string ResponsableID { get; set; }
         [ForeignKey("ResponsableID")]
         public User Responsable { get; set; }
@@ -55,21 +61,38 @@ namespace Pladeco.Model
         public DateTime RealEndDate { get; set; }
 
         [DisplayName("Sector")]
+        [Required(ErrorMessage = "Debes seleccionar un sector")]
         public int SectorID { get; set; }
         [ForeignKey("SectorID")]
         public Sector Sector { get; set; }
 
 
         [DisplayName("Unidad responsable")]
+        [Required(ErrorMessage = "Debes seleccionar una unidad responsable")]
         public int ResponsableUnitID { get; set; }
         [DisplayName("Unidad responsable")]
         [ForeignKey("ResponsableUnitID")]
         public ResponsableUnit ResponsableUnit { get; set; }
 
         [DisplayName("Eje de desarrollo")]
+        [Required(ErrorMessage = "Debes seleccionar un eje de desarrollo")]
         public int DevAxisID { get; set; }
         [ForeignKey("DevAxisID")]
         public DevAxis DevAxis { get; set; }
+
+        [DisplayName("Tipología")]
+        [Required(ErrorMessage = "Debes seleccionar una Tipología")]
+        public int TypologyID { get; set; }
+        [DisplayName("Tipología")]
+        [ForeignKey("TypologyID")]
+        public Typology Typology { get; set; }
+
+        [DisplayName("Etapa")]
+        [Required(ErrorMessage = "Debes seleccionar una etapa de la tipología")]
+        public int StageID { get; set; }
+        [DisplayName("Etapa")]
+        [ForeignKey("StageID")]
+        public TypologyStage Stage { get; set; }
 
         public ICollection<Plan> Plans { get; set; }
         public ICollection<PaymentPlan> PaymentPlans { get; set; }

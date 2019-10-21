@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pladeco.Model;
 using Pladeco.Web.Data;
+using Pladeco.Web.Helpers;
 using Pladeco.Web.Models;
 
 namespace Pladeco.Web.Controllers
@@ -14,10 +15,12 @@ namespace Pladeco.Web.Controllers
     public class PlansController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly ICombosHelper combosHelper;
 
-        public PlansController(ApplicationDbContext context)
+        public PlansController(ApplicationDbContext context,ICombosHelper combosHelper)
         {
             this.context = context;
+            this.combosHelper = combosHelper;
         }
         public async Task<IActionResult> Details(int id)
         {
@@ -94,7 +97,8 @@ namespace Pladeco.Web.Controllers
                 RealStartDate = plan.RealStartDate,
                 RealEndDate = plan.RealEndDate,
 
-                Users = new SelectList(context.Users, "Id", "Name", plan.ResponsableID),
+                ResponsableID = plan.ResponsableID,
+                Users = combosHelper.GetComboUsers(),
 
                 Project =plan.Project,
                 ProjectID=plan.ProjectID

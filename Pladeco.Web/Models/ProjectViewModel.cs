@@ -16,12 +16,13 @@ namespace Pladeco.Web.Models
             RealStartDate = DateTime.Now;
             RealEndDate = DateTime.Now;
         }
-        public SelectList Users { get; set; }
-        public SelectList Solicitantes { get; set; }
-        public SelectList Areas { get; set; }
+        public IEnumerable<SelectListItem> Users { get; set; }
+        public IEnumerable<SelectListItem> Areas { get; set; }
         public SelectList Priorities { get; set; }
-        public SelectList ResponsableUnits { get; set; }
-        public SelectList Sectors { get; set; }
-        public SelectList DevAxes { get; set; }
+        public IEnumerable<SelectListItem> ResponsableUnits { get; set; }
+        public IEnumerable<SelectListItem> Sectors { get; set; }
+        public IEnumerable<SelectListItem> DevAxes { get; set; }
+        public IEnumerable<SelectListItem> Typologies { get; set; }
+        public IEnumerable<SelectListItem> Stages { get; set; }
     }
 }

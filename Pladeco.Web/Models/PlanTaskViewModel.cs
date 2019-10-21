@@ -15,7 +15,7 @@ namespace Pladeco.Web.Models
             EndDate = DateTime.Now;
         }
 
-        public SelectList Users { get; set; }
+        public IEnumerable<SelectListItem> Users { get; set; }
         public SelectList Priorities { get; set; }
     }
 }

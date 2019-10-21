@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Pladeco.Model;
 using Pladeco.Model.Enum;
 using Pladeco.Web.Data;
+using Pladeco.Web.Helpers;
 using Pladeco.Web.Models;
 
 namespace Pladeco.Web.Controllers
@@ -15,10 +16,12 @@ namespace Pladeco.Web.Controllers
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly ICombosHelper combosHelper;
 
-        public ProjectsController(ApplicationDbContext context)
+        public ProjectsController(ApplicationDbContext context,ICombosHelper combosHelper)
         {
             this.context = context;
+            this.combosHelper = combosHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -42,6 +45,8 @@ namespace Pladeco.Web.Controllers
                 .Include(p => p.DevAxis)
                 .Include(p => p.Responsable)
                 .Include(p => p.Solicitante)
+                .Include(p => p.Typology)
+                .Include(p => p.Stage)
                 .Include(p=> p.Plans)
                 .Where(p=> p.ID==id)
                 .FirstOrDefaultAsync();
@@ -117,6 +122,8 @@ namespace Pladeco.Web.Controllers
                 SectorID=view.SectorID,
                 ResponsableUnitID=view.ResponsableUnitID,
                 DevAxisID=view.DevAxisID,
+                TypologyID = view.TypologyID,
+                StageID = view.StageID,
                 StartDate = view.StartDate,
                 EndDate = view.EndDate,
                 RealStartDate = view.RealStartDate,
@@ -138,14 +145,36 @@ namespace Pladeco.Web.Controllers
                 RealStartDate=project.RealStartDate,
                 RealEndDate=project.RealEndDate,
 
-                Areas = new SelectList(context.Areas, "ID", "Name"),
-                Solicitantes = new SelectList(context.Users, "Id", "Name", project.SolicitanteID),
-                Users = new SelectList(context.Users, "Id", "Name", project.ResponsableID),
-                DevAxes= new SelectList(context.DevAxes, "ID", "Name", project.DevAxisID),
-                ResponsableUnits = new SelectList(context.ResponsableUnits, "ID", "Name", project.ResponsableUnitID),
-                Sectors = new SelectList(context.Sectors, "ID", "Name", project.SectorID)
+                AreaID= project.AreaID,
+                Areas = combosHelper.GetComboAreas(),
+
+                ResponsableID = project.ResponsableID,
+                SolicitanteID = project.SolicitanteID,
+                Users = combosHelper.GetComboUsers(),
+
+                DevAxisID = project.DevAxisID,
+                DevAxes = combosHelper.GetComboDevAxes(),
+
+                ResponsableUnitID = project.ResponsableUnitID,
+                ResponsableUnits = combosHelper.GetComboResponsableUnits(),
+
+                SectorID = project.SectorID,
+                Sectors = combosHelper.GetComboSectors(),
+
+                TypologyID = project.TypologyID,
+                Typologies = combosHelper.GetComboTypologies(),
+
+                StageID = project.StageID,
+                Stages = combosHelper.GetComboStages(0)
 
             };
+
+
+            //model.Areas.Append(new SelectListItem()
+            //{
+            //    Text="Select",
+            //    Value="0"
+            //});
 
             return model;
         }
@@ -164,6 +193,8 @@ namespace Pladeco.Web.Controllers
                 .Include(p=> p.DevAxis)
                 .Include(p => p.Responsable)
                 .Include(p => p.Solicitante)
+                .Include(p => p.Typology)
+                .Include(p => p.Stage)
                 .Where(b => b.ID == id)
                 .FirstOrDefaultAsync();
 
@@ -221,6 +252,13 @@ namespace Pladeco.Web.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<JsonResult> GetStagesAsync(int typologyID)
+        {  
+            var typology = await context.Typologies.Include(t => t.Stages).Where(t=> t.ID==typologyID).FirstOrDefaultAsync();
+            return this.Json(typology.Stages.OrderBy(c => c.Name).ToList());
+        }
+
         private bool ProjectExists(int id)
         {
             return context.Projects.Any(e => e.ID == id);

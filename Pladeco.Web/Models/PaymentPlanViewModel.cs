@@ -9,6 +9,6 @@ namespace Pladeco.Web.Models
 {
     public class PaymentPlanViewModel : PaymentPlan
     {
-        public SelectList Users { get; set; }
+        public IEnumerable<SelectListItem> Users { get; set; }
     }
 }

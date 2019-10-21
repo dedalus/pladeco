@@ -19,15 +19,18 @@ namespace Pladeco.Web.Controllers
         private readonly IUserHelper userHelper;
         private readonly ApplicationDbContext context;
         private readonly IConfiguration configuration;
+        private readonly ICombosHelper combosHelper;
 
         public AccountController(
             IUserHelper userHelper,
             ApplicationDbContext context,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ICombosHelper combosHelper)
         {
             this.userHelper = userHelper;
             this.context = context;
             this.configuration = configuration;
+            this.combosHelper = combosHelper;
         }
 
         public IActionResult Login()
@@ -72,10 +75,11 @@ namespace Pladeco.Web.Controllers
             var model = new CreateUserViewModel
             {
                 Active=true,
-                Areas= new SelectList(context.Areas, "ID", "Name")
-            //Countries = this.countryRepository.GetComboCountries(),
-            //Cities = this.countryRepository.GetComboCities(0)
-        };
+                Areas= new SelectList(context.Areas, "ID", "Name"),
+                Roles= combosHelper.GetComboRoles()
+                //Countries = this.countryRepository.GetComboCountries(),
+                //Cities = this.countryRepository.GetComboCities(0)
+            };
 
             return this.View(model);
         }
@@ -102,6 +106,14 @@ namespace Pladeco.Web.Controllers
                         this.ModelState.AddModelError(string.Empty, "The user couldn't be created.");
                         return this.View(model);
                     }
+
+                    var role = await context.Roles.FindAsync(model.RoleID);
+
+                    if (role != null)
+                    {
+                        await this.userHelper.AddUserToRoleAsync(user, role.Name);
+                    }
+                    
 
                     //var myToken = await this.userHelper.GenerateEmailConfirmationTokenAsync(user);
                     //var tokenLink = this.Url.Action("ConfirmEmail", "Account", new

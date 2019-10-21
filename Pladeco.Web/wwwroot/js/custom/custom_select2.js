@@ -19,6 +19,4 @@ document.addEventListener('DOMContentLoaded', function () {
     $('.select-results-color').select2({
         containerCssClass: 'bg-grey-600'
     });
-
-
 });

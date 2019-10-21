@@ -19,6 +19,9 @@ namespace Pladeco.Model
 
         public PlanTask(Plan plan)
         {
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
+
             this.Plan = plan;
             this.PlanID = plan.ID;
         }
@@ -44,6 +47,7 @@ namespace Pladeco.Model
         public ePriority Priority { get; set; }
 
         [DisplayName("Responsable")]
+        [Required(ErrorMessage = "Debes seleccionar un responsable")]
         public string ResponsableID { get; set; }
         [ForeignKey("ResponsableID")]
         public User Responsable { get; set; }

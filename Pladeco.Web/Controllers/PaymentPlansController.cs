@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pladeco.Model;
 using Pladeco.Web.Data;
+using Pladeco.Web.Helpers;
 using Pladeco.Web.Models;
 
 namespace Pladeco.Web.Controllers
@@ -14,10 +15,12 @@ namespace Pladeco.Web.Controllers
     public class PaymentPlansController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly ICombosHelper combosHelper;
 
-        public PaymentPlansController(ApplicationDbContext context)
+        public PaymentPlansController(ApplicationDbContext context,ICombosHelper combosHelper)
         {
             this.context = context;
+            this.combosHelper = combosHelper;
         }
 
         public IActionResult Index()
@@ -93,7 +96,8 @@ namespace Pladeco.Web.Controllers
                 Date = paymentPlan.Date,
                 Amount = paymentPlan.Amount,
 
-                Users = new SelectList(context.Users, "Id", "Name", paymentPlan.SolicitanteID),
+                SolicitanteID=paymentPlan.SolicitanteID,
+                Users = combosHelper.GetComboUsers(),
 
                 Project = paymentPlan.Project,
                 ProjectID = paymentPlan.ProjectID

@@ -54,13 +54,24 @@
 
                                             <div class="form-group">
                                                 <label asp-for="Name" class="text-semibold"></label>
-                                                <input asp-for="Name" class="form-control" autofocus/>
+                                                <input asp-for="Name" class="form-control" autofocus />
                                                 <span asp-validation-for="Name" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
                                                 <label asp-for="Description" class="text-semibold"></label>
-                                                <textarea asp-for="Description" rows="4" cols="5" class="form-control"></textarea>
+                                                <textarea asp-for="Description" rows="5" cols="5" class="form-control"></textarea>
                                                 <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="SolicitanteID" class="text-semibold"></label>
+                                                <select asp-for="SolicitanteID" class="select" asp-items="Model.Users"></select>
+                                                <span asp-validation-for="SolicitanteID" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="ResponsableID" class="text-semibold"></label>
+                                                <select asp-for="ResponsableID" class="select" asp-items="Model.Users"></select>
+                                                <span asp-validation-for="ResponsableID" class="text-danger"></span>
                                             </div>
                                         </fieldset>
                                     </div>
@@ -74,34 +85,45 @@
                                                 <select asp-for="Priority" class="select" asp-items="Html.GetEnumSelectList<ePriority>()"></select>
                                                 <span asp-validation-for="Priority" class="text-danger"></span>
                                             </div>
-                                            <div class="form-group">
-                                                <label asp-for="SolicitanteID" class="text-semibold"></label>
-                                                <select asp-for="SolicitanteID" class="select" asp-items="Model.Users"></select>
-                                            </div>
+                                            
                                             <div class="form-group">
                                                 <label asp-for="AreaID" class="text-semibold"></label>
                                                 <select asp-for="AreaID" class="select" asp-items="Model.Areas"></select>
+                                                <span asp-validation-for="AreaID" class="text-danger"></span>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label asp-for="ResponsableID" class="text-semibold"></label>
-                                                <select asp-for="ResponsableID" class="select" asp-items="Model.Users"></select>
-                                            </div>
+                                            
 
                                             <div class="form-group">
                                                 <label asp-for="SectorID" class="text-semibold"></label>
                                                 <select asp-for="SectorID" class="select" asp-items="Model.Sectors"></select>
+                                                <span asp-validation-for="SectorID" class="text-danger"></span>
                                             </div>
 
                                             <div class="form-group">
                                                 <label asp-for="ResponsableUnitID" class="text-semibold"></label>
                                                 <select asp-for="ResponsableUnitID" class="select" asp-items="Model.ResponsableUnits"></select>
+                                                <span asp-validation-for="ResponsableUnitID" class="text-danger"></span>
                                             </div>
 
                                             <div class="form-group">
                                                 <label asp-for="DevAxisID" class="text-semibold"></label>
                                                 <select asp-for="DevAxisID" class="select" asp-items="Model.DevAxes"></select>
+                                                <span asp-validation-for="DevAxisID" class="text-danger"></span>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="TypologyID" class="text-semibold"></label>
+                                                <select asp-for="TypologyID" class="select" asp-items="Model.Typologies"></select>
+                                                <span asp-validation-for="TypologyID" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="StageID" class="text-semibold"></label>
+                                                <select asp-for="StageID" class="select" asp-items="Model.Stages"></select>
+                                                <span asp-validation-for="StageID" class="text-danger"></span>
+                                            </div>
+                                        </fieldset>
                                         </div>
 
                                     <div class="col-md-3">
@@ -128,10 +150,10 @@
                                                 <input asp-for="RealEndDate" class="form-control" />
                                                 <span asp-validation-for="RealEndDate" class="text-danger"></span>
                                             </div>
+                                        </fieldset>
+                                    </div>
 
-                                        </div>
-
-                                    </fieldset>
+                                    
                                 </div>
                             </div>
 
@@ -149,8 +171,9 @@
 <script src="~/js/plugins/forms/selects/select2.min.js"></script>
 <script src="~/js/plugins/forms/styling/uniform.min.js"></script>
 <script src="~/js/custom/custom_select2.js"></script>
-<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_select2_project.js"></script>
 <script src="~/js/custom/custom_checkradio.js"></script>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

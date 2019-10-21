@@ -12,10 +12,12 @@ namespace Pladeco.Model
     {
         public PaymentPlan()
         {
-
+            Date = DateTime.Now;
         }
         public PaymentPlan(Project project)
         {
+            Date = DateTime.Now;
+
             this.Project = project;
             this.ProjectID = project.ID;
         }

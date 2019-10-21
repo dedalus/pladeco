@@ -14,6 +14,9 @@ namespace Pladeco.Model
 
         public Plan(Project project)
         {
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
+
             this.Project = project;
             this.ProjectID = project.ID;
         }
@@ -47,6 +50,7 @@ namespace Pladeco.Model
         public DateTime RealEndDate { get; set; }
 
         [DisplayName("Responsable")]
+        [Required(ErrorMessage = "Debes seleccionar un responsable")]
         public string ResponsableID { get; set; }
         [ForeignKey("ResponsableID")]
         public User Responsable { get; set; }

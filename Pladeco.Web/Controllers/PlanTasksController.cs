@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pladeco.Model;
 using Pladeco.Web.Data;
+using Pladeco.Web.Helpers;
 using Pladeco.Web.Models;
 
 namespace Pladeco.Web.Controllers
@@ -14,10 +15,12 @@ namespace Pladeco.Web.Controllers
     public class PlanTasksController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly ICombosHelper combosHelper;
 
-        public PlanTasksController(ApplicationDbContext context)
+        public PlanTasksController(ApplicationDbContext context,ICombosHelper comboHelper)
         {
             this.context = context;
+            this.combosHelper = comboHelper;
         }
         public IActionResult Create(int id)
         {
@@ -76,7 +79,8 @@ namespace Pladeco.Web.Controllers
                 StartDate = planTask.StartDate,
                 EndDate = planTask.EndDate,
 
-                Users = new SelectList(context.Users, "Id", "Name", planTask.ResponsableID),
+                ResponsableID = planTask.ResponsableID,
+                Users = combosHelper.GetComboUsers(),
 
                 Plan = planTask.Plan,
                 PlanID = planTask.PlanID
@@ -159,6 +163,16 @@ namespace Pladeco.Web.Controllers
             }
 
             return View(view);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id,int planID)
+        {
+            var planTask = await context.Tasks.FindAsync(id);
+            context.Tasks.Remove(planTask);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details),"Plans", planID);
         }
 
         private bool PlanTaskExists(int id)

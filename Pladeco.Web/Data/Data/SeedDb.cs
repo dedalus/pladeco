@@ -37,10 +37,30 @@ namespace Pladeco.Web.Data.Data
 
             await this.CheckUser("sa@valsoft.com.ar", "SysAdmin", "Admin");
 
-            await this.AddDevAxes();
-            await this.AddResponsableUnits();
-            await this.AddSectors();
-            await this.AddAreas();
+            if (!this.context.DevAxes.Any())
+            {
+                await this.AddDevAxes();
+            }
+
+            if (!this.context.ResponsableUnits.Any())
+            {
+                await this.AddResponsableUnits();
+            }
+
+            if (!this.context.Sectors.Any())
+            {
+                await this.AddSectors();
+            }
+
+            if (!this.context.Areas.Any())
+            {
+                await this.AddAreas();
+            }
+
+            if (!this.context.Typologies.Any())
+            {
+                await this.AddTypologies();
+            }
 
             //// Add products
             //if (!this.context.Products.Any())
@@ -194,6 +214,83 @@ namespace Pladeco.Web.Data.Data
             this.context.Areas.Add(new Area
             {
                 Name = name
+            });
+        }
+
+        private async Task AddTypologies()
+        {
+            List<TypologyStage> stages = null;
+
+            stages = new List<TypologyStage>();
+            stages.Add(new TypologyStage()
+            {
+                Name = "Ejecución"
+            });
+
+            this.AddTypologie("Acción",stages);
+
+            stages = new List<TypologyStage>();
+            stages.Add(new TypologyStage()
+            {
+                Name = "Ejecución"
+            });
+            this.AddTypologie("Estudio", stages);
+
+            stages = new List<TypologyStage>();
+            stages.Add(new TypologyStage()
+            {
+                Name = "Ejecución"
+            });
+            stages.Add(new TypologyStage()
+            {
+                Name = "Diseño"
+            });
+            stages.Add(new TypologyStage()
+            {
+                Name = "Diseño y ejecución"
+            });
+            this.AddTypologie("Plan", stages);
+
+            stages = new List<TypologyStage>();
+            stages.Add(new TypologyStage()
+            {
+                Name = "Ejecución"
+            });
+            stages.Add(new TypologyStage()
+            {
+                Name = "Diseño"
+            });
+            this.AddTypologie("Programa", stages);
+
+            stages = new List<TypologyStage>();
+            stages.Add(new TypologyStage()
+            {
+                Name = "Ejecución"
+            });
+            stages.Add(new TypologyStage()
+            {
+                Name = "Diseño"
+            });
+            stages.Add(new TypologyStage()
+            {
+                Name = "Ejecución"
+            });
+            stages.Add(new TypologyStage()
+            {
+                Name = "Perfil"
+            });
+            this.AddTypologie("Proyecto", stages);
+
+            await this.context.SaveChangesAsync();
+        }
+
+        private void AddTypologie(string name, List<TypologyStage> stages)
+        {
+
+            this.context.Typologies.Add(new Typology
+            {
+                Name = name,
+                Stages=stages
             });
         }
 
