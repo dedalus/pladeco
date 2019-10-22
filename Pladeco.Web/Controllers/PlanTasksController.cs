@@ -60,6 +60,7 @@ namespace Pladeco.Web.Controllers
                 Name = view.Name,
                 Description = view.Description,
                 Priority = view.Priority,
+                Status = view.Status,
                 PlanID = view.PlanID,
                 ResponsableID = view.ResponsableID,
                 StartDate = view.StartDate,
@@ -75,6 +76,7 @@ namespace Pladeco.Web.Controllers
                 Name = planTask.Name,
                 Description = planTask.Description,
                 Priority = planTask.Priority,
+                Status = planTask.Status,
 
                 StartDate = planTask.StartDate,
                 EndDate = planTask.EndDate,
@@ -94,8 +96,9 @@ namespace Pladeco.Web.Controllers
         {
 
             var planTask = await context.Tasks
+                .Include(p => p.Responsable)
                 .Include(p => p.Plan)
-                    .ThenInclude(p=> p.Project)
+                    .ThenInclude(p => p.Project)
                 .Where(p => p.ID == id)
                 .FirstOrDefaultAsync();
             if (planTask == null)

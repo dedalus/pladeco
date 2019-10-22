@@ -58,12 +58,14 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="text-semibold">@Html.DisplayNameFor(model => model.Name)</label>
-                                                <input value="@Html.DisplayFor(model => model.Name)" class="form-control" autofocus />
+                                                <label asp-for="Name" class="text-semibold"></label>
+                                                <input asp-for="Name" class="form-control" autofocus />
+                                                <span asp-validation-for="Name" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label class="text-semibold">@Html.DisplayNameFor(model => model.Description)</label>
-                                                <textarea asp-for="Description" rows="10" cols="5" class="form-control"></textarea>
+                                                <label asp-for="Description" class="text-semibold"></label>
+                                                <textarea asp-for="Description" rows="4" cols="5" class="form-control"></textarea>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
                                             </div>
                                         </div>
 
@@ -73,6 +75,12 @@
                                                 <label asp-for="Priority"></label>
                                                 <select asp-for="Priority" class="select" asp-items="Html.GetEnumSelectList<ePriority>()"></select>
                                                 <span asp-validation-for="Priority" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label asp-for="Status"></label>
+                                                <select asp-for="Status" class="select" asp-items="Html.GetEnumSelectList<eStatus>()"></select>
+                                                <span asp-validation-for="Status" class="text-danger"></span>
                                             </div>
 
                                             <div class="form-group">
@@ -92,12 +100,14 @@
                                         <legend class="text-semibold"><i class="icon-database-time2"></i> Duración</legend>
 
                                         <div class="form-group">
-                                            <label class="text-semibold">@Html.DisplayNameFor(model => model.StartDate)</label>
-                                            <input value="@Html.DisplayFor(model => model.StartDate)" class="form-control" />
+                                            <label asp-for="StartDate" class="text-semibold"></label>
+                                            <input asp-for="StartDate" class="form-control" />
+                                            <span asp-validation-for="StartDate" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label class="text-semibold">@Html.DisplayNameFor(model => model.EndDate)</label>
-                                            <input value="@Html.DisplayFor(model => model.EndDate)" class="form-control" />
+                                            <label asp-for="EndDate" class="text-semibold"></label>
+                                            <input asp-for="EndDate" class="form-control" />
+                                            <span asp-validation-for="EndDate" class="text-danger"></span>
                                         </div>
                                     </fieldset>
                                 </div>

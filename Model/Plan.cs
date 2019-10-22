@@ -60,6 +60,9 @@ namespace Pladeco.Model
         [ForeignKey("ProjectID")]
         public virtual Project Project { get; set; }
 
+        [NotMapped]
+        public int Porc { get; set; }
+
         public ICollection<PlanTask> Tasks { get; set; }
         public DateTime? create_date { get; set; }
         public int? create_uid { get; set; }

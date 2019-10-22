@@ -26,9 +26,9 @@ namespace Pladeco.Model
         public ePriority Priority { get; set; }
 
         
-        [DisplayName("Area")]
-        [Required(ErrorMessage = "Debes seleccionar un área")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un área")]
+        [DisplayName("Fuente de financiamiento")]
+        [Required(ErrorMessage = "Debes seleccionar una fuente de financiamiento")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una fuente de financiamiento")]
         public int AreaID { get; set; }
         [ForeignKey("AreaID")]
         public virtual Area Area { get; set; }

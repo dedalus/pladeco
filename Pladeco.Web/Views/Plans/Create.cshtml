@@ -75,6 +75,7 @@
                                             <div class="form-group">
                                                 <label asp-for="ResponsableID" class="text-semibold"></label>
                                                 <select asp-for="ResponsableID" class="select" asp-items="Model.Users"></select>
+                                                <span asp-validation-for="ResponsableID" class="text-danger"></span>
                                             </div>
                                         </fieldset>
                                     </div>

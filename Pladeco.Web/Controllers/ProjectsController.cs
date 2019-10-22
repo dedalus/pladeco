@@ -38,7 +38,7 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            var area = await context.Projects
+            var project = await context.Projects
                 .Include(p=> p.Area)
                 .Include(p => p.ResponsableUnit)
                 .Include(p => p.Sector)
@@ -48,14 +48,43 @@ namespace Pladeco.Web.Controllers
                 .Include(p => p.Typology)
                 .Include(p => p.Stage)
                 .Include(p=> p.Plans)
+                    .ThenInclude(p=> p.Tasks)
                 .Where(p=> p.ID==id)
                 .FirstOrDefaultAsync();
-            if (area == null)
+
+            foreach (var item in project.Plans)
+            {
+                int done =(from t in item.Tasks where t.Status == eStatus.DONE select t).Count();
+                int in_process = (from t in item.Tasks where t.Status == eStatus.IN_PROCESS select t).Count();
+                int pending = (from t in item.Tasks where t.Status == eStatus.PENDING select t).Count();
+
+                if(done==0 && in_process == 0)
+                {
+                    item.Status = eStatus.PENDING;
+                    item.Porc = 0;
+                }
+                else
+                {
+                    if (in_process == 0)
+                    {
+                        item.Status = eStatus.DONE;
+                        item.Porc = 100;
+                    }
+                    else
+                    {
+                        item.Status = eStatus.IN_PROCESS;
+                        item.Porc = (done * 100) / (done + in_process + pending);
+                    }
+                }
+                
+            }
+
+            if (project == null)
             {
                 return NotFound();
             }
 
-            return View(area);
+            return View(project);
         }
 
         public async Task<IActionResult> PaymentPlan(int? id)

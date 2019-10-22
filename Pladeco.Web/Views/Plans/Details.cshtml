@@ -134,14 +134,28 @@
                                                     <th>Tareas</th>
                                                     <th>Fecha inicio</th>
                                                     <th>Fecha fin</th>
-                                                    <th>Progreso</th>
-                                                    <th>Status</th>
+                                                    <th>Estado</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach (var item in Model.Tasks)
                                                 {
-                                                    <tr>
+                                                    string status_cls = string.Empty;
+
+                                                    @switch (item.Status)
+                                                    {
+                                                        case Pladeco.Model.Enum.eStatus.PENDING:
+                                                            break;
+                                                        case Pladeco.Model.Enum.eStatus.IN_PROCESS:
+                                                            status_cls = "warning";
+                                                            break;
+                                                        case Pladeco.Model.Enum.eStatus.DONE:
+                                                            status_cls = "success";
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
+                                                    <tr class="@status_cls">
                                                         <td>@item.ID</td>
                                                         <td>
                                                             <a asp-action="Details" asp-controller="PlanTasks" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
@@ -152,13 +166,7 @@
                                                         <td>
                                                             @Html.DisplayFor(modelItem => item.EndDate)
                                                         </td>
-                                                        <td>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" style="width: 0%;">
-                                                                    <span class="sr-only">0% Complete</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
+ 
                                                         <td>@Html.DisplayFor(modelItem => item.Status)</td>
                                                     </tr>
                                                 }
