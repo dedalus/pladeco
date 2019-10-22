@@ -83,7 +83,7 @@ namespace Pladeco.Web
 
             // var webRootPath = env.WebRootPath;
             // call rotativa conf passing env to get web root path
-            RotativaConfiguration.Setup(env);
+            //RotativaConfiguration.Setup(env);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

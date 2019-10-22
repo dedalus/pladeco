@@ -52,13 +52,21 @@ namespace Pladeco.Web.Controllers
                 .Where(p=> p.ID==id)
                 .FirstOrDefaultAsync();
 
+            int project_done = 0;
+            int project_in_process = 0;
+            int project_pending = 0;
+
             foreach (var item in project.Plans)
             {
                 int done =(from t in item.Tasks where t.Status == eStatus.DONE select t).Count();
                 int in_process = (from t in item.Tasks where t.Status == eStatus.IN_PROCESS select t).Count();
                 int pending = (from t in item.Tasks where t.Status == eStatus.PENDING select t).Count();
 
-                if(done==0 && in_process == 0)
+                project_done += done;
+                project_in_process += in_process;
+                project_pending += pending;
+
+                if (done==0 && in_process == 0)
                 {
                     item.Status = eStatus.PENDING;
                     item.Porc = 0;
@@ -78,6 +86,8 @@ namespace Pladeco.Web.Controllers
                 }
                 
             }
+
+            project.Porc = (project_done * 100) / (project_done + project_in_process + project_pending);
 
             if (project == null)
             {

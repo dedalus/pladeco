@@ -94,6 +94,8 @@ namespace Pladeco.Model
         [ForeignKey("StageID")]
         public TypologyStage Stage { get; set; }
 
+        [NotMapped]
+        public int Porc { get; set; }
         public ICollection<Plan> Plans { get; set; }
         public ICollection<PaymentPlan> PaymentPlans { get; set; }
         public DateTime? create_date { get; set; }
