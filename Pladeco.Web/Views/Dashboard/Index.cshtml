@@ -39,17 +39,19 @@
                         </div>
 
                         <div class="progress progress-micro mb-10">
-                            <div class="progress-bar bg-success-400" style="width: 80%">
-                                <span class="sr-only">80% Completado</span>
+                            <div class="progress-bar bg-success-400" style="width: @item.Porc%">
+                                <span class="sr-only">@item.Porc% Completado</span>
                             </div>
                         </div>
-                        <span class="pull-right">80%</span>
-                        Tareas
+                        <span class="pull-right">@item.Porc%</span>
+                        Tareas (@item.DoneTasks/@item.TotalTasks)
                     </div>
                 </div>
             }
-            
+
         </div>
     </div>
 </div>
+
+
 <!-- Theme JS files -->
