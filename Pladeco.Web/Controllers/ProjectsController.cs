@@ -89,7 +89,10 @@ namespace Pladeco.Web.Controllers
                 
             }
 
-            project.Porc = (project_done * 100) / (project_done + project_in_process + project_pending);
+            int total = (project_done + project_in_process + project_pending);
+
+
+            project.Porc = total== 0 ? 0: (project_done * 100) / total;
 
             if (project == null)
             {

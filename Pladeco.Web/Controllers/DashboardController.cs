@@ -67,7 +67,9 @@ namespace Pladeco.Web.Controllers
                 }
                 p.DoneTasks = project_done;
                 p.TotalTasks = project_done + project_in_process + project_pending;
-                p.Porc = (project_done * 100) / (project_done + project_in_process + project_pending);
+
+
+                p.Porc = p.TotalTasks==0 ? 0: (project_done * 100) / p.TotalTasks;
             }
             
             return View(projects);
