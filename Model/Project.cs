@@ -94,6 +94,19 @@ namespace Pladeco.Model
         [ForeignKey("StageID")]
         public TypologyStage Stage { get; set; }
 
+        [DisplayName("Descripción")]
+        public string BudgetDescription { get; set; }
+
+        [DisplayName("Presupuesto")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal? BudgetAmount { get; set; }
+
+        [DisplayName("Responsable de Plan de Gasto")]
+        public string ResponsableBudgetID { get; set; }
+        [ForeignKey("ResponsableBudgetID")]
+        public User ResponsableBudget { get; set; }
+
+
         [NotMapped]
         public int Porc { get; set; }
 

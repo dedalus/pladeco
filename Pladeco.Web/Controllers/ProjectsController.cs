@@ -109,17 +109,18 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            var area = await context.Projects
+            var project = await context.Projects
+                .Include(p=> p.ResponsableBudget)
                 .Include(p => p.PaymentPlans)
                     .ThenInclude(p=> p.Solicitante)
                 .Where(p => p.ID == id)
                 .FirstOrDefaultAsync();
-            if (area == null)
+            if (project == null)
             {
                 return NotFound();
             }
 
-            return View(area);
+            return View(project);
         }
 
         public IActionResult Create()
@@ -301,6 +302,125 @@ namespace Pladeco.Web.Controllers
         {  
             var typology = await context.Typologies.Include(t => t.Stages).Where(t=> t.ID==typologyID).FirstOrDefaultAsync();
             return this.Json(typology.Stages.OrderBy(c => c.Name).ToList());
+        }
+
+        public async Task<IActionResult> Budget(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var project = await context.Projects
+                .Include(p => p.Area)
+                .Where(p => p.ID == id)
+                .FirstOrDefaultAsync();
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            var model = ToProjectBudgetViewModel(project);
+
+            return View(model);
+        }
+
+        private ProjectBudgetViewModel ToProjectBudgetViewModel(Project project)
+        {
+            var model = new ProjectBudgetViewModel()
+            {
+                ProjectID = project.ID,
+                ProjectName = project.Name,
+                AreaID=project.AreaID,
+                BudgetDescription=project.BudgetDescription,
+                ResponsableBudgetID = project.ResponsableBudgetID,
+                Users = combosHelper.GetComboUsers()
+
+            };
+
+            if (project.BudgetAmount == null)
+            {
+                model.Amount = 0;
+            }
+            else
+            {
+                model.Amount = (decimal)project.BudgetAmount;
+            }
+
+            return model;
+        }
+
+        private async Task<bool> CheckBudget(ProjectBudgetViewModel view)
+        {
+            Area area = await context.Areas
+                .Include(p => p.Projects)
+                .Where(p => p.ID == view.AreaID)
+                .FirstOrDefaultAsync();
+
+            decimal budget = (decimal)area.Projects
+                .Select(p => p.BudgetAmount)
+                .DefaultIfEmpty()
+                .Sum();
+
+
+            if (budget + view.Amount <= area.Budget)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception($"Presupuesto excedido. El monto asigado al area es de ${area.Budget}");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Budget(int id, ProjectBudgetViewModel view)
+        {
+            if (id != view.ProjectID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if(await CheckBudget(view))
+                    {
+                        Project project = await context.Projects.FindAsync(view.ProjectID);
+                        project.BudgetAmount = view.Amount;
+                        project.BudgetDescription = view.BudgetDescription;
+                        project.ResponsableBudgetID = view.ResponsableBudgetID;
+
+                        context.Update(project);
+                        await context.SaveChangesAsync();
+
+                        return RedirectToAction(nameof(PaymentPlan), new { id });
+                    }
+                    
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProjectExists(view.ProjectID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+
+                
+            }
+
+            return View(view);
         }
 
         private bool ProjectExists(int id)

@@ -61,17 +61,47 @@ namespace Pladeco.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                PaymentPlan paymentPlan = this.ToPaymentPlan(view);
+                try
+                {
+                    if (await CheckBudget(view))
+                    {
+                        PaymentPlan paymentPlan = this.ToPaymentPlan(view);
 
-                paymentPlan.ID = 0;
+                        paymentPlan.ID = 0;
 
-                context.Add(paymentPlan);
-                await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), new { paymentPlan.ID });
+                        context.Add(paymentPlan);
+                        await context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Details), new { paymentPlan.ID });
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+                
             }
 
-
             return View(view);
+        }
+
+        private async Task<bool> CheckBudget(PaymentPlanViewModel view)
+        {
+            Project project = await context.Projects
+                .Include(p => p.PaymentPlans)
+                .Where(p => p.ID == view.ProjectID)
+                .FirstOrDefaultAsync();
+
+            decimal budget = project.PaymentPlans.Sum(p => p.Amount);
+
+            if(budget + view.Amount <= project.BudgetAmount)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception($"Presupuesto excedido. El monto asigado al proyecto es de ${project.BudgetAmount}");
+            }
         }
 
         private PaymentPlan ToPaymentPlan(PaymentPlanViewModel view)
@@ -102,6 +132,7 @@ namespace Pladeco.Web.Controllers
                 Users = combosHelper.GetComboUsers(),
 
                 Project = paymentPlan.Project,
+                ProjectName=paymentPlan.Project.Name,
                 ProjectID = paymentPlan.ProjectID
 
             };

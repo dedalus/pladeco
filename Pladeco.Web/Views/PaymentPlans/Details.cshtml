@@ -10,7 +10,8 @@
     <div class="breadcrumb-line breadcrumb-line-component">
         <ul class="breadcrumb">
             <li><a asp-action="Index"><i class="icon-folder"></i>Proyectos</a></li>
-            <li><a asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Project.ID">@Model.Project.Name</a></li>
+            <li><a asp-action="Details" asp-controller="Projects" asp-route-id="@Model.ProjectID">@Model.Project.Name</a></li>
+            <li><a asp-action="PaymentPlan" asp-controller="Projects" asp-route-id="@Model.ProjectID">Plan de gastos</a></li>
             <li class="active">@Model.Name</li>
         </ul>
 

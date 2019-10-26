@@ -35,7 +35,7 @@
     <br />
     <div class="page-header-content">
         <div class="text-left">
-            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
+            <a asp-action="Budget" asp-route-id="@Model.ID" class="btn bg-green-700" role="button">Editar</a>
             <a asp-action="Create" asp-controller="PaymentPlans" asp-route-id="@Model.ID" class="btn btn-default" role="button">Agregar gasto</a>
         </div>
 
@@ -65,19 +65,23 @@
 
                     <div class="panel-body">
                         <div class="row">
+
                             <div class="col-md-12">
                                 <fieldset>
-                                    <legend class="text-semibold"><i class="icon-folder position-left"></i>General </legend>
+                                    <legend class="text-semibold"><i class="icon-folder position-left"></i> Plan de Gastos - @Model.Name </legend>
 
                                     <div class="form-group">
-                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Name)</label>
-                                        <input value="@Html.DisplayFor(model => model.Name)" class="form-control" disabled />
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.BudgetDescription)</label>
+                                        <input value="@Html.DisplayFor(model => model.BudgetDescription)" class="form-control" disabled />
                                     </div>
                                     <div class="form-group">
-                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Description)</label>
-                                        <textarea asp-for="Description" rows="10" cols="5" class="form-control" disabled></textarea>
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.ResponsableBudgetID)</label>
+                                        <input value="@Html.DisplayFor(model => model.ResponsableBudget.Name)" class="form-control" disabled />
                                     </div>
-
+                                    <div class="form-group">
+                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.BudgetAmount)</label>
+                                        <input value="@Html.DisplayFor(model => model.BudgetAmount)" class="form-control" disabled />
+                                    </div>
 
                                 </fieldset>
                             </div>

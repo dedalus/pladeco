@@ -1,39 +1,38 @@
 ﻿@using Pladeco.Model.Enum
-@model Pladeco.Web.Models.PaymentPlanViewModel
+@model Pladeco.Web.Models.ProjectBudgetViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-
-    <form asp-action="Create">
+    <form asp-action="Budget" enctype="multipart/form-data">
         <input type="hidden" asp-for="ProjectID" />
-        <input type="hidden" asp-for="ProjectName" />
+        <input type="hidden" asp-for="AreaID" />
+
         <!-- Page header -->
         <div class="page-header">
             <br />
             <div class="breadcrumb-line breadcrumb-line-component">
                 <ul class="breadcrumb">
-                    <li><a asp-action="Index" asp-controller="Projects"><i class="icon-folder"></i> Proyectos</a></li>
+                    <li><a asp-action="Index"><i class="icon-folder"></i>Proyectos</a></li>
                     <li><a asp-action="Details" asp-controller="Projects" asp-route-id="@Model.ProjectID">@Model.ProjectName</a></li>
                     <li><a asp-action="PaymentPlan" asp-controller="Projects" asp-route-id="@Model.ProjectID">Plan de gastos</a></li>
-                    <li class="active">Nuevo plan de gasto</li>
+                    <li class="active">Editar</li>
                 </ul>
+
             </div>
             <br />
             <div class="page-header-content">
                 <div class="text-left">
                     <button type="submit" class="btn bg-green-700">Guardar<i class="icon-arrow-right14 position-right"></i></button>
-                    <a asp-action="PaymentPlan" asp-controller="Projects" asp-route-id="@Model.ProjectID" class="btn btn-default" role="button">Descartar</a>
+                    <a asp-action="PaymentPlan" asp-route-id="@Model.ProjectID" class="btn btn-default" role="button">Descartar</a>
                 </div>
                 <div class="heading-elements">
-
                 </div>
             </div>
         </div>
         <!-- /page header -->
         <!-- Content area -->
-
         <div class="content">
             <!-- Vertical form options -->
             <div class="row">
@@ -51,52 +50,38 @@
 
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-md-8">
-                                        @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
-                                        {
-                                            <div class="alert alert-danger no-border">
-                                                <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
-                                                @Html.ValidationSummary(true, "Errors: ")
-                                            </div>
-                                        }
+                                    @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                    {
+                                        <div class="alert alert-danger no-border">
+                                            <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
+                                            @Html.ValidationSummary(true, "Errors: ")
+                                        </div>
+                                    }
+                                    <div class="col-md-6">
                                         <fieldset>
                                             <legend class="text-semibold"><i class="icon-folder position-left"></i>General </legend>
 
                                             <div class="form-group">
-                                                <label asp-for="Name" class="text-semibold"></label>
-                                                <input asp-for="Name" class="form-control" autofocus />
-                                                <span asp-validation-for="Name" class="text-danger"></span>
+                                                <label asp-for="BudgetDescription" class="text-semibold"></label>
+                                                <input asp-for="BudgetDescription" class="form-control" autofocus />
+                                                <span asp-validation-for="BudgetDescription" class="text-danger"></span>
                                             </div>
 
                                             <div class="form-group">
-                                                <label asp-for="Description" class="text-semibold"></label>
-                                                <textarea asp-for="Description" rows="4" cols="5" class="form-control"></textarea>
-                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                                <label asp-for="ResponsableBudgetID" class="text-semibold"></label>
+                                                <select asp-for="ResponsableBudgetID" class="select" asp-items="Model.Users"></select>
+                                                <span asp-validation-for="ResponsableBudgetID" class="text-danger"></span>
                                             </div>
 
                                             <div class="form-group">
                                                 <label asp-for="Amount" class="text-semibold"></label>
-                                                <input asp-for="Amount" class="form-control" />
+                                                <input asp-for="Amount" class="form-control" autofocus />
                                                 <span asp-validation-for="Amount" class="text-danger"></span>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label asp-for="Date" class="text-semibold"></label>
-                                                <input asp-for="Date" class="form-control" />
-                                                <span asp-validation-for="Date" class="text-danger"></span>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label asp-for="SolicitanteID" class="text-semibold"></label>
-                                                <select asp-for="SolicitanteID" class="select" asp-items="Model.Users"></select>
                                             </div>
                                         </fieldset>
                                     </div>
 
-
-
                                 </div>
-
                             </div>
 
                         </div>
@@ -113,7 +98,7 @@
 <script src="~/js/plugins/forms/selects/select2.min.js"></script>
 <script src="~/js/plugins/forms/styling/uniform.min.js"></script>
 <script src="~/js/custom/custom_select2.js"></script>
-<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_select2_project.js"></script>
 <script src="~/js/custom/custom_checkradio.js"></script>
 
 @section Scripts {

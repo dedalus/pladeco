@@ -17,6 +17,8 @@ namespace Pladeco.Model
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal? Budget { get; set; }
         [DisplayName("Habilitada")]
+
+        public ICollection<Project> Projects { get; set; }
         public bool Active { get; set; }
         public DateTime? create_date { get; set; }
         public int? create_uid { get; set; }
