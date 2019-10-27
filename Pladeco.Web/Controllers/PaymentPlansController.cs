@@ -85,6 +85,74 @@ namespace Pladeco.Web.Controllers
             return View(view);
         }
 
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var paymentPlan = await context.PaymentPlans
+                .Include(p=> p.Project)
+                .Include(p=> p.Solicitante)
+                .Where(b => b.ID == id)
+                .FirstOrDefaultAsync();
+
+            if (paymentPlan == null)
+            {
+                return NotFound();
+            }
+
+            var model = ToPaymentPlanViewModel(paymentPlan);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, PaymentPlanViewModel view)
+        {
+            if (id != view.ID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    PaymentPlan paymentPlan = this.ToPaymentPlan(view);
+
+                    context.Update(paymentPlan);
+                    await context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PaymentPlanExists(view.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            return View(view);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var paymentPlans = await context.PaymentPlans.FindAsync(id);
+            context.PaymentPlans.Remove(paymentPlans);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         private async Task<bool> CheckBudget(PaymentPlanViewModel view)
         {
             Project project = await context.Projects
@@ -104,6 +172,10 @@ namespace Pladeco.Web.Controllers
             }
         }
 
+        private bool PaymentPlanExists(int id)
+        {
+            return context.PaymentPlans.Any(e => e.ID == id);
+        }
         private PaymentPlan ToPaymentPlan(PaymentPlanViewModel view)
         {
             return new PaymentPlan

@@ -19,4 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
     $('.select-results-color').select2({
         containerCssClass: 'bg-grey-600'
     });
+
+    // Menu border and text color
+    $('.select-border-color').select2({
+        dropdownCssClass: 'border-primary',
+        containerCssClass: 'border-primary text-primary-700'
+    });
 });

@@ -23,6 +23,8 @@ namespace Pladeco.Model
         [ForeignKey("AreaID")]
         public virtual Area Area { get; set; }
 
+        public ICollection<ProjectUser> Projects { get; set; }
+
         public bool Active { get; set; }
 
     }

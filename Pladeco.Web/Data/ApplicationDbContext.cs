@@ -65,6 +65,7 @@ namespace Pladeco.Web.Data
         public DbSet<DevAxis> DevAxes { get; set; }
         public DbSet<Typology> Typologies { get; set; }
         public DbSet<TypologyStage> TypologyStages { get; set; }
+        public DbSet<ProjectUser> ProjectUsers { get; set; }
 
     }
 }

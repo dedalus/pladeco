@@ -116,6 +116,7 @@ namespace Pladeco.Model
         public int TotalTasks { get; set; }
 
         public ICollection<Plan> Plans { get; set; }
+        public ICollection<ProjectUser> Colaborators { get; set; }
         public ICollection<PaymentPlan> PaymentPlans { get; set; }
         public DateTime? create_date { get; set; }
         public int? create_uid { get; set; }

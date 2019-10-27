@@ -2,13 +2,15 @@
 @model Pladeco.Web.Models.PaymentPlanViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-
-    <form asp-action="Create">
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
         <input type="hidden" asp-for="ProjectID" />
         <input type="hidden" asp-for="ProjectName" />
+
         <!-- Page header -->
         <div class="page-header">
             <br />
@@ -17,23 +19,21 @@
                     <li><a asp-action="Index" asp-controller="Projects"><i class="icon-folder"></i> Proyectos</a></li>
                     <li><a asp-action="Details" asp-controller="Projects" asp-route-id="@Model.ProjectID">@Model.ProjectName</a></li>
                     <li><a asp-action="PaymentPlan" asp-controller="Projects" asp-route-id="@Model.ProjectID">Plan de gastos</a></li>
-                    <li class="active">Nuevo plan de gasto</li>
+                    <li class="active">@Model.Name</li>
                 </ul>
             </div>
             <br />
             <div class="page-header-content">
                 <div class="text-left">
                     <button type="submit" class="btn bg-green-700">Guardar<i class="icon-arrow-right14 position-right"></i></button>
-                    <a asp-action="PaymentPlan" asp-controller="Projects" asp-route-id="@Model.ProjectID" class="btn btn-default" role="button">Descartar</a>
+                    <a asp-action="Details"  asp-route-id="@Model.ProjectID" class="btn btn-default" role="button">Descartar</a>
                 </div>
                 <div class="heading-elements">
-
                 </div>
             </div>
         </div>
         <!-- /page header -->
         <!-- Content area -->
-
         <div class="content">
             <!-- Vertical form options -->
             <div class="row">
@@ -119,7 +119,7 @@
 <script src="~/js/plugins/forms/selects/select2.min.js"></script>
 <script src="~/js/plugins/forms/styling/uniform.min.js"></script>
 <script src="~/js/custom/custom_select2.js"></script>
-<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_select2_project.js"></script>
 <script src="~/js/custom/custom_checkradio.js"></script>
 
 @section Scripts {

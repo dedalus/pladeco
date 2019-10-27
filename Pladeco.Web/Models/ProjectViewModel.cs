@@ -2,6 +2,7 @@
 using Pladeco.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,9 @@ namespace Pladeco.Web.Models
             RealStartDate = DateTime.Now;
             RealEndDate = DateTime.Now;
         }
+        [DisplayName("Colaboradores")]
+        public IEnumerable<string> SelectedUsers { get; set; }
+        public IEnumerable<SelectListItem> Colaborators { get; set; }
         public IEnumerable<SelectListItem> Users { get; set; }
         public IEnumerable<SelectListItem> Areas { get; set; }
         public SelectList Priorities { get; set; }

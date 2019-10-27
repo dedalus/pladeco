@@ -210,7 +210,10 @@ namespace Pladeco.Web.Controllers
                 Typologies = combosHelper.GetComboTypologies(),
 
                 StageID = project.StageID,
-                Stages = combosHelper.GetComboStages(0)
+                Stages = combosHelper.GetComboStages(project.TypologyID),
+
+                Colaborators = new SelectList(context.Users, "Id", "Name"),
+                SelectedUsers = project.Colaborators.Select(sc => sc.UserID)
 
             };
 
@@ -240,6 +243,7 @@ namespace Pladeco.Web.Controllers
                 .Include(p => p.Solicitante)
                 .Include(p => p.Typology)
                 .Include(p => p.Stage)
+                .Include(p=> p.Colaborators)
                 .Where(b => b.ID == id)
                 .FirstOrDefaultAsync();
 
