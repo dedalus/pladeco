@@ -212,8 +212,8 @@ namespace Pladeco.Web.Controllers
                 StageID = project.StageID,
                 Stages = combosHelper.GetComboStages(project.TypologyID),
 
-                Colaborators = new SelectList(context.Users, "Id", "Name"),
-                SelectedUsers = project.Colaborators.Select(sc => sc.UserID)
+                Colaborators = new SelectList(context.Users, "Id", "Name")
+                //SelectedUsers = project.Colaborators.Select(sc => sc.UserID)
 
             };
 
