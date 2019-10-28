@@ -168,6 +168,16 @@ namespace Pladeco.Web.Controllers
             return View(view);
         }
 
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id, int projectID)
+        {
+            var plan = await context.Plans.FindAsync(id);
+            context.Plans.Remove(plan);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), "Projects", projectID);
+        }
+
         private bool PlanExists(int id)
         {
             return context.Plans.Any(e => e.ID == id);

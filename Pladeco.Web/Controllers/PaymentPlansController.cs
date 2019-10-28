@@ -146,13 +146,15 @@ namespace Pladeco.Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int projectID)
         {
             var paymentPlans = await context.PaymentPlans.FindAsync(id);
             context.PaymentPlans.Remove(paymentPlans);
             await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), "Projects", projectID);
         }
+
+
         private async Task<bool> CheckBudget(PaymentPlanViewModel view)
         {
             Project project = await context.Projects

@@ -51,6 +51,8 @@ namespace Pladeco.Web.Controllers
                 .Include(p => p.Stage)
                 .Include(p=> p.Plans)
                     .ThenInclude(p=> p.Tasks)
+                .Include(p=> p.Colaborators)
+                    .ThenInclude(p=> p.User)
                 .Where(p=> p.ID==id)
                 .FirstOrDefaultAsync();
 
@@ -99,7 +101,9 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            return View(project);
+            var model = ToProjectViewModel(project);
+
+            return View(model);
         }
 
         public async Task<IActionResult> PaymentPlan(int? id)
@@ -212,8 +216,10 @@ namespace Pladeco.Web.Controllers
                 StageID = project.StageID,
                 Stages = combosHelper.GetComboStages(project.TypologyID),
 
-                Colaborators = new SelectList(context.Users, "Id", "Name")
-                //SelectedUsers = project.Colaborators.Select(sc => sc.UserID)
+                ColaboratorsList = combosHelper.GetComboUsers(),
+                SelectedUsers = project.Colaborators == null ? null : project.Colaborators.Select(sc => sc.UserID),
+
+                Plans=project.Plans
 
             };
 
@@ -271,6 +277,17 @@ namespace Pladeco.Web.Controllers
                 try
                 {
                     Project project = this.ToProject(view);
+
+                    var newUsers = view.SelectedUsers
+                                  .Select(c => new ProjectUser
+                                  {
+                                      ProjectID = project.ID,
+                                      UserID = c
+                                  });
+
+                    project.Colaborators.RemoveAll(sc => !newUsers.Contains(sc));
+                    project.Colaborators.AddRange(
+                        newUsers.Where(nu => !project.Colaborators.Contains(nu)));
 
                     context.Update(project);
                     await context.SaveChangesAsync();

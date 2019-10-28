@@ -19,7 +19,7 @@ namespace Pladeco.Web.Models
         }
         [DisplayName("Colaboradores")]
         public IEnumerable<string> SelectedUsers { get; set; }
-        public IEnumerable<SelectListItem> Colaborators { get; set; }
+        public IEnumerable<SelectListItem> ColaboratorsList { get; set; }
         public IEnumerable<SelectListItem> Users { get; set; }
         public IEnumerable<SelectListItem> Areas { get; set; }
         public SelectList Priorities { get; set; }
