@@ -27,6 +27,65 @@ namespace Pladeco.Web.Controllers
             return View(await context.Areas.ToListAsync());
         }
 
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(BudgetViewModel view)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (await ValidateBudget(view))
+                    {
+                        Budget budget = this.ToBudget(view);
+
+                        budget.ID = 0;
+
+                        context.Add(budget);
+                        await context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Details), new { budget.ID });
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+
+            }
+
+            return View(view);
+        }
+
+        private Budget ToBudget(BudgetViewModel view)
+        {
+            return new Budget
+            {
+                ID = view.ID,
+                AreaID= view.AreaID,
+                Year = view.Year,
+                Amount = view.Amount
+            };
+        }
+
+        private async Task<bool> ValidateBudget(BudgetViewModel view)
+        {
+            var budget = await context.Budgets.Where(b => b.AreaID == view.AreaID && b.Year == view.Year).FirstOrDefaultAsync();
+
+            if (budget == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

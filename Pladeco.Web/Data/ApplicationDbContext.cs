@@ -66,6 +66,7 @@ namespace Pladeco.Web.Data
         public DbSet<Typology> Typologies { get; set; }
         public DbSet<TypologyStage> TypologyStages { get; set; }
         public DbSet<ProjectUser> ProjectUsers { get; set; }
+        public DbSet<Budget> Budgets { get; set; }
 
     }
 }
