@@ -1,4 +1,5 @@
-﻿using Pladeco.Model;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Pladeco.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,5 +13,7 @@ namespace Pladeco.Web.Models
     {
         [DisplayName("Area")]
         public string AreaName { get; set; }
+
+        public IEnumerable<SelectListItem> Areas { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pladeco.Model;
 using Pladeco.Web.Data;
+using Pladeco.Web.Helpers;
 using Pladeco.Web.Models;
 
 namespace Pladeco.Web.Controllers
@@ -16,21 +17,28 @@ namespace Pladeco.Web.Controllers
     public class BudgetsController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly ICombosHelper combosHelper;
 
-        public BudgetsController(ApplicationDbContext context)
+        public BudgetsController(ApplicationDbContext context, ICombosHelper combosHelper)
         {
             this.context = context;
+            this.combosHelper = combosHelper;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await context.Areas.ToListAsync());
+            return View(await context.Budgets
+                .Include(b=> b.Area)
+                .OrderBy(b=> b.Year)
+                .ToListAsync());
         }
 
         public IActionResult Create()
         {
 
-            return View();
+            var model = ToBudgetViewModel(new Budget());
+
+            return View(model);
         }
 
         [HttpPost]
@@ -93,7 +101,8 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            var area = await context.Areas
+            var area = await context.Budgets
+                .Include(b=> b.Area)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (area == null)
             {
@@ -112,14 +121,14 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            var area = await context.Areas.FindAsync(id);
+            var budget = await context.Budgets.FindAsync(id);
 
-            if (area == null)
+            if (budget == null)
             {
                 return NotFound();
             }
 
-            var model = ToBudgetViewModel(area);
+            var model = ToBudgetViewModel(budget);
            
             return View(model);
         }
@@ -137,15 +146,14 @@ namespace Pladeco.Web.Controllers
             {
                 try
                 {
-                    Area area = await context.Areas.FindAsync(view.AreaID);
-                    area.Budget = view.Amount;
+                    Budget budget = ToBudget(view);
 
-                    context.Update(area);
+                    context.Update(budget);
                     await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AreaExists(view.AreaID))
+                    if (!BudgetExists(view.AreaID))
                     {
                         return NotFound();
                     }
@@ -160,29 +168,24 @@ namespace Pladeco.Web.Controllers
             return View(view);
         }
 
-        private BudgetViewModel ToBudgetViewModel(Area area)
+        private BudgetViewModel ToBudgetViewModel(Budget budget)
         {
             var model = new BudgetViewModel()
             {
-                AreaID = area.ID,
-                AreaName=area.Name
+                ID = budget.ID,
+                AreaID = budget.AreaID,
+                Amount = budget.Amount,
+                Year = budget.Year,
+                Areas = combosHelper.GetComboAreas()
+                
             };
 
-            if (area.Budget == null)
-            {
-                model.Amount = 0;
-            }
-            else
-            {
-                model.Amount = (decimal)area.Budget;
-            }
-            
             return model;
         }
 
-        private bool AreaExists(int id)
+        private bool BudgetExists(int id)
         {
-            return context.Areas.Any(e => e.ID == id);
+            return context.Budgets.Any(e => e.ID == id);
         }
     }
 }

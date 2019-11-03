@@ -1,0 +1,100 @@
+﻿@using Pladeco.Model.Enum
+@model Pladeco.Web.Models.BudgetViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <!-- Page header -->
+    <div class="page-header">
+        <br />
+        <div class="breadcrumb-line breadcrumb-line-component">
+            <ul class="breadcrumb">
+                <li><a asp-action="Index" asp-controller="Budgets"><i class="icon-folder"></i>Presupuestos</a></li>
+                <li class="active">Nuevo presupuesto</li>
+            </ul>
+        </div>
+        <br />
+        <div class="page-header-content">
+            <div class="text-left">
+                <button type="submit" class="btn bg-green-700">Guardar<i class="icon-arrow-right14 position-right"></i></button>
+                <a asp-action="Index" asp-controller="Budgets"  class="btn btn-default" role="button">Descartar</a>
+            </div>
+            <div class="heading-elements">
+
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- Content area -->
+
+    <div class="content">
+        <!-- Vertical form options -->
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- Basic layout-->
+                <p>
+                    <div class="text-left">
+                    </div>
+                </p>
+                <div class="panel panel-flat">
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <fieldset>
+                                        <legend class="text-semibold"><i class="icon-folder position-left"></i>General </legend>
+
+                                        <div class="form-group">
+                                            <label asp-for="Year" class="text-semibold"></label>
+                                            <input asp-for="Year" class="form-control" autofocus />
+                                            <span asp-validation-for="Year" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="AreaID" class="text-semibold"></label>
+                                            <select asp-for="AreaID" class="select" asp-items="Model.Areas"></select>
+                                            <span asp-validation-for="AreaID" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="Amount" class="text-semibold"></label>
+                                            <input asp-for="Amount" class="form-control" autofocus />
+                                            <span asp-validation-for="Amount" class="text-danger"></span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /basic layout -->
+        </div>
+
+    </div>
+    <!-- /content area -->
+</form>
+<!-- /vertical form options -->
+<!-- Theme JS files -->
+<script src="~/js/plugins/forms/selects/select2.min.js"></script>
+<script src="~/js/plugins/forms/styling/uniform.min.js"></script>
+<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_select2.js"></script>
+<script src="~/js/custom/custom_checkradio.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
