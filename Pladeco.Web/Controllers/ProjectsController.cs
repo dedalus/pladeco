@@ -278,16 +278,16 @@ namespace Pladeco.Web.Controllers
                 {
                     Project project = this.ToProject(view);
 
-                    var newUsers = view.SelectedUsers
-                                  .Select(c => new ProjectUser
-                                  {
-                                      ProjectID = project.ID,
-                                      UserID = c
-                                  });
+                    //var newUsers = view.SelectedUsers
+                    //              .Select(c => new ProjectUser
+                    //              {
+                    //                  ProjectID = project.ID,
+                    //                  UserID = c
+                    //              });
 
-                    project.Colaborators.RemoveAll(sc => !newUsers.Contains(sc));
-                    project.Colaborators.AddRange(
-                        newUsers.Where(nu => !project.Colaborators.Contains(nu)));
+                    //project.Colaborators.RemoveAll(sc => !newUsers.Contains(sc));
+                    //project.Colaborators.AddRange(
+                    //    newUsers.Where(nu => !project.Colaborators.Contains(nu)));
 
                     context.Update(project);
                     await context.SaveChangesAsync();
@@ -379,19 +379,27 @@ namespace Pladeco.Web.Controllers
                 .Where(p => p.ID == view.AreaID)
                 .FirstOrDefaultAsync();
 
-            decimal budget = (decimal)area.Projects
+            decimal budgetAmount = (decimal)area.Projects
                 .Select(p => p.BudgetAmount)
                 .DefaultIfEmpty()
                 .Sum();
 
+            var budget = await context.Budgets
+                .Where(b => b.Year == DateTime.Now.Year && b.AreaID == area.ID)
+                .FirstOrDefaultAsync();
 
-            if (budget + view.Amount <= area.Budget)
+            if (budget == null)
+            {
+                throw new Exception($"No hay presupuesto asignado en el área para este año.");
+            }
+
+            if (budgetAmount + view.Amount <= budget.Amount)
             {
                 return true;
             }
             else
             {
-                throw new Exception($"Presupuesto excedido. El monto asigado al area es de ${area.Budget}");
+                throw new Exception($"Presupuesto excedido. El monto asigado al area es de ${budget.Amount}");
             }
         }
 
@@ -440,6 +448,8 @@ namespace Pladeco.Web.Controllers
 
                 
             }
+
+            view.Users = combosHelper.GetComboUsers();
 
             return View(view);
         }

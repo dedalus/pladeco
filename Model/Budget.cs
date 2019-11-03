@@ -10,10 +10,17 @@ namespace Pladeco.Model
 {
     public class Budget : IEntity
     {
+        public Budget()
+        {
+            Year = DateTime.Now.Year;
+        }
+
         [Key]
         public int ID { get; set; }
 
         [DisplayName("Año")]
+        [Range(2000, 3000, ErrorMessage = "Debe ingresar un año válido")]
+        [Required]
         public int Year { get; set; }
         [DisplayName("Area")]
         [Required(ErrorMessage = "Debes seleccionar un Area")]
@@ -24,6 +31,7 @@ namespace Pladeco.Model
         [DisplayName("Monto")]
         [Required(ErrorMessage = "Debes seleccionar un Area")]
         [DisplayFormat(DataFormatString = "{0:C}")]
+        [Range(0.01, Double.MaxValue, ErrorMessage = "El monto debe ser mayor a 0")]
         public decimal Amount { get; set; }
 
         public DateTime? create_date { get; set; }

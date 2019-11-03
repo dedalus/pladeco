@@ -29,7 +29,7 @@ namespace Pladeco.Web.Controllers
         {
             return View(await context.Budgets
                 .Include(b=> b.Area)
-                .OrderBy(b=> b.Year)
+                .OrderByDescending(b=> b.Year)
                 .ToListAsync());
         }
 
@@ -68,6 +68,8 @@ namespace Pladeco.Web.Controllers
 
             }
 
+            view.Areas = combosHelper.GetComboAreas();
+
             return View(view);
         }
 
@@ -86,12 +88,12 @@ namespace Pladeco.Web.Controllers
         {
             var budget = await context.Budgets.Where(b => b.AreaID == view.AreaID && b.Year == view.Year).FirstOrDefaultAsync();
 
-            if (budget == null)
+            if (budget != null)
             {
-                return true;
+                throw new Exception($"Ya se asignó un presupuesto a esta área para el año {budget.Year}");
             }
 
-            return false;
+            return true;
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -104,6 +106,7 @@ namespace Pladeco.Web.Controllers
             var area = await context.Budgets
                 .Include(b=> b.Area)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (area == null)
             {
                 return NotFound();
@@ -121,7 +124,10 @@ namespace Pladeco.Web.Controllers
                 return NotFound();
             }
 
-            var budget = await context.Budgets.FindAsync(id);
+            var budget = await context.Budgets
+                .Include(b=> b.Area)
+                .Where(b=> b.ID==id)
+                .FirstOrDefaultAsync();
 
             if (budget == null)
             {
@@ -146,10 +152,14 @@ namespace Pladeco.Web.Controllers
             {
                 try
                 {
-                    Budget budget = ToBudget(view);
+                    if (await ValidateBudget(view))
+                    {
+                        Budget budget = ToBudget(view);
 
-                    context.Update(budget);
-                    await context.SaveChangesAsync();
+                        context.Update(budget);
+                        await context.SaveChangesAsync();
+                    }
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -162,9 +172,15 @@ namespace Pladeco.Web.Controllers
                         throw;
                     }
                 }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
                 return RedirectToAction(nameof(Details), new { id });
             }
 
+            view.Areas = combosHelper.GetComboAreas();
             return View(view);
         }
 
@@ -180,7 +196,23 @@ namespace Pladeco.Web.Controllers
                 
             };
 
+            if (budget.Area != null)
+            {
+                model.AreaName = budget.Area.Name;
+            }
+
             return model;
+        }
+
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var budget = await context.Budgets.FindAsync(id);
+            context.Budgets.Remove(budget);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool BudgetExists(int id)

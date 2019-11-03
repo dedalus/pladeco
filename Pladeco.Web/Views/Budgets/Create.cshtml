@@ -7,13 +7,12 @@
 
 
 <form asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <!-- Page header -->
     <div class="page-header">
         <br />
         <div class="breadcrumb-line breadcrumb-line-component">
             <ul class="breadcrumb">
-                <li><a asp-action="Index" asp-controller="Budgets"><i class="icon-folder"></i>Presupuestos</a></li>
+                <li><a asp-action="Index" asp-controller="Budgets"><i class="icon-wallet"></i> Presupuestos</a></li>
                 <li class="active">Nuevo presupuesto</li>
             </ul>
         </div>
@@ -34,7 +33,6 @@
     <div class="content">
         <!-- Vertical form options -->
         <div class="row">
-
             <div class="col-md-12">
                 <!-- Basic layout-->
                 <p>
@@ -48,15 +46,16 @@
 
                         <div class="panel-body">
                             <div class="row">
+                                @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                {
+                                    <div class="alert alert-danger no-border">
+                                        <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
+                                        @Html.ValidationSummary(true, "Errors: ")
+                                    </div>
+                                }
                                 <div class="col-md-8">
                                     <fieldset>
                                         <legend class="text-semibold"><i class="icon-folder position-left"></i>General </legend>
-
-                                        <div class="form-group">
-                                            <label asp-for="Year" class="text-semibold"></label>
-                                            <input asp-for="Year" class="form-control" autofocus />
-                                            <span asp-validation-for="Year" class="text-danger"></span>
-                                        </div>
 
                                         <div class="form-group">
                                             <label asp-for="AreaID" class="text-semibold"></label>
@@ -65,8 +64,16 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <label asp-for="Year" class="text-semibold"></label>
+                                            <input asp-for="Year" class="form-control" autofocus />
+                                            <span asp-validation-for="Year" class="text-danger"></span>
+                                        </div>
+
+
+
+                                        <div class="form-group">
                                             <label asp-for="Amount" class="text-semibold"></label>
-                                            <input asp-for="Amount" class="form-control" autofocus />
+                                            <input asp-for="Amount" class="form-control" />
                                             <span asp-validation-for="Amount" class="text-danger"></span>
                                         </div>
                                     </fieldset>

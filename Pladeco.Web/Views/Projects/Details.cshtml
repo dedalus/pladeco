@@ -1,4 +1,5 @@
 ﻿@model Pladeco.Web.Models.ProjectViewModel
+@using Pladeco.Model.Enum
 
 @{
     ViewData["Title"] = "Details";
@@ -108,31 +109,45 @@
                                     <legend class="text-semibold"><i class="icon-newspaper"></i> Datos</legend>
 
                                     <div class="form-group">
-                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Solicitante)</label>
-                                        <input value="@Html.DisplayFor(model => model.Solicitante.Name)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Area)</label>
-                                        <input value="@Html.DisplayFor(model => model.Area.Name)" class="form-control" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Priority)</label>
-                                        <input value="@Html.DisplayFor(model => model.Priority)" class="form-control" disabled />
+                                        <label asp-for="Priority"></label>
+                                        <select asp-for="Priority" class="select" asp-items="Html.GetEnumSelectList<ePriority>()" disabled> </select>
+                                        <span asp-validation-for="Priority" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Responsable)</label>
-                                        <input value="@Html.DisplayFor(model => model.Responsable.Name)" class="form-control" disabled />
+                                        <label asp-for="AreaID" class="text-semibold"></label>
+                                        <select asp-for="AreaID" class="select" asp-items="Model.Areas" disabled></select>
+                                        <span asp-validation-for="AreaID" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Typology)</label>
-                                        <input value="@Html.DisplayFor(model => model.Typology.Name)" class="form-control" disabled />
+                                        <label asp-for="SectorID" class="text-semibold"></label>
+                                        <select asp-for="SectorID" class="select" asp-items="Model.Sectors" disabled></select>
+                                        <span asp-validation-for="SectorID" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="text-semibold">@Html.DisplayNameFor(model => model.Stage)</label>
-                                        <input value="@Html.DisplayFor(model => model.Stage.Name)" class="form-control" disabled />
+                                        <label asp-for="ResponsableUnitID" class="text-semibold"></label>
+                                        <select asp-for="ResponsableUnitID" class="select" asp-items="Model.ResponsableUnits" disabled></select>
+                                        <span asp-validation-for="ResponsableUnitID" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="DevAxisID" class="text-semibold"></label>
+                                        <select asp-for="DevAxisID" class="select" asp-items="Model.DevAxes" disabled></select>
+                                        <span asp-validation-for="DevAxisID" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="TypologyID" class="text-semibold"></label>
+                                        <select asp-for="TypologyID" class="select" asp-items="Model.Typologies" disabled></select>
+                                        <span asp-validation-for="TypologyID" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="StageID" class="text-semibold"></label>
+                                        <select asp-for="StageID" class="select" asp-items="Model.Stages" disabled></select>
+                                        <span asp-validation-for="StageID" class="text-danger"></span>
                                     </div>
 
                                 </fieldset>
@@ -242,7 +257,6 @@
     </div>
 </div>
 <!-- /default modal -->
-
 <!-- /content area -->
 <!-- /vertical form options -->
 <!-- Theme JS files -->

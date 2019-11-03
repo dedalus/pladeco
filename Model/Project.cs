@@ -107,6 +107,15 @@ namespace Pladeco.Model
         public User ResponsableBudget { get; set; }
 
 
+        [DisplayName("Objectivo estratégico")]
+        public string StrategyTarget { get; set; }
+
+        [DisplayName("Medio de verificación")]
+        public string VerificationUnit { get; set; }
+
+        [DisplayName("Indicador de cumpliento")]
+        public string ComplianceIndicator { get; set; }
+
         [NotMapped]
         public int Porc { get; set; }
 

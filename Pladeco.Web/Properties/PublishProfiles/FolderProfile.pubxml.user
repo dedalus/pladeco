@@ -6,6 +6,6 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Elio\source\repos\Elio13v\pladeco\Pladeco.Web\bin\Release\netcoreapp2.1\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Elio\Source\Repos\Elio13v\pladeco\Pladeco.Web\bin\Release\netcoreapp2.1\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>
