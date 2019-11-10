@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Pladeco.Model;
 using Pladeco.Model.Enum;
 using Pladeco.Web.Data;
+using Pladeco.Web.Data.Data;
 using Pladeco.Web.Helpers;
 using Pladeco.Web.Models;
 
@@ -312,20 +313,31 @@ namespace Pladeco.Web.Controllers
                 {
                     Project project = await ToProject(view);
 
-                    IEnumerable<ProjectUser> colaboratos = new List<ProjectUser>();
+                    //IEnumerable<ProjectUser> colaboratos = new List<ProjectUser>();
 
-                    if (view.SelectedUsers != null)
+                    //if (view.SelectedUsers != null)
+                    //{
+                    //    colaboratos = view.SelectedUsers.Select(p => new ProjectUser
+                    //    {
+                    //        ProjectID = project.ID,
+                    //        UserID = p
+                    //    });
+                    //}
+
+                    if (view.SelectedUsers == null)
                     {
-                        colaboratos = view.SelectedUsers.Select(p => new ProjectUser
-                        {
-                            ProjectID = project.ID,
-                            UserID = p
-                        });
+                        project.Colaborators.Clear();
                     }
-
-                    project.Colaborators.RemoveAll(sc => !colaboratos.Contains(sc));
-                    project.Colaborators.AddRange(
-                        colaboratos.Where(nu => !project.Colaborators.Contains(nu)));
+                    else
+                    {
+                        context.TryUpdateManyToMany(project.Colaborators, view.SelectedUsers
+                            .Select(x => new ProjectUser
+                            {
+                                UserID = x,
+                                ProjectID = project.ID
+                            }), x => x.UserID);
+                    }
+                    
 
 
                     context.Update(project);

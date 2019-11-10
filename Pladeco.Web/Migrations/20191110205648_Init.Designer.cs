@@ -10,7 +10,7 @@ using Pladeco.Web.Data;
 namespace Pladeco.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191110191812_Init")]
+    [Migration("20191110205648_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

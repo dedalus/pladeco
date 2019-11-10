@@ -16,6 +16,7 @@ namespace Pladeco.Model
         public string UserID { get; set; }
         [ForeignKey("UserID")]
         public virtual User User { get; set; }
+
         public DateTime? create_date { get; set; }
         public int? create_uid { get; set; }
         public DateTime? write_date { get; set; }

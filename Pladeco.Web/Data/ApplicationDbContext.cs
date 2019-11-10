@@ -54,6 +54,12 @@ namespace Pladeco.Web.Data
             //});
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+
+            base.OnConfiguring(optionsBuilder);
+        }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Plan> Plans { get; set; }
         public DbSet<Role> Roles { get; set; }
