@@ -10,8 +10,8 @@ using Pladeco.Web.Data;
 namespace Pladeco.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191027010712_AddColaborators")]
-    partial class AddColaborators
+    [Migration("20191110192125_SomeTest")]
+    partial class SomeTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,8 +186,6 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<decimal?>("Budget");
-
                     b.Property<string>("Name");
 
                     b.Property<DateTime?>("create_date");
@@ -201,6 +199,33 @@ namespace Pladeco.Web.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Areas");
+                });
+
+            modelBuilder.Entity("Pladeco.Model.Budget", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<int>("AreaID");
+
+                    b.Property<int>("Year");
+
+                    b.Property<DateTime?>("create_date");
+
+                    b.Property<int?>("create_uid");
+
+                    b.Property<DateTime?>("write_date");
+
+                    b.Property<int?>("write_uid");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AreaID");
+
+                    b.ToTable("Budgets");
                 });
 
             modelBuilder.Entity("Pladeco.Model.DevAxis", b =>
@@ -358,6 +383,8 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<string>("BudgetDescription");
 
+                    b.Property<string>("ComplianceIndicator");
+
                     b.Property<string>("Description");
 
                     b.Property<int>("DevAxisID");
@@ -389,7 +416,11 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<DateTime>("StartDate");
 
+                    b.Property<string>("StrategyTarget");
+
                     b.Property<int>("TypologyID");
+
+                    b.Property<string>("VerificationUnit");
 
                     b.Property<DateTime?>("create_date");
 
@@ -660,6 +691,14 @@ namespace Pladeco.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("Pladeco.Model.Budget", b =>
+                {
+                    b.HasOne("Pladeco.Model.Area", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("Pladeco.Model.PaymentPlan", b =>
                 {
                     b.HasOne("Pladeco.Model.Project", "Project")
@@ -748,12 +787,12 @@ namespace Pladeco.Web.Migrations
             modelBuilder.Entity("Pladeco.Model.ProjectUser", b =>
                 {
                     b.HasOne("Pladeco.Model.Project", "Project")
-                        .WithMany()
+                        .WithMany("Colaborators")
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Pladeco.Model.User", "User")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("UserID");
                 });
 

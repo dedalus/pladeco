@@ -2,7 +2,7 @@
 
 namespace Pladeco.Web.Migrations
 {
-    public partial class SomeStrings : Migration
+    public partial class SomeTest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

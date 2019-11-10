@@ -134,6 +134,8 @@ namespace Pladeco.Model
 
         public Project()
         {
+            Colaborators = new List<ProjectUser>();
+
             StartDate = DateTime.Now;
             EndDate = DateTime.Now;
             RealStartDate = DateTime.Now;

@@ -10,8 +10,8 @@ using Pladeco.Web.Data;
 namespace Pladeco.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191103190632_SomeFields")]
-    partial class SomeFields
+    [Migration("20191110191812_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -185,8 +185,6 @@ namespace Pladeco.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("Active");
-
-                    b.Property<decimal?>("Budget");
 
                     b.Property<string>("Name");
 
@@ -385,6 +383,8 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<string>("BudgetDescription");
 
+                    b.Property<string>("ComplianceIndicator");
+
                     b.Property<string>("Description");
 
                     b.Property<int>("DevAxisID");
@@ -416,7 +416,11 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<DateTime>("StartDate");
 
+                    b.Property<string>("StrategyTarget");
+
                     b.Property<int>("TypologyID");
+
+                    b.Property<string>("VerificationUnit");
 
                     b.Property<DateTime?>("create_date");
 

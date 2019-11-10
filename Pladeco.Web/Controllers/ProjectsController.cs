@@ -70,17 +70,17 @@ namespace Pladeco.Web.Controllers
                 project_in_process += in_process;
                 project_pending += pending;
 
-                if (done==0 && in_process == 0)
+                if (pending == 0 && in_process == 0)
                 {
-                    item.Status = eStatus.PENDING;
-                    item.Porc = 0;
+                    item.Status = eStatus.DONE;
+                    item.Porc = 100;
                 }
                 else
                 {
-                    if (in_process == 0)
+                    if (done == 0)
                     {
-                        item.Status = eStatus.DONE;
-                        item.Porc = 100;
+                        item.Status = eStatus.PENDING;
+                        item.Porc = 0;
                     }
                     else
                     {
@@ -146,7 +146,21 @@ namespace Pladeco.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Project project = this.ToProject(view);
+                Project project = await ToProject(view);
+
+                IEnumerable<ProjectUser> colaboratos = new List<ProjectUser>();
+
+                if (view.SelectedUsers != null)
+                {
+                    colaboratos = view.SelectedUsers.Select(p => new ProjectUser
+                    {
+                        ProjectID = project.ID,
+                        UserID = p
+                    });
+                }
+
+                project.Colaborators.AddRange(
+                    colaboratos.Where(nu => !project.Colaborators.Contains(nu)));
 
                 context.Add(project);
                 await context.SaveChangesAsync();
@@ -157,29 +171,49 @@ namespace Pladeco.Web.Controllers
             return View(view);
         }
 
-        private Project ToProject(ProjectViewModel view)
+        private async Task<Project> ToProject(ProjectViewModel view)
         {
-            return new Project
+            var project = await context.Projects
+                .Include(p => p.Area)
+                .Include(p => p.ResponsableUnit)
+                .Include(p => p.Sector)
+                .Include(p => p.DevAxis)
+                .Include(p => p.Responsable)
+                .Include(p => p.Solicitante)
+                .Include(p => p.Typology)
+                .Include(p => p.Stage)
+                .Include(p => p.Plans)
+                    .ThenInclude(p => p.Tasks)
+                .Include(p => p.Colaborators)
+                    .ThenInclude(p => p.User)
+                .Where(p => p.ID == view.ID)
+                .FirstOrDefaultAsync();
+
+            if (project == null)
             {
-                ID = view.ID,
-                Name = view.Name,
-                Description = view.Description,
-                Priority = view.Priority,
-                AreaID = view.AreaID,
-                SolicitanteID = view.SolicitanteID,
-                ResponsableID = view.ResponsableID,
-                SectorID=view.SectorID,
-                ResponsableUnitID=view.ResponsableUnitID,
-                DevAxisID=view.DevAxisID,
-                TypologyID = view.TypologyID,
-                StageID = view.StageID,
-                StartDate = view.StartDate,
-                EndDate = view.EndDate,
-                RealStartDate = view.RealStartDate,
-                RealEndDate = view.RealEndDate
-            };
+                project = new Project();
+            }
+
+            project.Name = view.Name;
+            project.Description = view.Description;
+            project.Priority = view.Priority;
+            project.AreaID = view.AreaID;
+            project.SolicitanteID = view.SolicitanteID;
+            project.ResponsableID = view.ResponsableID;
+            project.SectorID = view.SectorID;
+            project.ResponsableUnitID = view.ResponsableUnitID;
+            project.DevAxisID = view.DevAxisID;
+            project.TypologyID = view.TypologyID;
+            project.StageID = view.StageID;
+            project.StartDate = view.StartDate;
+            project.EndDate = view.EndDate;
+            project.RealStartDate = view.RealStartDate;
+            project.RealEndDate = view.RealEndDate;
+
+            return project;
         }
 
+        
         private ProjectViewModel ToProjectViewModel(Project project)
         {
             var model = new ProjectViewModel()
@@ -276,18 +310,23 @@ namespace Pladeco.Web.Controllers
             {
                 try
                 {
-                    Project project = this.ToProject(view);
+                    Project project = await ToProject(view);
 
-                    //var newUsers = view.SelectedUsers
-                    //              .Select(c => new ProjectUser
-                    //              {
-                    //                  ProjectID = project.ID,
-                    //                  UserID = c
-                    //              });
+                    IEnumerable<ProjectUser> colaboratos = new List<ProjectUser>();
 
-                    //project.Colaborators.RemoveAll(sc => !newUsers.Contains(sc));
-                    //project.Colaborators.AddRange(
-                    //    newUsers.Where(nu => !project.Colaborators.Contains(nu)));
+                    if (view.SelectedUsers != null)
+                    {
+                        colaboratos = view.SelectedUsers.Select(p => new ProjectUser
+                        {
+                            ProjectID = project.ID,
+                            UserID = p
+                        });
+                    }
+
+                    project.Colaborators.RemoveAll(sc => !colaboratos.Contains(sc));
+                    project.Colaborators.AddRange(
+                        colaboratos.Where(nu => !project.Colaborators.Contains(nu)));
+
 
                     context.Update(project);
                     await context.SaveChangesAsync();

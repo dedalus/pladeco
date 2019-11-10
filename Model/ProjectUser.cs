@@ -11,11 +11,11 @@ namespace Pladeco.Model
         public int ID { get; set; }
         public int ProjectID { get; set; }
         [ForeignKey("ProjectID")]
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
 
         public string UserID { get; set; }
         [ForeignKey("UserID")]
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public DateTime? create_date { get; set; }
         public int? create_uid { get; set; }
         public DateTime? write_date { get; set; }

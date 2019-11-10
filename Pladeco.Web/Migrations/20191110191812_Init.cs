@@ -15,7 +15,6 @@ namespace Pladeco.Web.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Budget = table.Column<decimal>(nullable: true),
                     Active = table.Column<bool>(nullable: false),
                     create_date = table.Column<DateTime>(nullable: true),
                     create_uid = table.Column<int>(nullable: true),
@@ -173,6 +172,31 @@ namespace Pladeco.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Budgets",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Year = table.Column<int>(nullable: false),
+                    AreaID = table.Column<int>(nullable: false),
+                    Amount = table.Column<decimal>(nullable: false),
+                    create_date = table.Column<DateTime>(nullable: true),
+                    create_uid = table.Column<int>(nullable: true),
+                    write_date = table.Column<DateTime>(nullable: true),
+                    write_uid = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Budgets", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Budgets_Areas_AreaID",
+                        column: x => x.AreaID,
+                        principalTable: "Areas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 columns: table => new
                 {
@@ -214,71 +238,6 @@ namespace Pladeco.Web.Migrations
                         column: x => x.TypologyID,
                         principalTable: "Typologies",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Priority = table.Column<int>(nullable: false),
-                    AreaID = table.Column<int>(nullable: false),
-                    SolicitanteID = table.Column<string>(maxLength: 450, nullable: false),
-                    ResponsableID = table.Column<string>(maxLength: 450, nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    RealStartDate = table.Column<DateTime>(nullable: false),
-                    RealEndDate = table.Column<DateTime>(nullable: false),
-                    SectorID = table.Column<int>(nullable: false),
-                    ResponsableUnitID = table.Column<int>(nullable: false),
-                    DevAxisID = table.Column<int>(nullable: false),
-                    create_date = table.Column<DateTime>(nullable: true),
-                    create_uid = table.Column<int>(nullable: true),
-                    write_date = table.Column<DateTime>(nullable: true),
-                    write_uid = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Projects_Areas_AreaID",
-                        column: x => x.AreaID,
-                        principalTable: "Areas",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Projects_DevAxes_DevAxisID",
-                        column: x => x.DevAxisID,
-                        principalTable: "DevAxes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Projects_AspNetUsers_ResponsableID",
-                        column: x => x.ResponsableID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Projects_ResponsableUnits_ResponsableUnitID",
-                        column: x => x.ResponsableUnitID,
-                        principalTable: "ResponsableUnits",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Projects_Sectors_SectorID",
-                        column: x => x.SectorID,
-                        principalTable: "Sectors",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Projects_AspNetUsers_SolicitanteID",
-                        column: x => x.SolicitanteID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -368,6 +327,97 @@ namespace Pladeco.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Priority = table.Column<int>(nullable: false),
+                    AreaID = table.Column<int>(nullable: false),
+                    SolicitanteID = table.Column<string>(nullable: false),
+                    ResponsableID = table.Column<string>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    RealStartDate = table.Column<DateTime>(nullable: false),
+                    RealEndDate = table.Column<DateTime>(nullable: false),
+                    SectorID = table.Column<int>(nullable: false),
+                    ResponsableUnitID = table.Column<int>(nullable: false),
+                    DevAxisID = table.Column<int>(nullable: false),
+                    TypologyID = table.Column<int>(nullable: false),
+                    StageID = table.Column<int>(nullable: false),
+                    BudgetDescription = table.Column<string>(nullable: true),
+                    BudgetAmount = table.Column<decimal>(nullable: true),
+                    ResponsableBudgetID = table.Column<string>(nullable: true),
+                    StrategyTarget = table.Column<string>(nullable: true),
+                    VerificationUnit = table.Column<string>(nullable: true),
+                    ComplianceIndicator = table.Column<string>(nullable: true),
+                    create_date = table.Column<DateTime>(nullable: true),
+                    create_uid = table.Column<int>(nullable: true),
+                    write_date = table.Column<DateTime>(nullable: true),
+                    write_uid = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Projects_Areas_AreaID",
+                        column: x => x.AreaID,
+                        principalTable: "Areas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_DevAxes_DevAxisID",
+                        column: x => x.DevAxisID,
+                        principalTable: "DevAxes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_AspNetUsers_ResponsableBudgetID",
+                        column: x => x.ResponsableBudgetID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_AspNetUsers_ResponsableID",
+                        column: x => x.ResponsableID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_ResponsableUnits_ResponsableUnitID",
+                        column: x => x.ResponsableUnitID,
+                        principalTable: "ResponsableUnits",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_Sectors_SectorID",
+                        column: x => x.SectorID,
+                        principalTable: "Sectors",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_AspNetUsers_SolicitanteID",
+                        column: x => x.SolicitanteID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_TypologyStages_StageID",
+                        column: x => x.StageID,
+                        principalTable: "TypologyStages",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_Typologies_TypologyID",
+                        column: x => x.TypologyID,
+                        principalTable: "Typologies",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PaymentPlans",
                 columns: table => new
                 {
@@ -415,7 +465,7 @@ namespace Pladeco.Web.Migrations
                     EndDate = table.Column<DateTime>(nullable: false),
                     RealStartDate = table.Column<DateTime>(nullable: false),
                     RealEndDate = table.Column<DateTime>(nullable: false),
-                    ResponsableID = table.Column<string>(nullable: true),
+                    ResponsableID = table.Column<string>(nullable: false),
                     ProjectID = table.Column<int>(nullable: false),
                     create_date = table.Column<DateTime>(nullable: true),
                     create_uid = table.Column<int>(nullable: true),
@@ -440,6 +490,36 @@ namespace Pladeco.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProjectUsers",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ProjectID = table.Column<int>(nullable: false),
+                    UserID = table.Column<string>(nullable: true),
+                    create_date = table.Column<DateTime>(nullable: true),
+                    create_uid = table.Column<int>(nullable: true),
+                    write_date = table.Column<DateTime>(nullable: true),
+                    write_uid = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectUsers", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ProjectUsers_Projects_ProjectID",
+                        column: x => x.ProjectID,
+                        principalTable: "Projects",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ProjectUsers_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tasks",
                 columns: table => new
                 {
@@ -451,7 +531,7 @@ namespace Pladeco.Web.Migrations
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
                     Priority = table.Column<int>(nullable: false),
-                    ResponsableID = table.Column<string>(nullable: true),
+                    ResponsableID = table.Column<string>(nullable: false),
                     PlanID = table.Column<int>(nullable: false),
                     create_date = table.Column<DateTime>(nullable: true),
                     create_uid = table.Column<int>(nullable: true),
@@ -493,6 +573,11 @@ namespace Pladeco.Web.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Budgets_AreaID",
+                table: "Budgets",
+                column: "AreaID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PaymentPlans_ProjectID",
                 table: "PaymentPlans",
                 column: "ProjectID");
@@ -523,6 +608,11 @@ namespace Pladeco.Web.Migrations
                 column: "DevAxisID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Projects_ResponsableBudgetID",
+                table: "Projects",
+                column: "ResponsableBudgetID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projects_ResponsableID",
                 table: "Projects",
                 column: "ResponsableID");
@@ -541,6 +631,26 @@ namespace Pladeco.Web.Migrations
                 name: "IX_Projects_SolicitanteID",
                 table: "Projects",
                 column: "SolicitanteID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_StageID",
+                table: "Projects",
+                column: "StageID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_TypologyID",
+                table: "Projects",
+                column: "TypologyID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectUsers_ProjectID",
+                table: "ProjectUsers",
+                column: "ProjectID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectUsers_UserID",
+                table: "ProjectUsers",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
@@ -588,16 +698,19 @@ namespace Pladeco.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Budgets");
+
+            migrationBuilder.DropTable(
                 name: "PaymentPlans");
+
+            migrationBuilder.DropTable(
+                name: "ProjectUsers");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
 
             migrationBuilder.DropTable(
                 name: "Tasks");
-
-            migrationBuilder.DropTable(
-                name: "TypologyStages");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");
@@ -618,9 +731,6 @@ namespace Pladeco.Web.Migrations
                 name: "Plans");
 
             migrationBuilder.DropTable(
-                name: "Typologies");
-
-            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
@@ -639,7 +749,13 @@ namespace Pladeco.Web.Migrations
                 name: "Sectors");
 
             migrationBuilder.DropTable(
+                name: "TypologyStages");
+
+            migrationBuilder.DropTable(
                 name: "Areas");
+
+            migrationBuilder.DropTable(
+                name: "Typologies");
         }
     }
 }
