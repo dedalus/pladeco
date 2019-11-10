@@ -147,11 +147,11 @@ namespace Pladeco.Web.Helpers
                 .OrderBy(pt => pt.Text)
                 .ToList();
 
-            list.Insert(0, new SelectListItem
-            {
-                Text = "",
-                Value = ""
-            });
+            //list.Insert(0, new SelectListItem
+            //{
+            //    Text = "",
+            //    Value = ""
+            //});
 
             return list;
         }

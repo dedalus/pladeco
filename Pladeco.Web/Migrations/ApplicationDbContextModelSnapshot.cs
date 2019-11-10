@@ -300,6 +300,8 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<int>("ProjectID");
 
+                    b.Property<int?>("ProjectID1");
+
                     b.Property<DateTime>("RealEndDate");
 
                     b.Property<DateTime>("RealStartDate");
@@ -323,6 +325,8 @@ namespace Pladeco.Web.Migrations
 
                     b.HasIndex("ProjectID");
 
+                    b.HasIndex("ProjectID1");
+
                     b.HasIndex("ResponsableID");
 
                     b.ToTable("Plans");
@@ -342,6 +346,8 @@ namespace Pladeco.Web.Migrations
                         .IsRequired();
 
                     b.Property<int>("PlanID");
+
+                    b.Property<int?>("PlanID1");
 
                     b.Property<int>("Priority");
 
@@ -364,6 +370,8 @@ namespace Pladeco.Web.Migrations
 
                     b.HasIndex("PlanID");
 
+                    b.HasIndex("PlanID1");
+
                     b.HasIndex("ResponsableID");
 
                     b.ToTable("Tasks");
@@ -376,6 +384,8 @@ namespace Pladeco.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AreaID");
+
+                    b.Property<int?>("AreaID1");
 
                     b.Property<decimal?>("BudgetAmount");
 
@@ -431,6 +441,8 @@ namespace Pladeco.Web.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("AreaID");
+
+                    b.HasIndex("AreaID1");
 
                     b.HasIndex("DevAxisID");
 
@@ -649,7 +661,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -657,7 +669,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Pladeco.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -665,7 +677,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Pladeco.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -673,12 +685,12 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Pladeco.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -686,7 +698,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Pladeco.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Pladeco.Model.Budget", b =>
@@ -694,7 +706,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Pladeco.Model.Area", "Area")
                         .WithMany()
                         .HasForeignKey("AreaID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Pladeco.Model.PaymentPlan", b =>
@@ -702,7 +714,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Pladeco.Model.Project", "Project")
                         .WithMany("PaymentPlans")
                         .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Pladeco.Model.User", "Solicitante")
                         .WithMany()
@@ -712,9 +724,13 @@ namespace Pladeco.Web.Migrations
             modelBuilder.Entity("Pladeco.Model.Plan", b =>
                 {
                     b.HasOne("Pladeco.Model.Project", "Project")
-                        .WithMany("Plans")
+                        .WithMany()
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pladeco.Model.Project")
+                        .WithMany("Plans")
+                        .HasForeignKey("ProjectID1");
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
@@ -725,9 +741,13 @@ namespace Pladeco.Web.Migrations
             modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
                 {
                     b.HasOne("Pladeco.Model.Plan", "Plan")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("PlanID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pladeco.Model.Plan")
+                        .WithMany("Tasks")
+                        .HasForeignKey("PlanID1");
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
@@ -738,9 +758,13 @@ namespace Pladeco.Web.Migrations
             modelBuilder.Entity("Pladeco.Model.Project", b =>
                 {
                     b.HasOne("Pladeco.Model.Area", "Area")
-                        .WithMany("Projects")
+                        .WithMany()
                         .HasForeignKey("AreaID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pladeco.Model.Area")
+                        .WithMany("Projects")
+                        .HasForeignKey("AreaID1");
 
                     b.HasOne("Pladeco.Model.DevAxis", "DevAxis")
                         .WithMany()
@@ -749,7 +773,8 @@ namespace Pladeco.Web.Migrations
 
                     b.HasOne("Pladeco.Model.User", "ResponsableBudget")
                         .WithMany()
-                        .HasForeignKey("ResponsableBudgetID");
+                        .HasForeignKey("ResponsableBudgetID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
@@ -774,7 +799,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Pladeco.Model.TypologyStage", "Stage")
                         .WithMany()
                         .HasForeignKey("StageID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Pladeco.Model.Typology", "Typology")
                         .WithMany()
@@ -787,7 +812,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Pladeco.Model.Project", "Project")
                         .WithMany("Colaborators")
                         .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Pladeco.Model.User", "User")
                         .WithMany("Projects")
@@ -799,7 +824,7 @@ namespace Pladeco.Web.Migrations
                     b.HasOne("Pladeco.Model.Typology", "Typology")
                         .WithMany("Stages")
                         .HasForeignKey("TypologyID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Pladeco.Model.User", b =>

@@ -29,14 +29,73 @@ namespace Pladeco.Web.Data
             modelBuilder.Entity<IdentityUserToken<string>>(entity => { entity.ToTable("UserTokens"); });
             modelBuilder.Entity<IdentityRoleClaim<string>>(entity => { entity.ToTable("RoleClaims"); });
 
-            var cascadeFKs = modelBuilder.Model
-                .G­etEntityTypes()
-                .SelectMany(t => t.GetForeignKeys())
-                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Casca­de);
-            foreach (var fk in cascadeFKs)
-            {
-                fk.DeleteBehavior = DeleteBehavior.Restr­ict;
-            }
+            modelBuilder.Entity<Project>()
+                .HasOne<User>(s => s.Responsable)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<Typology>(s => s.Typology)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<Area>(s => s.Area)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<User>(s => s.Solicitante)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<Sector>(s => s.Sector)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<ResponsableUnit>(s => s.ResponsableUnit)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<DevAxis>(s => s.DevAxis)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<User>(s => s.ResponsableBudget)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Plan>()
+               .HasOne<User>(s => s.Responsable)
+               .WithMany()
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Plan>()
+              .HasOne<Project>(s => s.Project)
+              .WithMany()
+              .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PlanTask>()
+                .HasOne<User>(s => s.Responsable)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PlanTask>()
+                .HasOne<Plan>(s => s.Plan)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+            //var cascadeFKs = modelBuilder.Model
+            //    .G­etEntityTypes()
+            //    .SelectMany(t => t.GetForeignKeys())
+            //    .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Casca­de);
+            //foreach (var fk in cascadeFKs)
+            //{
+            //    fk.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
 
             //modelBuilder.Entity<UserRole>(userRole =>
             //{

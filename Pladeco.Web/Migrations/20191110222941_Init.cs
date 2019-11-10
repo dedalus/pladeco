@@ -193,7 +193,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.AreaID,
                         principalTable: "Areas",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -214,7 +214,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -238,7 +238,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.TypologyID,
                         principalTable: "Typologies",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,7 +259,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -279,7 +279,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -297,13 +297,13 @@ namespace Pladeco.Web.Migrations
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -323,7 +323,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -356,7 +356,8 @@ namespace Pladeco.Web.Migrations
                     create_date = table.Column<DateTime>(nullable: true),
                     create_uid = table.Column<int>(nullable: true),
                     write_date = table.Column<DateTime>(nullable: true),
-                    write_uid = table.Column<int>(nullable: true)
+                    write_uid = table.Column<int>(nullable: true),
+                    AreaID1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -364,6 +365,12 @@ namespace Pladeco.Web.Migrations
                     table.ForeignKey(
                         name: "FK_Projects_Areas_AreaID",
                         column: x => x.AreaID,
+                        principalTable: "Areas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_Areas_AreaID1",
+                        column: x => x.AreaID1,
                         principalTable: "Areas",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -408,7 +415,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.StageID,
                         principalTable: "TypologyStages",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Projects_Typologies_TypologyID",
                         column: x => x.TypologyID,
@@ -442,7 +449,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.ProjectID,
                         principalTable: "Projects",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PaymentPlans_AspNetUsers_SolicitanteID",
                         column: x => x.SolicitanteID,
@@ -470,7 +477,8 @@ namespace Pladeco.Web.Migrations
                     create_date = table.Column<DateTime>(nullable: true),
                     create_uid = table.Column<int>(nullable: true),
                     write_date = table.Column<DateTime>(nullable: true),
-                    write_uid = table.Column<int>(nullable: true)
+                    write_uid = table.Column<int>(nullable: true),
+                    ProjectID1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -478,6 +486,12 @@ namespace Pladeco.Web.Migrations
                     table.ForeignKey(
                         name: "FK_Plans_Projects_ProjectID",
                         column: x => x.ProjectID,
+                        principalTable: "Projects",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Plans_Projects_ProjectID1",
+                        column: x => x.ProjectID1,
                         principalTable: "Projects",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -510,7 +524,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.ProjectID,
                         principalTable: "Projects",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProjectUsers_AspNetUsers_UserID",
                         column: x => x.UserID,
@@ -536,7 +550,8 @@ namespace Pladeco.Web.Migrations
                     create_date = table.Column<DateTime>(nullable: true),
                     create_uid = table.Column<int>(nullable: true),
                     write_date = table.Column<DateTime>(nullable: true),
-                    write_uid = table.Column<int>(nullable: true)
+                    write_uid = table.Column<int>(nullable: true),
+                    PlanID1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -544,6 +559,12 @@ namespace Pladeco.Web.Migrations
                     table.ForeignKey(
                         name: "FK_Tasks_Plans_PlanID",
                         column: x => x.PlanID,
+                        principalTable: "Plans",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tasks_Plans_PlanID1",
+                        column: x => x.PlanID1,
                         principalTable: "Plans",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -593,6 +614,11 @@ namespace Pladeco.Web.Migrations
                 column: "ProjectID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Plans_ProjectID1",
+                table: "Plans",
+                column: "ProjectID1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Plans_ResponsableID",
                 table: "Plans",
                 column: "ResponsableID");
@@ -601,6 +627,11 @@ namespace Pladeco.Web.Migrations
                 name: "IX_Projects_AreaID",
                 table: "Projects",
                 column: "AreaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_AreaID1",
+                table: "Projects",
+                column: "AreaID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_DevAxisID",
@@ -668,6 +699,11 @@ namespace Pladeco.Web.Migrations
                 name: "IX_Tasks_PlanID",
                 table: "Tasks",
                 column: "PlanID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_PlanID1",
+                table: "Tasks",
+                column: "PlanID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_ResponsableID",
