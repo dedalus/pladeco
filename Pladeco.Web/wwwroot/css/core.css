@@ -1109,7 +1109,7 @@ input[type="file"]:focus {
 .form-control[disabled],
 fieldset[disabled] .form-control {
   border-bottom-style: dashed;
-  color: #999999;
+  color: #505050;
 }
 .form-control[readonly] {
   border-bottom-style: dashed;
