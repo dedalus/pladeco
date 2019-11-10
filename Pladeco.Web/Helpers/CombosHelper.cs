@@ -117,7 +117,11 @@ namespace Pladeco.Web.Helpers
 
         public IEnumerable<SelectListItem> GetComboStages(int typologyID)
         {
-            var typology = this.context.Typologies.Find(typologyID);
+            var typology = this.context.Typologies
+                .Include(t => t.Stages)
+                .Where(t => t.ID == typologyID)
+                .FirstOrDefault();
+
             var list = new List<SelectListItem>();
             if (typology != null)
             {
@@ -137,7 +141,7 @@ namespace Pladeco.Web.Helpers
             return list;
         }
 
-        public IEnumerable<SelectListItem> GetComboUsers()
+        public IEnumerable<SelectListItem> GetComboUsers(bool insertBlank=true)
         {
             var list = context.Users.Select(pt => new SelectListItem
             {
@@ -147,11 +151,15 @@ namespace Pladeco.Web.Helpers
                 .OrderBy(pt => pt.Text)
                 .ToList();
 
-            //list.Insert(0, new SelectListItem
-            //{
-            //    Text = "",
-            //    Value = ""
-            //});
+            if (insertBlank)
+            {
+                list.Insert(0, new SelectListItem
+                {
+                    Text = "",
+                    Value = ""
+                });
+            }
+            
 
             return list;
         }

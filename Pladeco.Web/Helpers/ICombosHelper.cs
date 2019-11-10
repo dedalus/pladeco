@@ -9,7 +9,7 @@ namespace Pladeco.Web.Helpers
     public interface ICombosHelper
     {
         IEnumerable<SelectListItem> GetComboAreas();
-        IEnumerable<SelectListItem> GetComboUsers();
+        IEnumerable<SelectListItem> GetComboUsers(bool insertBlank=true);
         IEnumerable<SelectListItem> GetComboRoles();
         IEnumerable<SelectListItem> GetComboSectors();
         IEnumerable<SelectListItem> GetComboResponsableUnits();

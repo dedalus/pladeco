@@ -477,8 +477,7 @@ namespace Pladeco.Web.Migrations
                     create_date = table.Column<DateTime>(nullable: true),
                     create_uid = table.Column<int>(nullable: true),
                     write_date = table.Column<DateTime>(nullable: true),
-                    write_uid = table.Column<int>(nullable: true),
-                    ProjectID1 = table.Column<int>(nullable: true)
+                    write_uid = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -488,13 +487,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.ProjectID,
                         principalTable: "Projects",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Plans_Projects_ProjectID1",
-                        column: x => x.ProjectID1,
-                        principalTable: "Projects",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Plans_AspNetUsers_ResponsableID",
                         column: x => x.ResponsableID,
@@ -550,8 +543,7 @@ namespace Pladeco.Web.Migrations
                     create_date = table.Column<DateTime>(nullable: true),
                     create_uid = table.Column<int>(nullable: true),
                     write_date = table.Column<DateTime>(nullable: true),
-                    write_uid = table.Column<int>(nullable: true),
-                    PlanID1 = table.Column<int>(nullable: true)
+                    write_uid = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -561,13 +553,7 @@ namespace Pladeco.Web.Migrations
                         column: x => x.PlanID,
                         principalTable: "Plans",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Tasks_Plans_PlanID1",
-                        column: x => x.PlanID1,
-                        principalTable: "Plans",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tasks_AspNetUsers_ResponsableID",
                         column: x => x.ResponsableID,
@@ -612,11 +598,6 @@ namespace Pladeco.Web.Migrations
                 name: "IX_Plans_ProjectID",
                 table: "Plans",
                 column: "ProjectID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Plans_ProjectID1",
-                table: "Plans",
-                column: "ProjectID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Plans_ResponsableID",
@@ -699,11 +680,6 @@ namespace Pladeco.Web.Migrations
                 name: "IX_Tasks_PlanID",
                 table: "Tasks",
                 column: "PlanID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tasks_PlanID1",
-                table: "Tasks",
-                column: "PlanID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_ResponsableID",

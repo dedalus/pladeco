@@ -64,7 +64,7 @@ namespace Pladeco.Model
         [Required(ErrorMessage = "Debes seleccionar un sector")]
         public int SectorID { get; set; }
         [ForeignKey("SectorID")]
-        public Sector Sector { get; set; }
+        public virtual Sector Sector { get; set; }
 
 
         [DisplayName("Unidad responsable")]
@@ -72,27 +72,27 @@ namespace Pladeco.Model
         public int ResponsableUnitID { get; set; }
         [DisplayName("Unidad responsable")]
         [ForeignKey("ResponsableUnitID")]
-        public ResponsableUnit ResponsableUnit { get; set; }
+        public virtual ResponsableUnit ResponsableUnit { get; set; }
 
         [DisplayName("Eje de desarrollo")]
         [Required(ErrorMessage = "Debes seleccionar un eje de desarrollo")]
         public int DevAxisID { get; set; }
         [ForeignKey("DevAxisID")]
-        public DevAxis DevAxis { get; set; }
+        public virtual DevAxis DevAxis { get; set; }
 
         [DisplayName("Tipología")]
         [Required(ErrorMessage = "Debes seleccionar una Tipología")]
         public int TypologyID { get; set; }
         [DisplayName("Tipología")]
         [ForeignKey("TypologyID")]
-        public Typology Typology { get; set; }
+        public virtual Typology Typology { get; set; }
 
         [DisplayName("Etapa")]
         [Required(ErrorMessage = "Debes seleccionar una etapa de la tipología")]
         public int StageID { get; set; }
         [DisplayName("Etapa")]
         [ForeignKey("StageID")]
-        public TypologyStage Stage { get; set; }
+        public virtual TypologyStage Stage { get; set; }
 
         [DisplayName("Descripción")]
         public string BudgetDescription { get; set; }
@@ -104,7 +104,7 @@ namespace Pladeco.Model
         [DisplayName("Responsable de Plan de Gasto")]
         public string ResponsableBudgetID { get; set; }
         [ForeignKey("ResponsableBudgetID")]
-        public User ResponsableBudget { get; set; }
+        public virtual User ResponsableBudget { get; set; }
 
 
         [DisplayName("Objectivo estratégico")]

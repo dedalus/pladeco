@@ -64,8 +64,14 @@ namespace Pladeco.Web.Controllers
                 return RedirectToAction(nameof(Details), new { plan.ID });
             }
 
+            FillData(ref view);
 
             return View(view);
+        }
+
+        private void FillData(ref PlanViewModel view)
+        {
+            view.Users = combosHelper.GetComboUsers();
         }
 
         private Plan ToPlan(PlanViewModel view)
@@ -164,6 +170,8 @@ namespace Pladeco.Web.Controllers
                 }
                 return RedirectToAction(nameof(Details), new { id });
             }
+
+            FillData(ref view);
 
             return View(view);
         }

@@ -168,8 +168,22 @@ namespace Pladeco.Web.Controllers
                 return RedirectToAction(nameof(Details), new { project.ID });
             }
 
+            FillData(ref view);
 
             return View(view);
+        }
+
+        private void FillData(ref ProjectViewModel view)
+        {
+            view.Areas = combosHelper.GetComboAreas();
+            view.Users = combosHelper.GetComboUsers();
+            view.DevAxes = combosHelper.GetComboDevAxes();
+            view.ResponsableUnits = combosHelper.GetComboResponsableUnits();
+            view.Sectors = combosHelper.GetComboSectors();
+            view.Typologies = combosHelper.GetComboTypologies();
+            view.StageID = view.StageID;
+            view.Stages = combosHelper.GetComboStages(view.TypologyID);
+            view.ColaboratorsList = combosHelper.GetComboUsers();
         }
 
         private async Task<Project> ToProject(ProjectViewModel view)
@@ -357,6 +371,17 @@ namespace Pladeco.Web.Controllers
                 return RedirectToAction(nameof(Details), new { id });
             }
 
+            view.Areas = combosHelper.GetComboAreas();
+            view.Users = combosHelper.GetComboUsers();
+            view.DevAxes = combosHelper.GetComboDevAxes();
+            view.ResponsableUnits = combosHelper.GetComboResponsableUnits();
+            view.Sectors = combosHelper.GetComboSectors();
+            view.Typologies = combosHelper.GetComboTypologies();
+            view.StageID = view.StageID;
+            view.Stages = combosHelper.GetComboStages(view.TypologyID);
+            view.ColaboratorsList = combosHelper.GetComboUsers();
+
+
             return View(view);
         }
 
@@ -369,6 +394,7 @@ namespace Pladeco.Web.Controllers
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         public async Task<JsonResult> GetStagesAsync(int typologyID)
         {  

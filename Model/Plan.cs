@@ -53,7 +53,7 @@ namespace Pladeco.Model
         [Required(ErrorMessage = "Debes seleccionar un responsable")]
         public string ResponsableID { get; set; }
         [ForeignKey("ResponsableID")]
-        public User Responsable { get; set; }
+        public virtual User Responsable { get; set; }
 
         [DisplayName("Proyecto")]
         public int ProjectID { get; set; }

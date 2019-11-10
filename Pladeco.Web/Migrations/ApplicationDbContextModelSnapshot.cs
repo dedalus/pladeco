@@ -300,8 +300,6 @@ namespace Pladeco.Web.Migrations
 
                     b.Property<int>("ProjectID");
 
-                    b.Property<int?>("ProjectID1");
-
                     b.Property<DateTime>("RealEndDate");
 
                     b.Property<DateTime>("RealStartDate");
@@ -325,8 +323,6 @@ namespace Pladeco.Web.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.HasIndex("ProjectID1");
-
                     b.HasIndex("ResponsableID");
 
                     b.ToTable("Plans");
@@ -346,8 +342,6 @@ namespace Pladeco.Web.Migrations
                         .IsRequired();
 
                     b.Property<int>("PlanID");
-
-                    b.Property<int?>("PlanID1");
 
                     b.Property<int>("Priority");
 
@@ -369,8 +363,6 @@ namespace Pladeco.Web.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("PlanID");
-
-                    b.HasIndex("PlanID1");
 
                     b.HasIndex("ResponsableID");
 
@@ -724,13 +716,9 @@ namespace Pladeco.Web.Migrations
             modelBuilder.Entity("Pladeco.Model.Plan", b =>
                 {
                     b.HasOne("Pladeco.Model.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Pladeco.Model.Project")
                         .WithMany("Plans")
-                        .HasForeignKey("ProjectID1");
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()
@@ -741,13 +729,9 @@ namespace Pladeco.Web.Migrations
             modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
                 {
                     b.HasOne("Pladeco.Model.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Pladeco.Model.Plan")
                         .WithMany("Tasks")
-                        .HasForeignKey("PlanID1");
+                        .HasForeignKey("PlanID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Pladeco.Model.User", "Responsable")
                         .WithMany()

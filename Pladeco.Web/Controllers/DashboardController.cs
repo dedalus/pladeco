@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Pladeco.Model;
 using Pladeco.Model.Enum;
 using Pladeco.Web.Data;
+using Pladeco.Web.Models;
 
 namespace Pladeco.Web.Controllers
 {
@@ -73,6 +75,12 @@ namespace Pladeco.Web.Controllers
             }
             
             return View(projects);
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

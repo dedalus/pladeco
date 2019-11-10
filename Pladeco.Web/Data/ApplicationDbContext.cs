@@ -30,6 +30,21 @@ namespace Pladeco.Web.Data
             modelBuilder.Entity<IdentityRoleClaim<string>>(entity => { entity.ToTable("RoleClaims"); });
 
             modelBuilder.Entity<Project>()
+                .HasMany(p => p.Plans)
+                .WithOne(p => p.Project)
+                .HasForeignKey(p => p.ProjectID);
+
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.PaymentPlans)
+                .WithOne(p => p.Project)
+                .HasForeignKey(p => p.ProjectID);
+
+            modelBuilder.Entity<Plan>()
+                .HasMany(p => p.Tasks)
+                .WithOne(p => p.Plan)
+                .HasForeignKey(p => p.PlanID);
+
+            modelBuilder.Entity<Project>()
                 .HasOne<User>(s => s.Responsable)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
@@ -74,20 +89,12 @@ namespace Pladeco.Web.Data
                .WithMany()
                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Plan>()
-              .HasOne<Project>(s => s.Project)
-              .WithMany()
-              .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PlanTask>()
                 .HasOne<User>(s => s.Responsable)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<PlanTask>()
-                .HasOne<Plan>(s => s.Plan)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
             //var cascadeFKs = modelBuilder.Model
             //    .G­etEntityTypes()
             //    .SelectMany(t => t.GetForeignKeys())

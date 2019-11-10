@@ -82,6 +82,8 @@ namespace Pladeco.Web.Controllers
                 
             }
 
+            FillData(ref view);
+
             return View(view);
         }
 
@@ -141,7 +143,15 @@ namespace Pladeco.Web.Controllers
                 return RedirectToAction(nameof(Details), new { id });
             }
 
+            FillData(ref view);
+
+
             return View(view);
+        }
+
+        private void FillData(ref PaymentPlanViewModel view)
+        {
+            view.Users = combosHelper.GetComboUsers();
         }
 
         [HttpPost, ActionName("Delete")]

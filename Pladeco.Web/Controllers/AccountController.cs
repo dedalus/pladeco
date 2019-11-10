@@ -37,7 +37,7 @@ namespace Pladeco.Web.Controllers
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                return this.RedirectToAction("Index", "Home");
+                return this.RedirectToAction("Index", "Dashboard");
             }
 
             return this.View();
@@ -56,7 +56,7 @@ namespace Pladeco.Web.Controllers
                         return this.Redirect(this.Request.Query["ReturnUrl"].First());
                     }
 
-                    return this.RedirectToAction("Index", "Home");
+                    return this.RedirectToAction("Index", "Dashboard");
                 }
             }
 
