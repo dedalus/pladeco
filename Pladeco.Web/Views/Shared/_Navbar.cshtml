@@ -14,9 +14,30 @@
 
         </ul>
 
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            <div class="navbar-right">
+
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            @this.User.Identity.Name
+                            <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a asp-area="" asp-controller="Account" asp-action="Logout"><i class="icon-switch2"></i> Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        }
+
+
         <div class="navbar-left visible-md visible-lg">
             <p class="navbar-text">SISTEMA DE CONTROL Y EVALUACIÓN PLADECO COMUNA DE PUDAHUEL 2020-205</p>
-            
+
         </div>
     </div>
 </div>

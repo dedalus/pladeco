@@ -67,7 +67,7 @@ namespace Pladeco.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await this.userHelper.LogoutAsync();
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("Login", "Account");
         }
 
         public IActionResult Create()
