@@ -17,6 +17,9 @@ using Pladeco.Web.Helpers;
 using Pladeco.Model;
 using Pladeco.Web.Data.Data;
 using Microsoft.AspNetCore.Server.IISIntegration;
+using jsreport.Local;
+using jsreport.Binary;
+using jsreport.AspNetCore;
 
 namespace Pladeco.Web
 {
@@ -74,6 +77,13 @@ namespace Pladeco.Web
                 opt.LoginPath = "/Account/Login";
                 opt.AccessDeniedPath = "/Account/NotAuthorized";
             });
+
+            var rs = new LocalReporting()
+                    .UseBinary(JsReportBinary.GetBinary())
+                    .AsWebServer()
+                    .Create();
+            services.AddJsReport(rs);
+            rs.StartAsync();
 
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();
