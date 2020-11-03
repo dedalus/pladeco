@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  nginx-proxy:
+    image: elioac13/jwilder-nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:ro
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+  pladeco:
+    image: elioac13/pladeco:1.0.0
+    restart: always
+    ports:
+      - "5000:80"
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./data/appsettings.json:/app/appsettings.json
+      - ./data/appsettings.Development.json:/app/appsettings.Development.json
+      - ./data/appsettings.Docker.json:/app/appsettings.Docker.json
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - VIRTUAL_HOST=mppladeco.consultoragrupodxas.com
+      - LETSENCRYPT_HOST=mppladeco.consultoragrupodxas.com
+      - LETSENCRYPT_EMAIL=elio@valsoft.com.ar
+      - DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=false
+      #- HTTPS_METHOD=noredirect
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+    user: '0:0'
+    container_name: sqlserver2019
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=sql_5749
+      - MSSQL_PID=Express
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    ports:
+      - "5341:80"
+    restart: unless-stopped
+    volumes:
+      - ./seq-data:/data
+    environment:
+      - ACCEPT_EULA=Y
+      - VIRTUAL_HOST=seq.valsoft.com.ar
+      - LETSENCRYPT_HOST=seq.valsoft.com.ar
+      - LETSENCRYPT_EMAIL=elio@valsoft.com.ar
+volumes:
+  sqlserver_data:
+  certs:
+  html:
+  vhostd:

@@ -5,6 +5,7 @@
     <UserSecretsId>aspnet-Projects-A1B6FFDA-D299-4C30-A85C-5E63EEEF2503</UserSecretsId>
     <AssemblyName>Pladeco.Web</AssemblyName>
     <RootNamespace>Pladeco.Web</RootNamespace>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,10 +17,12 @@
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.435" />
     <PackageReference Include="jsreport.AspNetCore" Version="2.0.1" />
     <PackageReference Include="jsreport.Binary" Version="2.6.1" />
+    <PackageReference Include="jsreport.Binary.Linux" Version="2.6.1" />
     <PackageReference Include="jsreport.Local" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="2.1.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.0.0" />
   </ItemGroup>

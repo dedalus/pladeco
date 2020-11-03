@@ -29,6 +29,13 @@
     },
     "IIS": {
       "commandName": "IIS"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {},
+      "httpPort": 56012
     }
   }
 }

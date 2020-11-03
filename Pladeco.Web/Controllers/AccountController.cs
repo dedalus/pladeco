@@ -14,6 +14,7 @@ using Pladeco.Web.Models;
 
 namespace Pladeco.Web.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IUserHelper userHelper;
@@ -33,6 +34,7 @@ namespace Pladeco.Web.Controllers
             this.combosHelper = combosHelper;
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
             if (this.User.Identity.IsAuthenticated)
@@ -43,6 +45,7 @@ namespace Pladeco.Web.Controllers
             return this.View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {

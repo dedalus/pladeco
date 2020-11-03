@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,8 +14,8 @@ using Pladeco.Model;
 using Pladeco.Web.Data.Data;
 using Microsoft.AspNetCore.Server.IISIntegration;
 using jsreport.Local;
-using jsreport.Binary;
 using jsreport.AspNetCore;
+using System.Runtime.InteropServices;
 
 namespace Pladeco.Web
 {
@@ -79,9 +75,16 @@ namespace Pladeco.Web
             });
 
             var rs = new LocalReporting()
-                    .UseBinary(JsReportBinary.GetBinary())
-                    .AsWebServer()
-                    .Create();
+               .UseBinary(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
+                   jsreport.Binary.JsReportBinary.GetBinary() :
+                   jsreport.Binary.Linux.JsReportBinary.GetBinary())
+               .AsWebServer()
+               .Create();
+
+            //var rs = new LocalReporting()
+            //        .UseBinary(JsReportBinary.GetBinary())
+            //        .AsWebServer()
+            //        .Create();
             services.AddJsReport(rs);
             rs.StartAsync();
 
