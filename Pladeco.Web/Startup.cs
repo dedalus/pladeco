@@ -2,20 +2,17 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pladeco.Web.Data;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Pladeco.Web.Helpers;
-using Pladeco.Model;
 using Pladeco.Web.Data.Data;
 using Microsoft.AspNetCore.Server.IISIntegration;
-using jsreport.Local;
-using jsreport.AspNetCore;
-using System.Runtime.InteropServices;
+using Pladeco.Web.Installers;
 
 namespace Pladeco.Web
 {
@@ -37,32 +34,14 @@ namespace Pladeco.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
+            services.InstallServicesInAssembly(Configuration);
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddIdentity<User, Role>(options =>
-            {
-                options.Stores.MaxLengthForKeys = 128;
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 4;
-                options.Password.RequiredUniqueChars = 0;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultUI()
-                .AddDefaultTokenProviders();
-
-            
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                    .AddJsonOptions(
-                    options => options.SerializerSettings.ReferenceLoopHandling
-                        = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -74,19 +53,6 @@ namespace Pladeco.Web
                 opt.AccessDeniedPath = "/Account/NotAuthorized";
             });
 
-            var rs = new LocalReporting()
-               .UseBinary(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?
-                   jsreport.Binary.JsReportBinary.GetBinary() :
-                   jsreport.Binary.Linux.JsReportBinary.GetBinary())
-               .AsWebServer()
-               .Create();
-
-            //var rs = new LocalReporting()
-            //        .UseBinary(JsReportBinary.GetBinary())
-            //        .AsWebServer()
-            //        .Create();
-            services.AddJsReport(rs);
-            rs.StartAsync();
 
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();
@@ -94,13 +60,10 @@ namespace Pladeco.Web
 
             services.AddAuthentication(IISDefaults.AuthenticationScheme);
 
-            // var webRootPath = env.WebRootPath;
-            // call rotativa conf passing env to get web root path
-            //RotativaConfiguration.Setup(env);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -117,27 +80,32 @@ namespace Pladeco.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseRouting();
+
             app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes
-                .MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Dashboard}/{action=Index}/{id?}")
+                    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
-                .MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default_plans",
-                    template: "plans/{id?}", new { controller = "Plans", action = "Details" })
+                    pattern: "plans/{id?}", new { controller = "Plans", action = "Details" });
 
-                .MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default_projects",
-                    template: "projects/{id?}", new { controller = "Projects", action = "Details" })
+                    pattern: "projects/{id?}", new { controller = "Projects", action = "Details" });
 
-                .MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default_plantask",
-                    template: "plantasks/{id?}", new { controller = "PlanTasks", action = "Details" });
+                    pattern: "plantasks/{id?}", new { controller = "PlanTasks", action = "Details" });
+
+                endpoints.MapRazorPages();
             });
+
         }
     }
 }

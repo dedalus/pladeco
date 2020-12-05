@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Pladeco.Model;
+using Pladeco.Domain;
 using Pladeco.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ namespace Pladeco.Web.Data.Data
 
             await this.CheckRolesAsync();
 
-            await this.CheckUser("sa@valsoft.com.ar", "SysAdmin", "Admin");
+            await this.CheckUser("admin@consultoragrupodxas.com", "SysAdmin", "Admin");
 
             if (!this.context.DevAxes.Any())
             {
@@ -111,7 +111,7 @@ namespace Pladeco.Web.Data.Data
                 Active=true
             };
 
-            var result = await this.userHelper.AddUserAsync(user, "5749");
+            var result = await this.userHelper.AddUserAsync(user, "admin1");
             if (result != IdentityResult.Success)
             {
                 throw new InvalidOperationException("Could not create the user in seeder");
@@ -146,6 +146,11 @@ namespace Pladeco.Web.Data.Data
             this.AddSector("Tránsito y transporte público");
             this.AddSector("Vialidad");
             this.AddSector("Vivienda");
+            this.AddSector("Empleo");
+            this.AddSector("Seguridad");
+            this.AddSector("Grupos vulnerables");
+            this.AddSector("Equidad de género");
+            this.AddSector("Ordenamiento territorial");
             await this.context.SaveChangesAsync();
         }
 
@@ -188,6 +193,11 @@ namespace Pladeco.Web.Data.Data
             this.AddDevAxis("Desarrollo Sociocultural, Salud, Educación, Cultura y Deporte");
             this.AddDevAxis("Desarrollo Económico - Productivo");
             this.AddDevAxis("Gestión Municipal");
+            this.AddDevAxis("Covid 19 y reactivación económica");
+            this.AddDevAxis("Pudahuel comuna de deportista que promueve el deporte para una vida sana");
+            this.AddDevAxis("Pudahuel comuna segura");
+            this.AddDevAxis("Pudahuel comuna sustentable");
+            this.AddDevAxis("La comuna de Pudahuel plataforma de negocios");
             await this.context.SaveChangesAsync();
         }
 

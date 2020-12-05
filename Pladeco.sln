@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pladeco.Web", "Pladeco.Web\Pladeco.Web.csproj", "{FE6BE44F-0AA4-4B83-A732-8A21428CBC3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{9BE29359-4121-4BC2-8158-F4DDAAA217B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pladeco.Domain", "Pladeco.Domain\Pladeco.Domain.csproj", "{9BE29359-4121-4BC2-8158-F4DDAAA217B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

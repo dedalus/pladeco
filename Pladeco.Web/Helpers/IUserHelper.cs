@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
-    using Pladeco.Model;
+    using Pladeco.Domain;
     using Pladeco.Web.Models;
 
     public interface IUserHelper

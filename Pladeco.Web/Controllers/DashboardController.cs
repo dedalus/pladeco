@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pladeco.Model;
-using Pladeco.Model.Enum;
+using Pladeco.Domain;
+using Pladeco.Domain.Enum;
 using Pladeco.Web.Data;
 using Pladeco.Web.Models;
 

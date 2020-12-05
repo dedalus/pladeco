@@ -176,7 +176,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Area", b =>
+            modelBuilder.Entity("Pladeco.Domain.Area", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -199,7 +199,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Areas");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Budget", b =>
+            modelBuilder.Entity("Pladeco.Domain.Budget", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -226,7 +226,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Budgets");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.DevAxis", b =>
+            modelBuilder.Entity("Pladeco.Domain.DevAxis", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -248,7 +248,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("DevAxes");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.PaymentPlan", b =>
+            modelBuilder.Entity("Pladeco.Domain.PaymentPlan", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -283,7 +283,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("PaymentPlans");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Plan", b =>
+            modelBuilder.Entity("Pladeco.Domain.Plan", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -328,7 +328,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Plans");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
+            modelBuilder.Entity("Pladeco.Domain.PlanTask", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -369,7 +369,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Project", b =>
+            modelBuilder.Entity("Pladeco.Domain.Project", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -455,7 +455,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.ProjectUser", b =>
+            modelBuilder.Entity("Pladeco.Domain.ProjectUser", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -482,7 +482,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("ProjectUsers");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.ResponsableUnit", b =>
+            modelBuilder.Entity("Pladeco.Domain.ResponsableUnit", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -504,7 +504,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("ResponsableUnits");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Sector", b =>
+            modelBuilder.Entity("Pladeco.Domain.Sector", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -526,7 +526,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Sectors");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Typology", b =>
+            modelBuilder.Entity("Pladeco.Domain.Typology", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -547,7 +547,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("Typologies");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.TypologyStage", b =>
+            modelBuilder.Entity("Pladeco.Domain.TypologyStage", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -572,7 +572,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("TypologyStages");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.User", b =>
+            modelBuilder.Entity("Pladeco.Domain.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -633,7 +633,7 @@ namespace Pladeco.Web.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Role", b =>
+            modelBuilder.Entity("Pladeco.Domain.Role", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
 
@@ -658,7 +658,7 @@ namespace Pladeco.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Pladeco.Model.User")
+                    b.HasOne("Pladeco.Domain.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -666,7 +666,7 @@ namespace Pladeco.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Pladeco.Model.User")
+                    b.HasOne("Pladeco.Domain.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -679,7 +679,7 @@ namespace Pladeco.Web.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Pladeco.Model.User")
+                    b.HasOne("Pladeco.Domain.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -687,133 +687,133 @@ namespace Pladeco.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Pladeco.Model.User")
+                    b.HasOne("Pladeco.Domain.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Budget", b =>
+            modelBuilder.Entity("Pladeco.Domain.Budget", b =>
                 {
-                    b.HasOne("Pladeco.Model.Area", "Area")
+                    b.HasOne("Pladeco.Domain.Area", "Area")
                         .WithMany()
                         .HasForeignKey("AreaID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Pladeco.Model.PaymentPlan", b =>
+            modelBuilder.Entity("Pladeco.Domain.PaymentPlan", b =>
                 {
-                    b.HasOne("Pladeco.Model.Project", "Project")
+                    b.HasOne("Pladeco.Domain.Project", "Project")
                         .WithMany("PaymentPlans")
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Pladeco.Model.User", "Solicitante")
+                    b.HasOne("Pladeco.Domain.User", "Solicitante")
                         .WithMany()
                         .HasForeignKey("SolicitanteID");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Plan", b =>
+            modelBuilder.Entity("Pladeco.Domain.Plan", b =>
                 {
-                    b.HasOne("Pladeco.Model.Project", "Project")
+                    b.HasOne("Pladeco.Domain.Project", "Project")
                         .WithMany("Plans")
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Pladeco.Model.User", "Responsable")
+                    b.HasOne("Pladeco.Domain.User", "Responsable")
                         .WithMany()
                         .HasForeignKey("ResponsableID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Pladeco.Model.PlanTask", b =>
+            modelBuilder.Entity("Pladeco.Domain.PlanTask", b =>
                 {
-                    b.HasOne("Pladeco.Model.Plan", "Plan")
+                    b.HasOne("Pladeco.Domain.Plan", "Plan")
                         .WithMany("Tasks")
                         .HasForeignKey("PlanID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Pladeco.Model.User", "Responsable")
+                    b.HasOne("Pladeco.Domain.User", "Responsable")
                         .WithMany()
                         .HasForeignKey("ResponsableID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Pladeco.Model.Project", b =>
+            modelBuilder.Entity("Pladeco.Domain.Project", b =>
                 {
-                    b.HasOne("Pladeco.Model.Area", "Area")
+                    b.HasOne("Pladeco.Domain.Area", "Area")
                         .WithMany()
                         .HasForeignKey("AreaID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Pladeco.Model.Area")
+                    b.HasOne("Pladeco.Domain.Area")
                         .WithMany("Projects")
                         .HasForeignKey("AreaID1");
 
-                    b.HasOne("Pladeco.Model.DevAxis", "DevAxis")
+                    b.HasOne("Pladeco.Domain.DevAxis", "DevAxis")
                         .WithMany()
                         .HasForeignKey("DevAxisID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Pladeco.Model.User", "ResponsableBudget")
+                    b.HasOne("Pladeco.Domain.User", "ResponsableBudget")
                         .WithMany()
                         .HasForeignKey("ResponsableBudgetID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Pladeco.Model.User", "Responsable")
+                    b.HasOne("Pladeco.Domain.User", "Responsable")
                         .WithMany()
                         .HasForeignKey("ResponsableID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Pladeco.Model.ResponsableUnit", "ResponsableUnit")
+                    b.HasOne("Pladeco.Domain.ResponsableUnit", "ResponsableUnit")
                         .WithMany()
                         .HasForeignKey("ResponsableUnitID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Pladeco.Model.Sector", "Sector")
+                    b.HasOne("Pladeco.Domain.Sector", "Sector")
                         .WithMany()
                         .HasForeignKey("SectorID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Pladeco.Model.User", "Solicitante")
+                    b.HasOne("Pladeco.Domain.User", "Solicitante")
                         .WithMany()
                         .HasForeignKey("SolicitanteID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Pladeco.Model.TypologyStage", "Stage")
+                    b.HasOne("Pladeco.Domain.TypologyStage", "Stage")
                         .WithMany()
                         .HasForeignKey("StageID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Pladeco.Model.Typology", "Typology")
+                    b.HasOne("Pladeco.Domain.Typology", "Typology")
                         .WithMany()
                         .HasForeignKey("TypologyID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("Pladeco.Model.ProjectUser", b =>
+            modelBuilder.Entity("Pladeco.Domain.ProjectUser", b =>
                 {
-                    b.HasOne("Pladeco.Model.Project", "Project")
+                    b.HasOne("Pladeco.Domain.Project", "Project")
                         .WithMany("Colaborators")
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Pladeco.Model.User", "User")
+                    b.HasOne("Pladeco.Domain.User", "User")
                         .WithMany("Projects")
                         .HasForeignKey("UserID");
                 });
 
-            modelBuilder.Entity("Pladeco.Model.TypologyStage", b =>
+            modelBuilder.Entity("Pladeco.Domain.TypologyStage", b =>
                 {
-                    b.HasOne("Pladeco.Model.Typology", "Typology")
+                    b.HasOne("Pladeco.Domain.Typology", "Typology")
                         .WithMany("Stages")
                         .HasForeignKey("TypologyID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Pladeco.Model.User", b =>
+            modelBuilder.Entity("Pladeco.Domain.User", b =>
                 {
-                    b.HasOne("Pladeco.Model.Area", "Area")
+                    b.HasOne("Pladeco.Domain.Area", "Area")
                         .WithMany()
                         .HasForeignKey("AreaID");
                 });

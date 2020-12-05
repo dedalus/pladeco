@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Pladeco.Domain.DevAxis>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="page-header">
+    <br />
+    <div class="breadcrumb-line breadcrumb-line-component">
+        <ul class="breadcrumb">
+            <li><a href="#"><i class="icon-cog3"></i> Ejes de desarrollo</a></li>
+        </ul>
+    </div>
+</div>
+<br />
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+    <!-- Vertical form options -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-left">
+                <a asp-action="Create" class="btn bg-green-700" role="button">Crear</a>
+            </div>
+            <br />
+        </div>
+        <div class="col-md-12">
+            <!-- Basic datatable -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="reload"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <table class="table datatable-button-html5-basic ">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.ID">
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /basic datatable -->
+        </div>
+    </div>
+</div>
+<!-- Theme JS files -->
+<script src="~/js/plugins/tables/datatables/datatables.min.js"></script>
+<script src="~/js/plugins/forms/selects/select2.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/jszip/jszip.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/select.min.js"></script>
+<script src="~/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
+<script src="~/js/demo_pages/datatables_extension_buttons_html5.js"></script>
+<script src="~/js/custom/custom_datatable.js"></script>

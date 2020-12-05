@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using Pladeco.Model;
+    using Pladeco.Domain;
     using Pladeco.Web.Models;
 
     public class UserHelper : IUserHelper

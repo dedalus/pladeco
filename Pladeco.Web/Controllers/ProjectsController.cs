@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Pladeco.Model;
-using Pladeco.Model.Enum;
+using Newtonsoft.Json.Linq;
+using Pladeco.Domain;
+using Pladeco.Domain.Enum;
 using Pladeco.Web.Data;
 using Pladeco.Web.Data.Data;
 using Pladeco.Web.Helpers;
@@ -34,6 +34,82 @@ namespace Pladeco.Web.Controllers
                 .ToListAsync());
         }
 
+         [HttpPost]
+        public async Task<IActionResult> LoadTable([FromBody]JObject d)
+        {
+            var dtParameters = d.ToObject<DTParameters>();
+
+            if (!ModelState.IsValid) 
+            {
+
+            }
+            try
+            {
+                var searchBy = dtParameters.Search?.Value;
+
+                var orderCriteria = string.Empty;
+                var orderAscendingDirection = true;
+
+                if (dtParameters.Order != null)
+                {
+                    // in this example we just default sort on the 1st column
+                    orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                    orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "desc";
+                }
+                else
+                {
+                    // if we have an empty search then just order the results by Id ascending
+                    orderCriteria = "Name";
+                    orderAscendingDirection = true;
+                }
+
+                var result = context.Projects
+                    .Include(p=> p.ResponsableUnit)
+                    .AsQueryable();
+
+                if (!string.IsNullOrEmpty(searchBy))
+                {
+                    result = result.Where(r => r.Name != null && EF.Functions.Like(r.Name, "%" + searchBy + "%") ||
+                                            EF.Functions.Like(r.ID.ToString(), "%" + searchBy + "%")
+                                            );
+
+                }
+
+                result = orderAscendingDirection ? result.OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc) : result.OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc);
+
+                //fill with stock
+                
+                
+
+            
+
+                // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
+                var filteredResultsCount = result.Count();
+                var totalResultsCount = await context.Projects.CountAsync();
+
+                var data=await result.AsNoTracking()
+                        .Skip(dtParameters.Start)
+                        .Take(dtParameters.Length)
+                        .ToListAsync();
+
+
+                return Ok(new
+                {
+                    draw = dtParameters.Draw,
+                    recordsTotal = totalResultsCount,
+                    recordsFiltered = filteredResultsCount,
+                    data = data
+                });
+
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+            
+        }
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

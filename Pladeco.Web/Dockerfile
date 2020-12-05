@@ -1,21 +1,12 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim AS base
-
-RUN apt-get update && \   
-    apt-get install -y gnupg  libgconf-2-4 wget && \
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
-    apt-get update && \
-    apt-get install -y google-chrome-unstable --no-install-recommends
-
-ENV chrome:launchOptions:args --no-sandbox
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["Pladeco.Web/Pladeco.Web.csproj", "Pladeco.Web/"]
-COPY ["Model/Model.csproj", "Model/"]
+COPY ["Pladeco.Domain/Pladeco.Domain.csproj", "Pladeco.Domain/"]
 RUN dotnet restore "Pladeco.Web/Pladeco.Web.csproj"
 COPY . .
 WORKDIR "/src/Pladeco.Web"

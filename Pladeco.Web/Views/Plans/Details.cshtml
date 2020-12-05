@@ -1,4 +1,4 @@
-﻿@model Pladeco.Model.Plan
+﻿@model Pladeco.Domain.Plan
 
 @{
     ViewData["Title"] = "Details";
@@ -144,12 +144,12 @@
 
                                                     @switch (item.Status)
                                                     {
-                                                        case Pladeco.Model.Enum.eStatus.PENDING:
+                                                        case Pladeco.Domain.Enum.eStatus.PENDING:
                                                             break;
-                                                        case Pladeco.Model.Enum.eStatus.IN_PROCESS:
+                                                        case Pladeco.Domain.Enum.eStatus.IN_PROCESS:
                                                             status_cls = "warning";
                                                             break;
-                                                        case Pladeco.Model.Enum.eStatus.DONE:
+                                                        case Pladeco.Domain.Enum.eStatus.DONE:
                                                             status_cls = "success";
                                                             break;
                                                         default:
